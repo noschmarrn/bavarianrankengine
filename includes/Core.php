@@ -28,6 +28,9 @@ class Core {
         require_once BRE_DIR . 'includes/Features/MetaGenerator.php';
         require_once BRE_DIR . 'includes/Features/SchemaEnhancer.php';
         require_once BRE_DIR . 'includes/Admin/SettingsPage.php';
+        require_once BRE_DIR . 'includes/Admin/AdminMenu.php';
+        require_once BRE_DIR . 'includes/Admin/ProviderPage.php';
+        require_once BRE_DIR . 'includes/Admin/MetaPage.php';
         require_once BRE_DIR . 'includes/Admin/BulkPage.php';
     }
 
@@ -42,7 +45,10 @@ class Core {
         ( new Features\SchemaEnhancer() )->register();
 
         if ( is_admin() ) {
-            ( new Admin\SettingsPage() )->register();
+            $menu = new Admin\AdminMenu();
+            $menu->register();
+            ( new Admin\ProviderPage() )->register();
+            ( new Admin\MetaPage() )->register();
             ( new Admin\BulkPage() )->register();
         }
     }
