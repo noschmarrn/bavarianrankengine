@@ -122,6 +122,12 @@ jQuery( function ( $ ) {
         $( '#seo-geo-progress-text' ).text( done + ' / ' + t + ' verarbeitet' );
     }
 
+    /**
+     * Append a line to the log console.
+     * @param {string} msg  Pre-escaped HTML string. User data MUST be escaped via
+     *                      $('<span>').text(val).html() before passing here.
+     * @param {string} type 'error' | 'warn' | undefined (info)
+     */
     function log( msg, type ) {
         var color = type === 'error' ? '#f48771' : type === 'warn' ? '#dcdcaa' : '#9cdcfe';
         $( '#seo-geo-bulk-log' ).append(
