@@ -98,7 +98,9 @@ class SettingsPage {
         ) );
 
         $clean['schema_same_as'] = [
-            'organization' => array_values( array_filter( array_map( 'esc_url_raw', (array) ( $input['schema_same_as']['organization'] ?? [] ) ) ) ),
+            'organization' => array_values( array_filter( array_map( 'esc_url_raw',
+                array_map( 'trim', explode( "\n", $input['schema_same_as']['organization'] ?? '' ) )
+            ) ) ),
         ];
 
         return $clean;
