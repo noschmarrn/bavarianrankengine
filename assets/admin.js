@@ -1,14 +1,14 @@
-/* global seoGeo */
+/* global breAdmin */
 jQuery( function ( $ ) {
     function updateProviderRows() {
-        var active = $( '#seo-geo-provider' ).val();
-        $( '.seo-geo-provider-row' ).removeClass( 'active' );
-        $( '.seo-geo-provider-row[data-provider="' + active + '"]' ).addClass( 'active' );
+        var active = $( '#bre-provider' ).val();
+        $( '.bre-provider-row' ).removeClass( 'active' );
+        $( '.bre-provider-row[data-provider="' + active + '"]' ).addClass( 'active' );
     }
     updateProviderRows();
-    $( '#seo-geo-provider' ).on( 'change', updateProviderRows );
+    $( '#bre-provider' ).on( 'change', updateProviderRows );
 
-    $( document ).on( 'click', '.seo-geo-test-btn', function () {
+    $( document ).on( 'click', '.bre-test-btn', function () {
         var btn        = $( this );
         var providerId = btn.data( 'provider' );
         var resultEl   = $( '#test-result-' + providerId );
@@ -16,9 +16,9 @@ jQuery( function ( $ ) {
         resultEl.removeClass( 'success error' ).text( 'Teste\u2026' );
         btn.prop( 'disabled', true );
 
-        $.post( seoGeo.ajaxUrl, {
+        $.post( breAdmin.ajaxUrl, {
             action:   'bre_test_connection',
-            nonce:    seoGeo.nonce,
+            nonce:    breAdmin.nonce,
             provider: providerId,
             // api_key removed — server reads stored encrypted key
         } ).done( function ( res ) {
@@ -34,11 +34,11 @@ jQuery( function ( $ ) {
         } );
     } );
 
-    $( '#seo-geo-reset-prompt' ).on( 'click', function () {
+    $( '#bre-reset-prompt' ).on( 'click', function () {
         if ( ! confirm( 'Prompt wirklich zur\u00fccksetzen?' ) ) return;
-        $.post( seoGeo.ajaxUrl, {
+        $.post( breAdmin.ajaxUrl, {
             action: 'bre_get_default_prompt',
-            nonce:  seoGeo.nonce,
+            nonce:  breAdmin.nonce,
         } ).done( function ( res ) {
             if ( res.success ) {
                 $( 'textarea[name*="prompt"]' ).val( res.data );

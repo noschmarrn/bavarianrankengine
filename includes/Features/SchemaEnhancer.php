@@ -31,7 +31,7 @@ class SchemaEnhancer {
         if ( defined( 'RANK_MATH_VERSION' ) || defined( 'WPSEO_VERSION' ) || defined( 'AIOSEO_VERSION' ) ) return;
         if ( ! is_singular() ) return;
 
-        $desc = get_post_meta( get_the_ID(), '_seo_geo_meta_description', true );
+        $desc = get_post_meta( get_the_ID(), '_bre_meta_description', true );
         if ( empty( $desc ) ) return;
 
         echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
@@ -100,7 +100,7 @@ class SchemaEnhancer {
             'url'           => get_permalink(),
             'datePublished' => get_the_date( 'c' ),
             'dateModified'  => get_the_modified_date( 'c' ),
-            'description'   => get_post_meta( get_the_ID(), '_seo_geo_meta_description', true ) ?: get_the_excerpt(),
+            'description'   => get_post_meta( get_the_ID(), '_bre_meta_description', true ) ?: get_the_excerpt(),
             'publisher'     => [
                 '@type' => 'Organization',
                 'name'  => get_bloginfo( 'name' ),

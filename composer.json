@@ -1,5 +1,5 @@
 {
-    "name": "donau2space/seo-geo",
+    "name": "donau2space/bavarian-rank-engine",
     "description": "Bavarian Rank Engine WordPress Plugin",
     "require-dev": {
         "phpunit/phpunit": "^10.0"

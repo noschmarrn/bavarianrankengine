@@ -1,5 +1,5 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
-<div class="wrap seo-geo-settings">
+<div class="wrap bre-settings">
     <h1>Bavarian Rank Engine</h1>
 
     <?php settings_errors( 'bre' ); ?>
@@ -12,7 +12,7 @@
             <tr>
                 <th scope="row">Aktiver Provider</th>
                 <td>
-                    <select name="bre_settings[provider]" id="seo-geo-provider">
+                    <select name="bre_settings[provider]" id="bre-provider">
                         <?php foreach ( $providers as $id => $provider ) : ?>
                         <option value="<?php echo esc_attr( $id ); ?>"
                             <?php selected( $settings['provider'], $id ); ?>>
@@ -23,11 +23,11 @@
                 </td>
             </tr>
             <?php foreach ( $providers as $id => $provider ) : ?>
-            <tr class="seo-geo-provider-row" data-provider="<?php echo esc_attr( $id ); ?>">
+            <tr class="bre-provider-row" data-provider="<?php echo esc_attr( $id ); ?>">
                 <th scope="row"><?php echo esc_html( $provider->getName() ); ?> API Key</th>
                 <td>
                     <?php if ( ! empty( $masked_keys[ $id ] ) ) : ?>
-                    <span class="seo-geo-key-saved">
+                    <span class="bre-key-saved">
                         Gespeichert: <code><?php echo esc_html( $masked_keys[ $id ] ); ?></code>
                     </span><br>
                     <?php endif; ?>
@@ -37,10 +37,10 @@
                            placeholder="<?php echo ! empty( $masked_keys[ $id ] ) ? esc_attr( 'Neuen Key eingeben zum Überschreiben' ) : esc_attr( 'API Key eingeben' ); ?>"
                            class="regular-text"
                            autocomplete="new-password">
-                    <button type="button" class="button seo-geo-test-btn" data-provider="<?php echo esc_attr( $id ); ?>">
+                    <button type="button" class="button bre-test-btn" data-provider="<?php echo esc_attr( $id ); ?>">
                         Verbindung testen
                     </button>
-                    <span class="seo-geo-test-result" id="test-result-<?php echo esc_attr( $id ); ?>"></span>
+                    <span class="bre-test-result" id="test-result-<?php echo esc_attr( $id ); ?>"></span>
                     <br><br>
                     <label><?php esc_html_e( 'Modell:', 'bavarian-rank-engine' ); ?></label>
                     <select name="bre_settings[models][<?php echo esc_attr( $id ); ?>]">
@@ -116,7 +116,7 @@
                               class="large-text code"><?php echo esc_textarea( $settings['prompt'] ); ?></textarea>
                     <p class="description">
                         Variablen: <code>{title}</code>, <code>{content}</code>, <code>{excerpt}</code>, <code>{language}</code><br>
-                        <button type="button" class="button" id="seo-geo-reset-prompt">Prompt zurücksetzen</button>
+                        <button type="button" class="button" id="bre-reset-prompt">Prompt zurücksetzen</button>
                     </p>
                 </td>
             </tr>

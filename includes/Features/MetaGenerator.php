@@ -37,7 +37,7 @@ class MetaGenerator {
                 $this->saveMeta( $post_id, $description );
             }
         } catch ( \Exception $e ) {
-            error_log( '[SEO-GEO] Meta generation failed for post ' . $post_id . ': ' . $e->getMessage() );
+            error_log( '[BRE] Meta generation failed for post ' . $post_id . ': ' . $e->getMessage() );
         }
     }
 
@@ -102,7 +102,7 @@ class MetaGenerator {
 
     public function hasExistingMeta( int $post_id ): bool {
         $fields = [
-            '_seo_geo_meta_description',
+            '_bre_meta_description',
             'rank_math_description',
             '_yoast_wpseo_metadesc',
             '_aioseo_description',
@@ -119,7 +119,7 @@ class MetaGenerator {
 
     public function saveMeta( int $post_id, string $description ): void {
         $clean = sanitize_text_field( $description );
-        update_post_meta( $post_id, '_seo_geo_meta_description', $clean );
+        update_post_meta( $post_id, '_bre_meta_description', $clean );
 
         if ( defined( 'RANK_MATH_VERSION' ) ) {
             update_post_meta( $post_id, 'rank_math_description', $clean );
@@ -207,7 +207,7 @@ class MetaGenerator {
         global $wpdb;
 
         $meta_fields = [
-            '_seo_geo_meta_description',
+            '_bre_meta_description',
             'rank_math_description',
             '_yoast_wpseo_metadesc',
             '_aioseo_description',

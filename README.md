@@ -1,4 +1,4 @@
-# SEO & GEO Tools
+# Bavarian Rank Engine
 
 A WordPress plugin that extends any site with AI-powered meta descriptions and GEO-optimized structured data — helping blogs get cited by ChatGPT, Claude, Grok, and Gemini.
 
@@ -30,7 +30,7 @@ A WordPress plugin that extends any site with AI-powered meta descriptions and G
 
 1. Upload the `seo-geo` folder to `wp-content/plugins/`
 2. Activate via **Plugins → Installed Plugins**
-3. Go to **Einstellungen → SEO & GEO Tools**
+3. Go to **Bavarian Rank → Dashboard**
 4. Select your AI provider, enter your API key, click **Verbindung testen**
 5. Configure which post types to auto-generate for
 6. Enable the Schema.org types you want active
@@ -41,7 +41,7 @@ A WordPress plugin that extends any site with AI-powered meta descriptions and G
 
 | Location | Purpose |
 |---|---|
-| `Einstellungen → SEO & GEO Tools` | Provider, API key, model, prompt, schema types |
+| `Bavarian Rank → Dashboard` | Provider, API key, model, prompt, schema types |
 | `Tools → GEO Bulk Meta` | Bulk generate meta for existing posts |
 
 ---
@@ -54,7 +54,7 @@ A WordPress plugin that extends any site with AI-powered meta descriptions and G
 
 ```php
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 class YourProvider implements ProviderInterface {
     public function getId(): string    { return 'yourprovider'; }
@@ -85,7 +85,7 @@ That's it — the provider appears automatically in all dropdowns.
 ### Adding a New Feature
 
 1. Create `includes/Features/YourFeature.php` with a `register()` method
-2. Add `require_once SEO_GEO_DIR . 'includes/Features/YourFeature.php';` in `Core::load_dependencies()`
+2. Add `require_once BRE_DIR . 'includes/Features/YourFeature.php';` in `Core::load_dependencies()`
 3. Add `( new Features\YourFeature() )->register();` in `Core::register_hooks()`
 
 ---
@@ -95,13 +95,13 @@ That's it — the provider appears automatically in all dropdowns.
 ```php
 // Filter the prompt before it is sent to the AI provider
 // Use to add custom context, inject keywords, or change format
-add_filter( 'seo_geo_prompt', function( string $prompt, \WP_Post $post ): string {
+add_filter( 'bre_prompt', function( string $prompt, \WP_Post $post ): string {
     return $prompt . "\nFokus-Keyword: " . get_post_meta( $post->ID, 'focus_keyword', true );
 }, 10, 2 );
 
 // Action fired after a meta description is saved
 // Use to sync to other systems, send notifications, log results
-add_action( 'seo_geo_meta_saved', function( int $post_id, string $description ): void {
+add_action( 'bre_meta_saved', function( int $post_id, string $description ): void {
     // Your code here
 }, 10, 2 );
 ```

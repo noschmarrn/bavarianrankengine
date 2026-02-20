@@ -35,7 +35,7 @@ class SettingsPage {
         if ( $hook !== 'settings_page_bre-settings' ) return;
         wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', [], BRE_VERSION );
         wp_enqueue_script( 'bre-admin', BRE_URL . 'assets/admin.js', [ 'jquery' ], BRE_VERSION, true );
-        wp_localize_script( 'bre-admin', 'seoGeo', [
+        wp_localize_script( 'bre-admin', 'breAdmin', [
             'nonce'   => wp_create_nonce( 'bre_admin' ),
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
         ] );

@@ -1,10 +1,10 @@
-.seo-geo-settings h2 {
+.bre-settings h2 {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
     margin-top: 30px;
 }
-.seo-geo-provider-row { display: none; }
-.seo-geo-provider-row.active { display: table-row; }
-.seo-geo-test-result { margin-left: 10px; font-weight: bold; }
-.seo-geo-test-result.success { color: #46b450; }
-.seo-geo-test-result.error { color: #dc3232; }
+.bre-provider-row { display: none; }
+.bre-provider-row.active { display: table-row; }
+.bre-test-result { margin-left: 10px; font-weight: bold; }
+.bre-test-result.success { color: #46b450; }
+.bre-test-result.error { color: #dc3232; }
