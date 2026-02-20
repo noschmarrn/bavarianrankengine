@@ -1,9 +1,9 @@
 <?php
-namespace SeoGeo\Features;
+namespace BavarianRankEngine\Features;
 
-use SeoGeo\Admin\SettingsPage;
-use SeoGeo\ProviderRegistry;
-use SeoGeo\Helpers\TokenEstimator;
+use BavarianRankEngine\Admin\SettingsPage;
+use BavarianRankEngine\ProviderRegistry;
+use BavarianRankEngine\Helpers\TokenEstimator;
 
 class MetaGenerator {
     public function register(): void {
@@ -20,8 +20,8 @@ class MetaGenerator {
             }
         }
 
-        add_action( 'wp_ajax_seo_geo_bulk_generate', [ $this, 'ajaxBulkGenerate' ] );
-        add_action( 'wp_ajax_seo_geo_bulk_stats',    [ $this, 'ajaxBulkStats' ] );
+        add_action( 'wp_ajax_bre_bulk_generate', [ $this, 'ajaxBulkGenerate' ] );
+        add_action( 'wp_ajax_bre_bulk_stats',    [ $this, 'ajaxBulkStats' ] );
     }
 
     public function onPublish( int $post_id, \WP_Post $post ): void {
@@ -78,7 +78,7 @@ class MetaGenerator {
         $prompt = str_replace( '{excerpt}',  $post->post_excerpt ?: '',  $prompt );
         $prompt = str_replace( '{language}', $language,                  $prompt );
 
-        return apply_filters( 'seo_geo_prompt', $prompt, $post );
+        return apply_filters( 'bre_prompt', $prompt, $post );
     }
 
     private function detectLanguage( \WP_Post $post ): string {
@@ -131,11 +131,11 @@ class MetaGenerator {
             update_post_meta( $post_id, '_seopress_titles_desc', $clean );
         }
 
-        do_action( 'seo_geo_meta_saved', $post_id, $description );
+        do_action( 'bre_meta_saved', $post_id, $description );
     }
 
     public function ajaxBulkStats(): void {
-        check_ajax_referer( 'seo_geo_admin', 'nonce' );
+        check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( 'Keine Berechtigung.' );
         }
@@ -151,7 +151,7 @@ class MetaGenerator {
     }
 
     public function ajaxBulkGenerate(): void {
-        check_ajax_referer( 'seo_geo_admin', 'nonce' );
+        check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( 'Keine Berechtigung.' );
         }

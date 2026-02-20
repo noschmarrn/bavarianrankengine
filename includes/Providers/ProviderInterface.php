@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 interface ProviderInterface {
     /** Unique machine-readable ID, e.g. 'openai' */

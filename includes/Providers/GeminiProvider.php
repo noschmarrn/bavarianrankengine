@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 class GeminiProvider implements ProviderInterface {
     private const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';

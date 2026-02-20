@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 class OpenAIProvider implements ProviderInterface {
     private const API_URL = 'https://api.openai.com/v1/chat/completions';

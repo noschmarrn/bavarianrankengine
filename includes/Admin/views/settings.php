@@ -1,18 +1,18 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap seo-geo-settings">
-    <h1>SEO &amp; GEO Tools</h1>
+    <h1>Bavarian Rank Engine</h1>
 
-    <?php settings_errors( 'seo_geo' ); ?>
+    <?php settings_errors( 'bre' ); ?>
 
     <form method="post" action="options.php">
-        <?php settings_fields( 'seo_geo' ); ?>
+        <?php settings_fields( 'bre' ); ?>
 
         <h2>AI-Provider</h2>
         <table class="form-table">
             <tr>
                 <th scope="row">Aktiver Provider</th>
                 <td>
-                    <select name="seo_geo_settings[provider]" id="seo-geo-provider">
+                    <select name="bre_settings[provider]" id="seo-geo-provider">
                         <?php foreach ( $providers as $id => $provider ) : ?>
                         <option value="<?php echo esc_attr( $id ); ?>"
                             <?php selected( $settings['provider'], $id ); ?>>
@@ -26,18 +26,24 @@
             <tr class="seo-geo-provider-row" data-provider="<?php echo esc_attr( $id ); ?>">
                 <th scope="row"><?php echo esc_html( $provider->getName() ); ?> API Key</th>
                 <td>
+                    <?php if ( ! empty( $masked_keys[ $id ] ) ) : ?>
+                    <span class="seo-geo-key-saved">
+                        Gespeichert: <code><?php echo esc_html( $masked_keys[ $id ] ); ?></code>
+                    </span><br>
+                    <?php endif; ?>
                     <input type="password"
-                           name="seo_geo_settings[api_keys][<?php echo esc_attr( $id ); ?>]"
-                           value="<?php echo esc_attr( $settings['api_keys'][ $id ] ?? '' ); ?>"
+                           name="bre_settings[api_keys][<?php echo esc_attr( $id ); ?>]"
+                           value=""
+                           placeholder="<?php echo ! empty( $masked_keys[ $id ] ) ? esc_attr( 'Neuen Key eingeben zum Überschreiben' ) : esc_attr( 'API Key eingeben' ); ?>"
                            class="regular-text"
-                           autocomplete="off">
+                           autocomplete="new-password">
                     <button type="button" class="button seo-geo-test-btn" data-provider="<?php echo esc_attr( $id ); ?>">
                         Verbindung testen
                     </button>
                     <span class="seo-geo-test-result" id="test-result-<?php echo esc_attr( $id ); ?>"></span>
                     <br><br>
-                    <label><?php esc_html_e( 'Modell:', 'seo-geo' ); ?></label>
-                    <select name="seo_geo_settings[models][<?php echo esc_attr( $id ); ?>]">
+                    <label><?php esc_html_e( 'Modell:', 'bavarian-rank-engine' ); ?></label>
+                    <select name="bre_settings[models][<?php echo esc_attr( $id ); ?>]">
                         <?php
                         $saved_model = $settings['models'][ $id ] ?? array_key_first( $provider->getModels() );
                         foreach ( $provider->getModels() as $model_id => $model_label ) :
@@ -60,7 +66,7 @@
                 <td>
                     <label>
                         <input type="checkbox"
-                               name="seo_geo_settings[meta_auto_enabled]"
+                               name="bre_settings[meta_auto_enabled]"
                                value="1"
                                <?php checked( $settings['meta_auto_enabled'], true ); ?>>
                         Meta-Beschreibung automatisch beim Veröffentlichen generieren
@@ -73,7 +79,7 @@
                     <?php foreach ( $post_types as $pt_slug => $pt_obj ) : ?>
                     <label style="margin-right:15px;">
                         <input type="checkbox"
-                               name="seo_geo_settings[meta_post_types][]"
+                               name="bre_settings[meta_post_types][]"
                                value="<?php echo esc_attr( $pt_slug ); ?>"
                                <?php checked( in_array( $pt_slug, $settings['meta_post_types'], true ), true ); ?>>
                         <?php echo esc_html( $pt_obj->labels->singular_name ); ?>
@@ -85,17 +91,17 @@
                 <th scope="row">Token-Modus</th>
                 <td>
                     <label>
-                        <input type="radio" name="seo_geo_settings[token_mode]" value="full"
+                        <input type="radio" name="bre_settings[token_mode]" value="full"
                                <?php checked( $settings['token_mode'], 'full' ); ?>>
                         Ganzen Artikel senden
                     </label>
                     &nbsp;&nbsp;
                     <label>
-                        <input type="radio" name="seo_geo_settings[token_mode]" value="limit"
+                        <input type="radio" name="bre_settings[token_mode]" value="limit"
                                <?php checked( $settings['token_mode'], 'limit' ); ?>>
                         Auf
                         <input type="number"
-                               name="seo_geo_settings[token_limit]"
+                               name="bre_settings[token_limit]"
                                value="<?php echo esc_attr( $settings['token_limit'] ); ?>"
                                min="100" max="8000" style="width:80px;">
                         Token kürzen
@@ -105,7 +111,7 @@
             <tr>
                 <th scope="row">Prompt</th>
                 <td>
-                    <textarea name="seo_geo_settings[prompt]"
+                    <textarea name="bre_settings[prompt]"
                               rows="8"
                               class="large-text code"><?php echo esc_textarea( $settings['prompt'] ); ?></textarea>
                     <p class="description">
@@ -124,7 +130,7 @@
                     <?php foreach ( $schema_labels as $type => $label ) : ?>
                     <label style="display:block;margin-bottom:8px;">
                         <input type="checkbox"
-                               name="seo_geo_settings[schema_enabled][]"
+                               name="bre_settings[schema_enabled][]"
                                value="<?php echo esc_attr( $type ); ?>"
                                <?php checked( in_array( $type, $settings['schema_enabled'], true ), true ); ?>>
                         <?php echo esc_html( $label ); ?>
@@ -136,7 +142,7 @@
                 <th scope="row">Organization sameAs URLs</th>
                 <td>
                     <p class="description">Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook…)</p>
-                    <textarea name="seo_geo_settings[schema_same_as][organization]"
+                    <textarea name="bre_settings[schema_same_as][organization]"
                               rows="5"
                               class="large-text"><?php echo esc_textarea( implode( "\n", $settings['schema_same_as']['organization'] ?? [] ) ); ?></textarea>
                 </td>
@@ -148,7 +154,7 @@
 
     <hr>
     <p style="color:#999;font-size:12px;">
-        SEO &amp; GEO Tools <?php echo esc_html( SEO_GEO_VERSION ); ?> &mdash;
+        Bavarian Rank Engine <?php echo esc_html( BRE_VERSION ); ?> &mdash;
         entwickelt mit ♥ von <a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
     </p>
 </div>

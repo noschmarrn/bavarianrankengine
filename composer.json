@@ -1,12 +1,12 @@
 {
     "name": "donau2space/seo-geo",
-    "description": "SEO & GEO Tools WordPress Plugin",
+    "description": "Bavarian Rank Engine WordPress Plugin",
     "require-dev": {
         "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
-            "SeoGeo\\": "includes/"
+            "BavarianRankEngine\\": "includes/"
         },
         "classmap": [
             "includes/Providers/ProviderRegistry.php"
@@ -14,7 +14,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SeoGeo\\Tests\\": "tests/"
+            "BavarianRankEngine\\Tests\\": "tests/"
         }
     }
 }

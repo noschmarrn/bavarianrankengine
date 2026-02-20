@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 class AnthropicProvider implements ProviderInterface {
     private const API_URL = 'https://api.anthropic.com/v1/messages';

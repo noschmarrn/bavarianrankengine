@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Helpers;
+namespace BavarianRankEngine\Helpers;
 
 class TokenEstimator {
     /**

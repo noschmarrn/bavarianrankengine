@@ -9,7 +9,7 @@ jQuery( function ( $ ) {
 
     function loadStats() {
         $.post( seoGeoBulk.ajaxUrl, {
-            action: 'seo_geo_bulk_stats',
+            action: 'bre_bulk_stats',
             nonce:  seoGeoBulk.nonce,
         } ).done( function ( res ) {
             if ( ! res.success ) return;
@@ -69,7 +69,7 @@ jQuery( function ( $ ) {
         var batchSize = Math.min( 5, remaining );
 
         $.post( seoGeoBulk.ajaxUrl, {
-            action:     'seo_geo_bulk_generate',
+            action:     'bre_bulk_generate',
             nonce:      seoGeoBulk.nonce,
             post_type:  postType,
             batch_size: batchSize,

@@ -1,12 +1,12 @@
 <?php
-namespace SeoGeo\Tests\Providers;
+namespace BavarianRankEngine\Tests\Providers;
 
 use PHPUnit\Framework\TestCase;
-use SeoGeo\Providers\OpenAIProvider;
-use SeoGeo\Providers\AnthropicProvider;
-use SeoGeo\Providers\GeminiProvider;
-use SeoGeo\Providers\GrokProvider;
-use SeoGeo\Providers\ProviderInterface;
+use BavarianRankEngine\Providers\OpenAIProvider;
+use BavarianRankEngine\Providers\AnthropicProvider;
+use BavarianRankEngine\Providers\GeminiProvider;
+use BavarianRankEngine\Providers\GrokProvider;
+use BavarianRankEngine\Providers\ProviderInterface;
 
 class ProvidersTest extends TestCase {
     public function test_openai_implements_interface(): void {

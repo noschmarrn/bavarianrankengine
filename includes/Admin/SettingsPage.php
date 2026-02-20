@@ -1,42 +1,42 @@
 <?php
-namespace SeoGeo\Admin;
+namespace BavarianRankEngine\Admin;
 
-use SeoGeo\ProviderRegistry;
-use SeoGeo\Helpers\KeyVault;
+use BavarianRankEngine\ProviderRegistry;
+use BavarianRankEngine\Helpers\KeyVault;
 
 class SettingsPage {
-    private const OPTION_KEY = 'seo_geo_settings';
+    private const OPTION_KEY = 'bre_settings';
 
     public function register(): void {
         add_action( 'admin_menu', [ $this, 'add_menu' ] );
         add_action( 'admin_init', [ $this, 'register_settings' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-        add_action( 'wp_ajax_seo_geo_test_connection', [ $this, 'ajax_test_connection' ] );
-        add_action( 'wp_ajax_seo_geo_get_default_prompt', [ $this, 'ajax_get_default_prompt' ] );
+        add_action( 'wp_ajax_bre_test_connection', [ $this, 'ajax_test_connection' ] );
+        add_action( 'wp_ajax_bre_get_default_prompt', [ $this, 'ajax_get_default_prompt' ] );
     }
 
     public function add_menu(): void {
         add_options_page(
-            'SEO & GEO Tools',
-            'SEO & GEO Tools',
+            'Bavarian Rank Engine',
+            'Bavarian Rank Engine',
             'manage_options',
-            'seo-geo-settings',
+            'bre-settings',
             [ $this, 'render' ]
         );
     }
 
     public function register_settings(): void {
-        register_setting( 'seo_geo', self::OPTION_KEY, [
+        register_setting( 'bre', self::OPTION_KEY, [
             'sanitize_callback' => [ $this, 'sanitize_settings' ],
         ] );
     }
 
     public function enqueue_assets( string $hook ): void {
-        if ( $hook !== 'settings_page_seo-geo-settings' ) return;
-        wp_enqueue_style( 'seo-geo-admin', SEO_GEO_URL . 'assets/admin.css', [], SEO_GEO_VERSION );
-        wp_enqueue_script( 'seo-geo-admin', SEO_GEO_URL . 'assets/admin.js', [ 'jquery' ], SEO_GEO_VERSION, true );
-        wp_localize_script( 'seo-geo-admin', 'seoGeo', [
-            'nonce'   => wp_create_nonce( 'seo_geo_admin' ),
+        if ( $hook !== 'settings_page_bre-settings' ) return;
+        wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', [], BRE_VERSION );
+        wp_enqueue_script( 'bre-admin', BRE_URL . 'assets/admin.js', [ 'jquery' ], BRE_VERSION, true );
+        wp_localize_script( 'bre-admin', 'seoGeo', [
+            'nonce'   => wp_create_nonce( 'bre_admin' ),
             'ajaxUrl' => admin_url( 'admin-ajax.php' ),
         ] );
     }
@@ -130,7 +130,7 @@ class SettingsPage {
     }
 
     public function ajax_test_connection(): void {
-        check_ajax_referer( 'seo_geo_admin', 'nonce' );
+        check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( 'Keine Berechtigung.' );
         }
@@ -157,7 +157,7 @@ class SettingsPage {
     }
 
     public function ajax_get_default_prompt(): void {
-        check_ajax_referer( 'seo_geo_admin', 'nonce' );
+        check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error();
         }
@@ -186,6 +186,6 @@ class SettingsPage {
             $masked_keys[ $id ]  = KeyVault::mask( $plain !== '' ? $plain : $stored );
         }
 
-        include SEO_GEO_DIR . 'includes/Admin/views/settings.php';
+        include BRE_DIR . 'includes/Admin/views/settings.php';
     }
 }

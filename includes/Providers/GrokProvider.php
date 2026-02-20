@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo\Providers;
+namespace BavarianRankEngine\Providers;
 
 class GrokProvider implements ProviderInterface {
     private const API_URL = 'https://api.x.ai/v1/chat/completions';

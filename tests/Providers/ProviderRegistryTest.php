@@ -1,9 +1,9 @@
 <?php
-namespace SeoGeo\Tests\Providers;
+namespace BavarianRankEngine\Tests\Providers;
 
 use PHPUnit\Framework\TestCase;
-use SeoGeo\ProviderRegistry;
-use SeoGeo\Providers\ProviderInterface;
+use BavarianRankEngine\ProviderRegistry;
+use BavarianRankEngine\Providers\ProviderInterface;
 
 class ProviderRegistryTest extends TestCase {
     protected function setUp(): void {

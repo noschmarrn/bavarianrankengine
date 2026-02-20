@@ -12,11 +12,6 @@ class ComposerStaticInit6a76784812f7200ed5338ff510dca983
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' =>
-        array (
-            'SeoGeo\\Tests\\' => 13,
-            'SeoGeo\\' => 7,
-        ),
         'P' =>
         array (
             'PhpParser\\' => 10,
@@ -25,17 +20,14 @@ class ComposerStaticInit6a76784812f7200ed5338ff510dca983
         array (
             'DeepCopy\\' => 9,
         ),
+        'B' =>
+        array (
+            'BavarianRankEngine\\Tests\\' => 25,
+            'BavarianRankEngine\\' => 19,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'SeoGeo\\Tests\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/tests',
-        ),
-        'SeoGeo\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/includes',
-        ),
         'PhpParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -44,9 +36,18 @@ class ComposerStaticInit6a76784812f7200ed5338ff510dca983
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'BavarianRankEngine\\Tests\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
+        ),
+        'BavarianRankEngine\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/includes',
+        ),
     );
 
     public static $classMap = array (
+        'BavarianRankEngine\\ProviderRegistry' => __DIR__ . '/../..' . '/includes/Providers/ProviderRegistry.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
@@ -1216,7 +1217,6 @@ class ComposerStaticInit6a76784812f7200ed5338ff510dca983
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
-        'SeoGeo\\ProviderRegistry' => __DIR__ . '/../..' . '/includes/Providers/ProviderRegistry.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',
         'TheSeer\\Tokenizer\\NamespaceUriException' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUriException.php',

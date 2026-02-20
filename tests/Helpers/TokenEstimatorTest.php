@@ -1,8 +1,8 @@
 <?php
-namespace SeoGeo\Tests\Helpers;
+namespace BavarianRankEngine\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
-use SeoGeo\Helpers\TokenEstimator;
+use BavarianRankEngine\Helpers\TokenEstimator;
 
 class TokenEstimatorTest extends TestCase {
     public function test_estimate_tokens_approximation(): void {

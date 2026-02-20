@@ -1,5 +1,5 @@
 <?php
-namespace SeoGeo;
+namespace BavarianRankEngine;
 
 class Core {
     private static ?Core $instance = null;
@@ -17,17 +17,18 @@ class Core {
     }
 
     private function load_dependencies(): void {
-        require_once SEO_GEO_DIR . 'includes/Providers/ProviderInterface.php';
-        require_once SEO_GEO_DIR . 'includes/Providers/ProviderRegistry.php';
-        require_once SEO_GEO_DIR . 'includes/Providers/OpenAIProvider.php';
-        require_once SEO_GEO_DIR . 'includes/Providers/AnthropicProvider.php';
-        require_once SEO_GEO_DIR . 'includes/Providers/GeminiProvider.php';
-        require_once SEO_GEO_DIR . 'includes/Providers/GrokProvider.php';
-        require_once SEO_GEO_DIR . 'includes/Helpers/TokenEstimator.php';
-        require_once SEO_GEO_DIR . 'includes/Features/MetaGenerator.php';
-        require_once SEO_GEO_DIR . 'includes/Features/SchemaEnhancer.php';
-        require_once SEO_GEO_DIR . 'includes/Admin/SettingsPage.php';
-        require_once SEO_GEO_DIR . 'includes/Admin/BulkPage.php';
+        require_once BRE_DIR . 'includes/Providers/ProviderInterface.php';
+        require_once BRE_DIR . 'includes/Providers/ProviderRegistry.php';
+        require_once BRE_DIR . 'includes/Providers/OpenAIProvider.php';
+        require_once BRE_DIR . 'includes/Providers/AnthropicProvider.php';
+        require_once BRE_DIR . 'includes/Providers/GeminiProvider.php';
+        require_once BRE_DIR . 'includes/Providers/GrokProvider.php';
+        require_once BRE_DIR . 'includes/Helpers/KeyVault.php';
+        require_once BRE_DIR . 'includes/Helpers/TokenEstimator.php';
+        require_once BRE_DIR . 'includes/Features/MetaGenerator.php';
+        require_once BRE_DIR . 'includes/Features/SchemaEnhancer.php';
+        require_once BRE_DIR . 'includes/Admin/SettingsPage.php';
+        require_once BRE_DIR . 'includes/Admin/BulkPage.php';
     }
 
     private function register_hooks(): void {

@@ -1,7 +1,7 @@
 <?php
-namespace SeoGeo;
+namespace BavarianRankEngine;
 
-use SeoGeo\Providers\ProviderInterface;
+use BavarianRankEngine\Providers\ProviderInterface;
 
 class ProviderRegistry {
     private static ?ProviderRegistry $instance = null;

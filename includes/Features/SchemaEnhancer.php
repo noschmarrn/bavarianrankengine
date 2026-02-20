@@ -1,7 +1,7 @@
 <?php
-namespace SeoGeo\Features;
+namespace BavarianRankEngine\Features;
 
-use SeoGeo\Admin\SettingsPage;
+use BavarianRankEngine\Admin\SettingsPage;
 
 class SchemaEnhancer {
     public function register(): void {

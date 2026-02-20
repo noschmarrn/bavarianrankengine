@@ -1,8 +1,8 @@
 <?php
-namespace SeoGeo\Tests\Admin;
+namespace BavarianRankEngine\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
-use SeoGeo\Admin\SettingsPage;
+use BavarianRankEngine\Admin\SettingsPage;
 
 class SettingsPageTest extends TestCase {
 
