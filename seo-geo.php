@@ -1,13 +1,15 @@
 <?php
 /**
- * Plugin Name: SEO & GEO Tools
- * Plugin URI:  https://donau2space.de
- * Description: AI-powered meta descriptions and GEO-optimized structured data for any WordPress site.
- * Version:     1.0.0
- * Author:      Donau2Space
- * Author URI:  https://donau2space.de
- * License:     GPL-2.0-or-later
- * Text Domain: seo-geo
+ * Plugin Name:       SEO & GEO Tools
+ * Plugin URI:        https://donau2space.de
+ * Description:       AI-powered meta descriptions and GEO-optimized structured data for any WordPress site.
+ * Version:           1.0.0
+ * Requires at least: 6.0
+ * Requires PHP:      8.0
+ * Author:            Donau2Space
+ * Author URI:        https://donau2space.de
+ * License:           GPL-2.0-or-later
+ * Text Domain:       seo-geo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

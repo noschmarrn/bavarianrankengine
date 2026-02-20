@@ -29,8 +29,8 @@ class GeminiProvider implements ProviderInterface {
         $response = wp_remote_post( $url, [
             'timeout' => 30,
             'headers' => [
-                'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type'   => 'application/json',
+                'x-goog-api-key' => $api_key,
             ],
             'body'    => wp_json_encode( [
                 'contents'         => [ [ 'parts' => [ [ 'text' => $prompt ] ] ] ],

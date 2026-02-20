@@ -118,12 +118,17 @@ class MetaGenerator {
     }
 
     public function saveMeta( int $post_id, string $description ): void {
-        update_post_meta( $post_id, '_seo_geo_meta_description', sanitize_text_field( $description ) );
+        $clean = sanitize_text_field( $description );
+        update_post_meta( $post_id, '_seo_geo_meta_description', $clean );
 
         if ( defined( 'RANK_MATH_VERSION' ) ) {
-            update_post_meta( $post_id, 'rank_math_description', sanitize_text_field( $description ) );
+            update_post_meta( $post_id, 'rank_math_description', $clean );
         } elseif ( defined( 'WPSEO_VERSION' ) ) {
-            update_post_meta( $post_id, '_yoast_wpseo_metadesc', sanitize_text_field( $description ) );
+            update_post_meta( $post_id, '_yoast_wpseo_metadesc', $clean );
+        } elseif ( defined( 'AIOSEO_VERSION' ) ) {
+            update_post_meta( $post_id, '_aioseo_description', $clean );
+        } elseif ( class_exists( 'SeoPress_Titles_Admin' ) ) {
+            update_post_meta( $post_id, '_seopress_titles_desc', $clean );
         }
 
         do_action( 'seo_geo_meta_saved', $post_id, $description );
@@ -135,11 +140,11 @@ class MetaGenerator {
             wp_send_json_error( 'Keine Berechtigung.' );
         }
 
-        $settings   = SettingsPage::getSettings();
-        $stats      = [];
+        $settings = SettingsPage::getSettings();
+        $stats    = [];
 
         foreach ( $settings['meta_post_types'] as $pt ) {
-            $stats[ $pt ] = count( $this->getPostsWithoutMeta( $pt, 9999 ) );
+            $stats[ $pt ] = $this->countPostsWithoutMeta( $pt );
         }
 
         wp_send_json_success( $stats );
@@ -159,7 +164,12 @@ class MetaGenerator {
             $settings['provider'] = sanitize_key( $_POST['provider'] );
         }
         if ( ! empty( $_POST['model'] ) ) {
-            $settings['models'][ $settings['provider'] ] = sanitize_text_field( $_POST['model'] );
+            $provider_obj    = ProviderRegistry::instance()->get( $settings['provider'] );
+            $allowed_models  = $provider_obj ? array_keys( $provider_obj->getModels() ) : [];
+            $requested_model = sanitize_text_field( $_POST['model'] );
+            if ( in_array( $requested_model, $allowed_models, true ) ) {
+                $settings['models'][ $settings['provider'] ] = $requested_model;
+            }
         }
 
         $post_ids = $this->getPostsWithoutMeta( $post_type, $limit );
@@ -189,8 +199,38 @@ class MetaGenerator {
         wp_send_json_success( [
             'results'   => $results,
             'processed' => count( $results ),
-            'remaining' => count( $this->getPostsWithoutMeta( $post_type, 9999 ) ),
+            'remaining' => $this->countPostsWithoutMeta( $post_type ),
         ] );
+    }
+
+    private function countPostsWithoutMeta( string $post_type ): int {
+        global $wpdb;
+
+        $meta_fields = [
+            '_seo_geo_meta_description',
+            'rank_math_description',
+            '_yoast_wpseo_metadesc',
+            '_aioseo_description',
+            '_seopress_titles_desc',
+            '_meta_description',
+        ];
+
+        $not_exists = '';
+        foreach ( $meta_fields as $field ) {
+            $not_exists .= $wpdb->prepare(
+                " AND NOT EXISTS (
+                    SELECT 1 FROM {$wpdb->postmeta} pm
+                    WHERE pm.post_id = p.ID AND pm.meta_key = %s AND pm.meta_value != ''
+                )",
+                $field
+            );
+        }
+
+        return (int) $wpdb->get_var( $wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->posts} p
+             WHERE p.post_type = %s AND p.post_status = 'publish'" . $not_exists,
+            $post_type
+        ) );
     }
 
     private function getPostsWithoutMeta( string $post_type, int $limit ): array {

@@ -67,8 +67,9 @@ class SettingsPage {
              . 'Inhalt: {content}';
     }
 
-    public function sanitize_settings( array $input ): array {
-        $clean                      = [];
+    public function sanitize_settings( mixed $input ): array {
+        $input = is_array( $input ) ? $input : [];
+        $clean = [];
         $clean['provider']          = sanitize_key( $input['provider'] ?? 'openai' );
         $clean['meta_auto_enabled'] = ! empty( $input['meta_auto_enabled'] );
         $clean['token_mode']        = in_array( $input['token_mode'] ?? '', [ 'limit', 'full' ], true ) ? $input['token_mode'] : 'limit';
