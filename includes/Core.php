@@ -1,0 +1,48 @@
+<?php
+namespace SeoGeo;
+
+class Core {
+    private static ?Core $instance = null;
+
+    public static function instance(): self {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function init(): void {
+        $this->load_dependencies();
+        $this->register_hooks();
+    }
+
+    private function load_dependencies(): void {
+        require_once SEO_GEO_DIR . 'includes/Providers/ProviderInterface.php';
+        require_once SEO_GEO_DIR . 'includes/Providers/ProviderRegistry.php';
+        require_once SEO_GEO_DIR . 'includes/Providers/OpenAIProvider.php';
+        require_once SEO_GEO_DIR . 'includes/Providers/AnthropicProvider.php';
+        require_once SEO_GEO_DIR . 'includes/Providers/GeminiProvider.php';
+        require_once SEO_GEO_DIR . 'includes/Providers/GrokProvider.php';
+        require_once SEO_GEO_DIR . 'includes/Helpers/TokenEstimator.php';
+        require_once SEO_GEO_DIR . 'includes/Features/MetaGenerator.php';
+        require_once SEO_GEO_DIR . 'includes/Features/SchemaEnhancer.php';
+        require_once SEO_GEO_DIR . 'includes/Admin/SettingsPage.php';
+        require_once SEO_GEO_DIR . 'includes/Admin/BulkPage.php';
+    }
+
+    private function register_hooks(): void {
+        $registry = ProviderRegistry::instance();
+        $registry->register( new Providers\OpenAIProvider() );
+        $registry->register( new Providers\AnthropicProvider() );
+        $registry->register( new Providers\GeminiProvider() );
+        $registry->register( new Providers\GrokProvider() );
+
+        ( new Features\MetaGenerator() )->register();
+        ( new Features\SchemaEnhancer() )->register();
+
+        if ( is_admin() ) {
+            ( new Admin\SettingsPage() )->register();
+            ( new Admin\BulkPage() )->register();
+        }
+    }
+}

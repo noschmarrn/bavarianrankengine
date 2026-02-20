@@ -1,0 +1,12 @@
+{
+    "name": "donau2space/seo-geo",
+    "description": "SEO & GEO Tools WordPress Plugin",
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SeoGeo\\Tests\\": "tests/"
+        }
+    }
+}
