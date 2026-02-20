@@ -2,6 +2,7 @@
 namespace SeoGeo\Admin;
 
 use SeoGeo\ProviderRegistry;
+use SeoGeo\Helpers\KeyVault;
 
 class SettingsPage {
     private const OPTION_KEY = 'seo_geo_settings';
@@ -53,8 +54,16 @@ class SettingsPage {
             'schema_enabled'    => [],
             'schema_same_as'    => [],
         ];
-        $saved = get_option( self::OPTION_KEY, [] );
-        return array_merge( $defaults, $saved );
+        $saved    = get_option( self::OPTION_KEY, [] );
+        $settings = array_merge( $defaults, $saved );
+
+        foreach ( $settings['api_keys'] as $id => $stored ) {
+            $decrypted = KeyVault::decrypt( $stored );
+            // Fallback: if decrypt returns empty, the stored value is a legacy plain-text key
+            $settings['api_keys'][ $id ] = $decrypted !== '' ? $decrypted : $stored;
+        }
+
+        return $settings;
     }
 
     public static function getDefaultPrompt(): string {
@@ -68,8 +77,10 @@ class SettingsPage {
     }
 
     public function sanitize_settings( mixed $input ): array {
-        $input = is_array( $input ) ? $input : [];
-        $clean = [];
+        $input    = is_array( $input ) ? $input : [];
+        $existing = get_option( self::OPTION_KEY, [] );
+        $clean    = [];
+
         $clean['provider']          = sanitize_key( $input['provider'] ?? 'openai' );
         $clean['meta_auto_enabled'] = ! empty( $input['meta_auto_enabled'] );
         $clean['token_mode']        = in_array( $input['token_mode'] ?? '', [ 'limit', 'full' ], true ) ? $input['token_mode'] : 'limit';
@@ -77,8 +88,14 @@ class SettingsPage {
         $clean['prompt']            = sanitize_textarea_field( $input['prompt'] ?? self::getDefaultPrompt() );
 
         $clean['api_keys'] = [];
-        foreach ( ( $input['api_keys'] ?? [] ) as $provider_id => $key ) {
-            $clean['api_keys'][ sanitize_key( $provider_id ) ] = sanitize_text_field( $key );
+        foreach ( ( $input['api_keys'] ?? [] ) as $provider_id => $raw ) {
+            $provider_id = sanitize_key( $provider_id );
+            $raw         = sanitize_text_field( $raw );
+            if ( $raw !== '' ) {
+                $clean['api_keys'][ $provider_id ] = KeyVault::encrypt( $raw );
+            } elseif ( isset( $existing['api_keys'][ $provider_id ] ) ) {
+                $clean['api_keys'][ $provider_id ] = $existing['api_keys'][ $provider_id ]; // keep encrypted
+            }
         }
 
         $clean['models'] = [];
@@ -86,7 +103,7 @@ class SettingsPage {
             $clean['models'][ sanitize_key( $provider_id ) ] = sanitize_text_field( $model );
         }
 
-        $all_post_types         = array_keys( get_post_types( [ 'public' => true ] ) );
+        $all_post_types           = array_keys( get_post_types( [ 'public' => true ] ) );
         $clean['meta_post_types'] = array_values( array_intersect(
             array_map( 'sanitize_key', (array) ( $input['meta_post_types'] ?? [] ) ),
             $all_post_types
@@ -98,9 +115,13 @@ class SettingsPage {
             $schema_types
         ) );
 
+        $org_raw = $input['schema_same_as']['organization'] ?? '';
+        if ( is_array( $org_raw ) ) {
+            $org_raw = implode( "\n", $org_raw );
+        }
         $clean['schema_same_as'] = [
             'organization' => array_values( array_filter( array_map( 'esc_url_raw',
-                array_map( 'trim', explode( "\n", $input['schema_same_as']['organization'] ?? '' ) )
+                array_map( 'trim', explode( "\n", $org_raw ) )
             ) ) ),
         ];
 
@@ -114,7 +135,12 @@ class SettingsPage {
         }
 
         $provider_id = sanitize_key( $_POST['provider'] ?? '' );
-        $api_key     = sanitize_text_field( $_POST['api_key'] ?? '' );
+
+        $settings = self::getSettings(); // already decrypted
+        $api_key  = $settings['api_keys'][ $provider_id ] ?? '';
+        if ( empty( $api_key ) ) {
+            wp_send_json_error( 'Kein API Key gespeichert. Bitte zuerst speichern.' );
+        }
 
         $provider = ProviderRegistry::instance()->get( $provider_id );
         if ( ! $provider ) {
@@ -151,6 +177,13 @@ class SettingsPage {
             'breadcrumb'    => 'BreadcrumbList',
             'ai_meta_tags'  => 'AI-optimierte Meta-Tags (max-snippet etc.)',
         ];
+
+        $masked_keys  = [];
+        $raw_settings = get_option( self::OPTION_KEY, [] );
+        foreach ( $raw_settings['api_keys'] ?? [] as $id => $stored ) {
+            $plain               = KeyVault::decrypt( $stored );
+            $masked_keys[ $id ]  = KeyVault::mask( $plain !== '' ? $plain : $stored );
+        }
 
         include SEO_GEO_DIR . 'includes/Admin/views/settings.php';
     }
