@@ -6,8 +6,16 @@ use SeoGeo\ProviderRegistry;
 use SeoGeo\Providers\ProviderInterface;
 
 class ProviderRegistryTest extends TestCase {
+    protected function setUp(): void {
+        ProviderRegistry::reset();
+    }
+
+    protected function tearDown(): void {
+        ProviderRegistry::reset();
+    }
+
     public function test_register_and_get_provider(): void {
-        $registry = new ProviderRegistry();
+        $registry = ProviderRegistry::instance();
         $mock = $this->createMock( ProviderInterface::class );
         $mock->method('getId')->willReturn('test');
         $mock->method('getName')->willReturn('Test Provider');
@@ -16,12 +24,11 @@ class ProviderRegistryTest extends TestCase {
     }
 
     public function test_get_nonexistent_returns_null(): void {
-        $registry = new ProviderRegistry();
-        $this->assertNull( $registry->get('nonexistent') );
+        $this->assertNull( ProviderRegistry::instance()->get('nonexistent') );
     }
 
     public function test_get_select_options(): void {
-        $registry = new ProviderRegistry();
+        $registry = ProviderRegistry::instance();
         $mock = $this->createMock( ProviderInterface::class );
         $mock->method('getId')->willReturn('openai');
         $mock->method('getName')->willReturn('OpenAI');

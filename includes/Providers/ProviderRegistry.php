@@ -7,6 +7,8 @@ class ProviderRegistry {
     private static ?ProviderRegistry $instance = null;
     private array $providers = [];
 
+    private function __construct() {}
+
     public static function instance(): self {
         if ( null === self::$instance ) {
             self::$instance = new self();
@@ -25,6 +27,11 @@ class ProviderRegistry {
     /** @return ProviderInterface[] */
     public function all(): array {
         return $this->providers;
+    }
+
+    /** Reset singleton — for use in tests only */
+    public static function reset(): void {
+        self::$instance = null;
     }
 
     /** Returns ['id' => 'Name'] for dropdowns */
