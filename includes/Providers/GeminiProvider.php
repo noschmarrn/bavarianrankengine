@@ -25,10 +25,13 @@ class GeminiProvider implements ProviderInterface {
     }
 
     public function generateText( string $prompt, string $api_key, string $model, int $max_tokens = 300 ): string {
-        $url      = self::API_BASE . $model . ':generateContent?key=' . $api_key;
+        $url      = self::API_BASE . $model . ':generateContent';
         $response = wp_remote_post( $url, [
             'timeout' => 30,
-            'headers' => [ 'Content-Type' => 'application/json' ],
+            'headers' => [
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $api_key,
+            ],
             'body'    => wp_json_encode( [
                 'contents'         => [ [ 'parts' => [ [ 'text' => $prompt ] ] ] ],
                 'generationConfig' => [ 'maxOutputTokens' => $max_tokens ],
