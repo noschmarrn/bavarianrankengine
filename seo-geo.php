@@ -29,3 +29,8 @@ function bre_init(): void {
     \BavarianRankEngine\Core::instance()->init();
 }
 add_action( 'plugins_loaded', 'bre_init' );
+
+register_activation_hook( BRE_FILE, function() {
+    add_rewrite_rule( '^llms\.txt$', 'index.php?bre_llms=1', 'top' );
+    flush_rewrite_rules();
+} );

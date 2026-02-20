@@ -51,7 +51,7 @@ class AdminMenu {
             'llms.txt',
             'manage_options',
             'bre-llms',
-            [ $this, 'render_llms_placeholder' ]
+            [ new LlmsPage(), 'render' ]
         );
 
         add_submenu_page(
@@ -73,13 +73,6 @@ class AdminMenu {
         $meta_stats = $this->get_meta_stats( $post_types );
 
         include BRE_DIR . 'includes/Admin/views/dashboard.php';
-    }
-
-    public function render_llms_placeholder(): void {
-        if ( ! current_user_can( 'manage_options' ) ) return;
-        echo '<div class="wrap"><h1>llms.txt</h1><p>' .
-            esc_html__( 'llms.txt configuration will be available here.', 'bavarian-rank-engine' ) .
-            '</p></div>';
     }
 
     private function get_meta_stats( array $post_types ): array {

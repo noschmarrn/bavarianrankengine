@@ -27,11 +27,13 @@ class Core {
         require_once BRE_DIR . 'includes/Helpers/TokenEstimator.php';
         require_once BRE_DIR . 'includes/Features/MetaGenerator.php';
         require_once BRE_DIR . 'includes/Features/SchemaEnhancer.php';
+        require_once BRE_DIR . 'includes/Features/LlmsTxt.php';
         require_once BRE_DIR . 'includes/Admin/SettingsPage.php';
         require_once BRE_DIR . 'includes/Admin/AdminMenu.php';
         require_once BRE_DIR . 'includes/Admin/ProviderPage.php';
         require_once BRE_DIR . 'includes/Admin/MetaPage.php';
         require_once BRE_DIR . 'includes/Admin/BulkPage.php';
+        require_once BRE_DIR . 'includes/Admin/LlmsPage.php';
     }
 
     private function register_hooks(): void {
@@ -43,6 +45,7 @@ class Core {
 
         ( new Features\MetaGenerator() )->register();
         ( new Features\SchemaEnhancer() )->register();
+        ( new Features\LlmsTxt() )->register();
 
         if ( is_admin() ) {
             $menu = new Admin\AdminMenu();
@@ -50,6 +53,7 @@ class Core {
             ( new Admin\ProviderPage() )->register();
             ( new Admin\MetaPage() )->register();
             ( new Admin\BulkPage() )->register();
+            ( new Admin\LlmsPage() )->register();
         }
     }
 }
