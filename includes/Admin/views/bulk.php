@@ -1,15 +1,15 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap bre-settings">
-    <h1>GEO Bulk Meta-Generator</h1>
-    <p>Generiert Meta-Beschreibungen für Artikel ohne vorhandene Meta-Beschreibung.</p>
+    <h1><?php esc_html_e( 'Bulk Generator', 'bavarian-rank-engine' ); ?></h1>
+    <p><?php esc_html_e( 'Generates meta descriptions for posts without an existing meta description.', 'bavarian-rank-engine' ); ?></p>
 
     <div id="bre-bulk-stats" style="background:#fff;padding:15px;border:1px solid #ddd;margin-bottom:20px;">
-        <em>Lade Statistiken…</em>
+        <em><?php esc_html_e( 'Loading statistics…', 'bavarian-rank-engine' ); ?></em>
     </div>
 
     <table class="form-table">
         <tr>
-            <th scope="row">Provider</th>
+            <th scope="row"><?php esc_html_e( 'Active Provider', 'bavarian-rank-engine' ); ?></th>
             <td>
                 <select id="bre-bulk-provider">
                     <?php foreach ( $providers as $id => $provider ) : ?>
@@ -22,7 +22,7 @@
             </td>
         </tr>
         <tr>
-            <th scope="row">Modell</th>
+            <th scope="row"><?php esc_html_e( 'Model:', 'bavarian-rank-engine' ); ?></th>
             <td>
                 <select id="bre-bulk-model">
                     <?php
@@ -40,7 +40,7 @@
             </td>
         </tr>
         <tr>
-            <th scope="row">Max. Artikel diesen Run</th>
+            <th scope="row"><?php esc_html_e( 'Max. posts this run', 'bavarian-rank-engine' ); ?></th>
             <td>
                 <input type="number" id="bre-bulk-limit" value="20" min="1" max="500">
                 <p class="description" id="bre-cost-estimate"></p>
@@ -49,8 +49,8 @@
     </table>
 
     <p>
-        <button id="bre-bulk-start" class="button button-primary">Bulk-Run starten</button>
-        <button id="bre-bulk-stop" class="button" style="display:none;">Abbrechen</button>
+        <button id="bre-bulk-start" class="button button-primary"><?php esc_html_e( 'Start Bulk Run', 'bavarian-rank-engine' ); ?></button>
+        <button id="bre-bulk-stop" class="button" style="display:none;"><?php esc_html_e( 'Cancel', 'bavarian-rank-engine' ); ?></button>
     </p>
 
     <div id="bre-progress-wrap" style="display:none;margin:15px 0;">
@@ -58,7 +58,7 @@
             <div id="bre-progress-bar"
                  style="background:#0073aa;height:20px;border-radius:3px;width:0;transition:width .3s;"></div>
         </div>
-        <p id="bre-progress-text">0 / 0 verarbeitet</p>
+        <p id="bre-progress-text"><?php esc_html_e( '0 / 0 processed', 'bavarian-rank-engine' ); ?></p>
     </div>
 
     <div id="bre-bulk-log"

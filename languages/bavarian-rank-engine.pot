@@ -1,0 +1,247 @@
+# Bavarian Rank Engine Translation Template
+# Copyright (C) 2024 Donau2Space
+# This file is distributed under the same license as the Bavarian Rank Engine plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Bavarian Rank Engine 2.0.0\n"
+"Report-Msgid-Bugs-To: https://donau2space.de\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 3.0\n"
+"X-Domain: bavarian-rank-engine\n"
+
+msgid "Bavarian Rank Engine"
+msgstr ""
+
+msgid "Bavarian Rank"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "AI Provider"
+msgstr ""
+
+msgid "Meta Generator"
+msgstr ""
+
+msgid "Bulk Generator"
+msgstr ""
+
+msgid "Active Provider:"
+msgstr ""
+
+msgid "Version:"
+msgstr ""
+
+msgid "Meta Coverage"
+msgstr ""
+
+msgid "Quick Links"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Post Type"
+msgstr ""
+
+msgid "Published"
+msgstr ""
+
+msgid "With Meta"
+msgstr ""
+
+msgid "Coverage"
+msgstr ""
+
+msgid "No post types configured."
+msgstr ""
+
+msgid "AI Provider Settings"
+msgstr ""
+
+msgid "Meta Generator Settings"
+msgstr ""
+
+msgid "Active Provider"
+msgstr ""
+
+msgid "API Key"
+msgstr ""
+
+msgid "Enter new key to overwrite"
+msgstr ""
+
+msgid "Enter API key"
+msgstr ""
+
+msgid "Test connection"
+msgstr ""
+
+msgid "Model:"
+msgstr ""
+
+msgid "Auto Mode"
+msgstr ""
+
+msgid "Automatically generate meta description on publish"
+msgstr ""
+
+msgid "Post Types"
+msgstr ""
+
+msgid "Token Mode"
+msgstr ""
+
+msgid "Send full article"
+msgstr ""
+
+msgid "Limit to"
+msgstr ""
+
+msgid "tokens"
+msgstr ""
+
+msgid "Prompt"
+msgstr ""
+
+msgid "Variables:"
+msgstr ""
+
+msgid "Reset prompt"
+msgstr ""
+
+msgid "Schema.org Enhancer (GEO)"
+msgstr ""
+
+msgid "Enabled Schema Types"
+msgstr ""
+
+msgid "Organization sameAs URLs"
+msgstr ""
+
+msgid "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "llms.txt Configuration"
+msgstr ""
+
+msgid "Enable llms.txt"
+msgstr ""
+
+msgid "Serve llms.txt at"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Appears as the # heading in llms.txt"
+msgstr ""
+
+msgid "Description (before links)"
+msgstr ""
+
+msgid "Text shown after the title, before featured links."
+msgstr ""
+
+msgid "Featured Links"
+msgstr ""
+
+msgid "Important links to highlight for AI models. One per line."
+msgstr ""
+
+msgid "Markdown format recommended:"
+msgstr ""
+
+msgid "Which post types to include in the content list."
+msgstr ""
+
+msgid "Description (after content)"
+msgstr ""
+
+msgid "Footer Description"
+msgstr ""
+
+msgid "Appears at the end of llms.txt after a --- separator."
+msgstr ""
+
+msgid "Save llms.txt Settings"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "After saving, visit your llms.txt to verify:"
+msgstr ""
+
+msgid "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Your llms.txt will be served at:"
+msgstr ""
+
+msgid "Saved:"
+msgstr ""
+
+msgid "No API key saved. Please save first."
+msgstr ""
+
+msgid "Unknown provider."
+msgstr ""
+
+msgid "Insufficient permissions."
+msgstr ""
+
+msgid "developed with"
+msgstr ""
+
+msgid "Organization (sameAs Social Profiles)"
+msgstr ""
+
+msgid "Author (sameAs Profile Links)"
+msgstr ""
+
+msgid "Speakable (for AI assistants)"
+msgstr ""
+
+msgid "Article about/mentions"
+msgstr ""
+
+msgid "BreadcrumbList"
+msgstr ""
+
+msgid "AI-optimized Meta Tags (max-snippet etc.)"
+msgstr ""
+
+msgid "Generates meta descriptions for posts without an existing meta description."
+msgstr ""
+
+msgid "Loading statistics\xe2\x80\xa6"
+msgstr ""
+
+msgid "Max. posts this run"
+msgstr ""
+
+msgid "Start Bulk Run"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "0 / 0 processed"
+msgstr ""

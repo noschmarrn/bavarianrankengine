@@ -1,0 +1,245 @@
+# German translation for Bavarian Rank Engine
+# Copyright (C) 2024 Donau2Space
+msgid ""
+msgstr ""
+"Project-Id-Version: Bavarian Rank Engine 2.0.0\n"
+"PO-Revision-Date: 2024-01-01T00:00:00+00:00\n"
+"Last-Translator: Donau2Space <info@donau2space.de>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+msgid "Bavarian Rank Engine"
+msgstr "Bavarian Rank Engine"
+
+msgid "Bavarian Rank"
+msgstr "Bavarian Rank"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "AI Provider"
+msgstr "KI-Anbieter"
+
+msgid "Meta Generator"
+msgstr "Meta-Generator"
+
+msgid "Bulk Generator"
+msgstr "Massen-Generator"
+
+msgid "Active Provider:"
+msgstr "Aktiver Anbieter:"
+
+msgid "Version:"
+msgstr "Version:"
+
+msgid "Meta Coverage"
+msgstr "Meta-Abdeckung"
+
+msgid "Quick Links"
+msgstr "Schnellzugriff"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Post Type"
+msgstr "Beitragstyp"
+
+msgid "Published"
+msgstr "Veröffentlicht"
+
+msgid "With Meta"
+msgstr "Mit Meta"
+
+msgid "Coverage"
+msgstr "Abdeckung"
+
+msgid "No post types configured."
+msgstr "Keine Beitragstypen konfiguriert."
+
+msgid "AI Provider Settings"
+msgstr "KI-Anbieter-Einstellungen"
+
+msgid "Meta Generator Settings"
+msgstr "Meta-Generator-Einstellungen"
+
+msgid "Active Provider"
+msgstr "Aktiver Anbieter"
+
+msgid "API Key"
+msgstr "API-Schlüssel"
+
+msgid "Enter new key to overwrite"
+msgstr "Neuen Schlüssel zum Überschreiben eingeben"
+
+msgid "Enter API key"
+msgstr "API-Schlüssel eingeben"
+
+msgid "Test connection"
+msgstr "Verbindung testen"
+
+msgid "Model:"
+msgstr "Modell:"
+
+msgid "Auto Mode"
+msgstr "Auto-Modus"
+
+msgid "Automatically generate meta description on publish"
+msgstr "Meta-Beschreibung beim Veröffentlichen automatisch generieren"
+
+msgid "Post Types"
+msgstr "Beitragstypen"
+
+msgid "Token Mode"
+msgstr "Token-Modus"
+
+msgid "Send full article"
+msgstr "Ganzen Artikel senden"
+
+msgid "Limit to"
+msgstr "Kürzen auf"
+
+msgid "tokens"
+msgstr "Token"
+
+msgid "Prompt"
+msgstr "Prompt"
+
+msgid "Variables:"
+msgstr "Variablen:"
+
+msgid "Reset prompt"
+msgstr "Prompt zurücksetzen"
+
+msgid "Schema.org Enhancer (GEO)"
+msgstr "Schema.org Enhancer (GEO)"
+
+msgid "Enabled Schema Types"
+msgstr "Aktivierte Schema-Typen"
+
+msgid "Organization sameAs URLs"
+msgstr "Organization sameAs URLs"
+
+msgid "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
+msgstr "Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
+
+msgid "Save Settings"
+msgstr "Einstellungen speichern"
+
+msgid "llms.txt Configuration"
+msgstr "llms.txt Konfiguration"
+
+msgid "Enable llms.txt"
+msgstr "llms.txt aktivieren"
+
+msgid "Serve llms.txt at"
+msgstr "llms.txt bereitstellen unter"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Appears as the # heading in llms.txt"
+msgstr "Erscheint als # Überschrift in der llms.txt"
+
+msgid "Description (before links)"
+msgstr "Beschreibung (vor Links)"
+
+msgid "Text shown after the title, before featured links."
+msgstr "Text der nach dem Titel, vor den besonderen Links erscheint."
+
+msgid "Featured Links"
+msgstr "Besondere Links"
+
+msgid "Important links to highlight for AI models. One per line."
+msgstr "Wichtige Links für KI-Modelle hervorheben. Eine pro Zeile."
+
+msgid "Markdown format recommended:"
+msgstr "Markdown-Format empfohlen:"
+
+msgid "Which post types to include in the content list."
+msgstr "Welche Beitragstypen in der Inhaltsliste erscheinen sollen."
+
+msgid "Description (after content)"
+msgstr "Beschreibung (nach Inhalt)"
+
+msgid "Footer Description"
+msgstr "Fußzeilen-Beschreibung"
+
+msgid "Appears at the end of llms.txt after a --- separator."
+msgstr "Erscheint am Ende der llms.txt nach einem --- Trenner."
+
+msgid "Save llms.txt Settings"
+msgstr "llms.txt-Einstellungen speichern"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "After saving, visit your llms.txt to verify:"
+msgstr "Nach dem Speichern die llms.txt aufrufen zur Überprüfung:"
+
+msgid "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
+msgstr "Hinweis: Wenn die URL einen 404 zeigt, unter Einstellungen \xe2\x86\x92 Permalinks auf Speichern klicken."
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Inactive"
+msgstr "Inaktiv"
+
+msgid "Your llms.txt will be served at:"
+msgstr "Deine llms.txt ist erreichbar unter:"
+
+msgid "Saved:"
+msgstr "Gespeichert:"
+
+msgid "No API key saved. Please save first."
+msgstr "Kein API-Schlüssel gespeichert. Bitte zuerst speichern."
+
+msgid "Unknown provider."
+msgstr "Unbekannter Anbieter."
+
+msgid "Insufficient permissions."
+msgstr "Keine Berechtigung."
+
+msgid "developed with"
+msgstr "entwickelt mit"
+
+msgid "Organization (sameAs Social Profiles)"
+msgstr "Organisation (sameAs Social-Profile)"
+
+msgid "Author (sameAs Profile Links)"
+msgstr "Autor (sameAs Profil-Links)"
+
+msgid "Speakable (for AI assistants)"
+msgstr "Speakable (für KI-Assistenten)"
+
+msgid "Article about/mentions"
+msgstr "Artikel über/erwähnt"
+
+msgid "BreadcrumbList"
+msgstr "BreadcrumbList"
+
+msgid "AI-optimized Meta Tags (max-snippet etc.)"
+msgstr "KI-optimierte Meta-Tags (max-snippet usw.)"
+
+msgid "Generates meta descriptions for posts without an existing meta description."
+msgstr "Generiert Meta-Beschreibungen für Artikel ohne vorhandene Meta-Beschreibung."
+
+msgid "Loading statistics\xe2\x80\xa6"
+msgstr "Lade Statistiken\xe2\x80\xa6"
+
+msgid "Max. posts this run"
+msgstr "Max. Artikel diesen Run"
+
+msgid "Start Bulk Run"
+msgstr "Bulk-Run starten"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "0 / 0 processed"
+msgstr "0 / 0 verarbeitet"

@@ -137,7 +137,7 @@ class MetaGenerator {
     public function ajaxBulkStats(): void {
         check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( 'Keine Berechtigung.' );
+            wp_send_json_error( __( 'Insufficient permissions.', 'bavarian-rank-engine' ) );
         }
 
         $settings = SettingsPage::getSettings();
@@ -153,7 +153,7 @@ class MetaGenerator {
     public function ajaxBulkGenerate(): void {
         check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( 'Keine Berechtigung.' );
+            wp_send_json_error( __( 'Insufficient permissions.', 'bavarian-rank-engine' ) );
         }
 
         $post_type = sanitize_key( $_POST['post_type'] ?? 'post' );
