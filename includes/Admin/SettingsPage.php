@@ -78,7 +78,8 @@ class SettingsPage {
 
     public function sanitize_settings( mixed $input ): array {
         $input    = is_array( $input ) ? $input : [];
-        $existing = get_option( self::OPTION_KEY, [] );
+        $raw_existing = get_option( self::OPTION_KEY, [] );
+        $existing      = is_array( $raw_existing ) ? $raw_existing : [];
         $clean    = [];
 
         $clean['provider']          = sanitize_key( $input['provider'] ?? 'openai' );
