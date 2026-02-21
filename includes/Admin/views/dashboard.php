@@ -59,6 +59,33 @@
             </div>
         </div>
 
+        <div class="postbox">
+            <div class="postbox-header"><h2><?php esc_html_e( 'AI Crawler — letzte 30 Tage', 'bavarian-rank-engine' ); ?></h2></div>
+            <div class="inside">
+                <?php $crawlers = \BavarianRankEngine\Features\CrawlerLog::get_recent_summary( 30 ); ?>
+                <?php if ( empty( $crawlers ) ) : ?>
+                    <p><?php esc_html_e( 'Noch keine AI-Crawls aufgezeichnet.', 'bavarian-rank-engine' ); ?></p>
+                <?php else : ?>
+                <table class="widefat striped">
+                    <thead><tr>
+                        <th><?php esc_html_e( 'Bot', 'bavarian-rank-engine' ); ?></th>
+                        <th><?php esc_html_e( 'Besuche', 'bavarian-rank-engine' ); ?></th>
+                        <th><?php esc_html_e( 'Zuletzt', 'bavarian-rank-engine' ); ?></th>
+                    </tr></thead>
+                    <tbody>
+                    <?php foreach ( $crawlers as $row ) : ?>
+                    <tr>
+                        <td><code><?php echo esc_html( $row['bot_name'] ); ?></code></td>
+                        <td><?php echo esc_html( $row['visits'] ); ?></td>
+                        <td><?php echo esc_html( $row['last_seen'] ); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+        </div>
+
     </div>
 
     <script>

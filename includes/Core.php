@@ -30,6 +30,8 @@ class Core {
         require_once BRE_DIR . 'includes/Features/MetaGenerator.php';
         require_once BRE_DIR . 'includes/Features/SchemaEnhancer.php';
         require_once BRE_DIR . 'includes/Features/LlmsTxt.php';
+        require_once BRE_DIR . 'includes/Features/RobotsTxt.php';
+        require_once BRE_DIR . 'includes/Features/CrawlerLog.php';
         require_once BRE_DIR . 'includes/Admin/SettingsPage.php';
         require_once BRE_DIR . 'includes/Admin/AdminMenu.php';
         require_once BRE_DIR . 'includes/Admin/ProviderPage.php';
@@ -39,6 +41,7 @@ class Core {
         require_once BRE_DIR . 'includes/Admin/MetaEditorBox.php';
         require_once BRE_DIR . 'includes/Admin/SeoWidget.php';
         require_once BRE_DIR . 'includes/Admin/LinkAnalysis.php';
+        require_once BRE_DIR . 'includes/Admin/RobotsPage.php';
     }
 
     private function register_hooks(): void {
@@ -51,6 +54,8 @@ class Core {
         ( new Features\MetaGenerator() )->register();
         ( new Features\SchemaEnhancer() )->register();
         ( new Features\LlmsTxt() )->register();
+        ( new Features\RobotsTxt() )->register();
+        ( new Features\CrawlerLog() )->register();
 
         if ( is_admin() ) {
             $menu = new Admin\AdminMenu();
@@ -62,6 +67,7 @@ class Core {
             ( new Admin\MetaEditorBox() )->register();
             ( new Admin\SeoWidget() )->register();
             ( new Admin\LinkAnalysis() )->register();
+            ( new Admin\RobotsPage() )->register();
         }
     }
 }

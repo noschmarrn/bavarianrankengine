@@ -31,6 +31,9 @@ function bre_init(): void {
 add_action( 'plugins_loaded', 'bre_init' );
 
 register_activation_hook( BRE_FILE, function() {
+    require_once BRE_DIR . 'includes/Features/RobotsTxt.php';
+    require_once BRE_DIR . 'includes/Features/CrawlerLog.php';
+    \BavarianRankEngine\Features\CrawlerLog::install();
     add_rewrite_rule( '^llms\.txt$', 'index.php?bre_llms=1', 'top' );
     flush_rewrite_rules();
 } );

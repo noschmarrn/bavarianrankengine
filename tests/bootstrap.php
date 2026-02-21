@@ -41,9 +41,10 @@ if ( ! function_exists( 'sanitize_textarea_field' ) ) {
     }
 }
 
+$GLOBALS['bre_test_options'] = [];
 if ( ! function_exists( 'get_option' ) ) {
     function get_option( $option, $default = false ) {
-        return $default;
+        return $GLOBALS['bre_test_options'][ $option ] ?? $default;
     }
 }
 
@@ -180,4 +181,35 @@ if ( ! function_exists( 'wp_create_nonce' ) ) {
 }
 if ( ! function_exists( 'add_action' ) ) {
     function add_action( $tag, $callback, $priority = 10, $accepted_args = 1 ) {}
+}
+
+if ( ! function_exists( 'add_filter' ) ) {
+    function add_filter( $tag, $callback, $priority = 10, $accepted_args = 1 ) {}
+}
+if ( ! function_exists( 'settings_fields' ) ) {
+    function settings_fields( $option_group ) {}
+}
+if ( ! function_exists( 'register_setting' ) ) {
+    function register_setting( $option_group, $option_name, $args = [] ) {}
+}
+if ( ! function_exists( 'checked' ) ) {
+    function checked( $checked, $current = true, $echo = true ) {
+        $result = $checked == $current ? ' checked="checked"' : '';
+        if ( $echo ) echo $result;
+        return $result;
+    }
+}
+if ( ! function_exists( 'submit_button' ) ) {
+    function submit_button( $text = null, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = null ) {}
+}
+if ( ! function_exists( 'wp_next_scheduled' ) ) {
+    function wp_next_scheduled( $hook, $args = [] ) { return false; }
+}
+if ( ! function_exists( 'wp_schedule_event' ) ) {
+    function wp_schedule_event( $timestamp, $recurrence, $hook, $args = [] ) {}
+}
+if ( ! function_exists( 'current_time' ) ) {
+    function current_time( $type, $gmt = 0 ) {
+        return $type === 'timestamp' ? time() : date( 'Y-m-d H:i:s' );
+    }
 }

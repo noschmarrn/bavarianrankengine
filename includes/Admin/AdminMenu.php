@@ -62,6 +62,15 @@ class AdminMenu {
             'bre-bulk',
             [ new BulkPage(), 'render' ]
         );
+
+        add_submenu_page(
+            'bavarian-rank',
+            __( 'robots.txt / AI Bots', 'bavarian-rank-engine' ),
+            __( 'robots.txt', 'bavarian-rank-engine' ),
+            'manage_options',
+            'bre-robots',
+            [ new RobotsPage(), 'render' ]
+        );
     }
 
     public function render_dashboard(): void {
