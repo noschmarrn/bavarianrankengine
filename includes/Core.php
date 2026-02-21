@@ -36,6 +36,7 @@ class Core {
         require_once BRE_DIR . 'includes/Admin/MetaPage.php';
         require_once BRE_DIR . 'includes/Admin/BulkPage.php';
         require_once BRE_DIR . 'includes/Admin/LlmsPage.php';
+        require_once BRE_DIR . 'includes/Admin/MetaEditorBox.php';
     }
 
     private function register_hooks(): void {
@@ -56,6 +57,7 @@ class Core {
             ( new Admin\MetaPage() )->register();
             ( new Admin\BulkPage() )->register();
             ( new Admin\LlmsPage() )->register();
+            ( new Admin\MetaEditorBox() )->register();
         }
     }
 }
