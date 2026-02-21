@@ -52,5 +52,58 @@
             </div>
         </div>
 
+        <div class="postbox">
+            <div class="postbox-header"><h2><?php esc_html_e( 'Interne Link-Analyse', 'bavarian-rank-engine' ); ?></h2></div>
+            <div class="inside" id="bre-link-analysis-content">
+                <em><?php esc_html_e( 'Wird geladen…', 'bavarian-rank-engine' ); ?></em>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+    jQuery(function($){
+        $.post(ajaxurl, {
+            action: 'bre_link_analysis',
+            nonce: '<?php echo esc_js( wp_create_nonce( 'bre_admin' ) ); ?>'
+        }).done(function(res){
+            if(!res.success){
+                $('#bre-link-analysis-content').text('Analysefehler.');
+                return;
+            }
+            var d=res.data, h='';
+            h+='<p><strong>Posts ohne interne Links ('+d.no_internal_links.length+')</strong></p>';
+            if(d.no_internal_links.length){
+                h+='<ul style="margin:0 0 10px 20px;">';
+                $.each(d.no_internal_links.slice(0,10),function(i,p){
+                    h+='<li>'+$('<span>').text(p.title).html()+'</li>';
+                });
+                if(d.no_internal_links.length>10) h+='<li>…</li>';
+                h+='</ul>';
+            } else { h+='<p>Alle Posts haben interne Links.</p>'; }
+
+            h+='<p><strong>Posts mit vielen externen Links (≥'+d.threshold+')</strong></p>';
+            if(d.too_many_external.length){
+                h+='<ul style="margin:0 0 10px 20px;">';
+                $.each(d.too_many_external.slice(0,5),function(i,p){
+                    h+='<li>'+$('<span>').text(p.title).html()+' ('+p.count+')</li>';
+                });
+                h+='</ul>';
+            } else { h+='<p>Keine auffälligen Posts.</p>'; }
+
+            h+='<p><strong>Pillar Pages (Top 5)</strong></p>';
+            if(d.pillar_pages.length){
+                h+='<ul style="margin:0 0 10px 20px;">';
+                $.each(d.pillar_pages,function(i,p){
+                    h+='<li><a href="'+$('<span>').text(p.url).html()+'" target="_blank">'+$('<span>').text(p.url).html()+'</a> ('+p.count+'x)</li>';
+                });
+                h+='</ul>';
+            } else { h+='<p>Keine Daten.</p>'; }
+
+            $('#bre-link-analysis-content').html(h);
+        }).fail(function(){
+            $('#bre-link-analysis-content').text('Verbindungsfehler.');
+        });
+    });
+    </script>
 </div>

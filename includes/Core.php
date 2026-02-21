@@ -37,6 +37,8 @@ class Core {
         require_once BRE_DIR . 'includes/Admin/BulkPage.php';
         require_once BRE_DIR . 'includes/Admin/LlmsPage.php';
         require_once BRE_DIR . 'includes/Admin/MetaEditorBox.php';
+        require_once BRE_DIR . 'includes/Admin/SeoWidget.php';
+        require_once BRE_DIR . 'includes/Admin/LinkAnalysis.php';
     }
 
     private function register_hooks(): void {
@@ -58,6 +60,8 @@ class Core {
             ( new Admin\BulkPage() )->register();
             ( new Admin\LlmsPage() )->register();
             ( new Admin\MetaEditorBox() )->register();
+            ( new Admin\SeoWidget() )->register();
+            ( new Admin\LinkAnalysis() )->register();
         }
     }
 }
