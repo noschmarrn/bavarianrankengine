@@ -1,6 +1,9 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap bre-settings">
     <h1><?php esc_html_e( 'Bulk Generator', 'bavarian-rank-engine' ); ?></h1>
+
+    <div id="bre-lock-warning" style="display:none;background:#fcf8e3;border:1px solid #faebcc;padding:10px 15px;margin-bottom:15px;border-radius:3px;color:#8a6d3b;"></div>
+
     <p><?php esc_html_e( 'Generates meta descriptions for posts without an existing meta description.', 'bavarian-rank-engine' ); ?></p>
 
     <div id="bre-bulk-stats" style="background:#fff;padding:15px;border:1px solid #ddd;margin-bottom:20px;">
@@ -63,4 +66,6 @@
 
     <div id="bre-bulk-log"
          style="background:#1e1e1e;color:#d4d4d4;padding:15px;font-family:monospace;font-size:12px;max-height:400px;overflow-y:auto;display:none;"></div>
+
+    <div id="bre-failed-summary" style="display:none;background:#fdf2f2;border:1px solid #f5c6cb;padding:10px 15px;margin-top:15px;border-radius:3px;font-size:13px;"></div>
 </div>

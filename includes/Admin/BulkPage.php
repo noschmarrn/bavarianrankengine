@@ -12,9 +12,14 @@ class BulkPage {
         if ( $hook !== 'bavarian-rank_page_bre-bulk' ) return;
         wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', [], BRE_VERSION );
         wp_enqueue_script( 'bre-bulk', BRE_URL . 'assets/bulk.js', [ 'jquery' ], BRE_VERSION, true );
+        $settings = SettingsPage::getSettings();
         wp_localize_script( 'bre-bulk', 'breBulk', [
-            'nonce'   => wp_create_nonce( 'bre_admin' ),
-            'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+            'nonce'     => wp_create_nonce( 'bre_admin' ),
+            'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+            'isLocked'  => \BavarianRankEngine\Helpers\BulkQueue::isLocked(),
+            'lockAge'   => \BavarianRankEngine\Helpers\BulkQueue::lockAge(),
+            'rateDelay' => 6000,
+            'costs'     => $settings['costs'] ?? [],
         ] );
     }
 
