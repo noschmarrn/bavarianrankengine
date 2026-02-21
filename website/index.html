@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bavarian Rank Engine — AI SEO Plugin for WordPress</title>
+    <meta name="description" content="AI-powered meta descriptions, Schema.org, llms.txt, and AI-bot management for WordPress. Free forever. No subscription.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://bavarianrankengine.com/">
+    <meta property="og:title"       content="Bavarian Rank Engine — AI SEO Plugin for WordPress">
+    <meta property="og:description" content="AI meta descriptions, Schema.org, llms.txt, robots.txt manager. Free forever. Pay your AI provider directly — not us.">
+    <meta property="og:site_name"   content="Bavarian Rank Engine">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary">
+    <meta name="twitter:title"       content="Bavarian Rank Engine">
+    <meta name="twitter:description" content="AI SEO plugin for WordPress. Free forever. No subscription.">
+
+    <link rel="canonical" href="https://bavarianrankengine.com/">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//data.donau2space.de/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo -->
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+    <div class="container nav__inner">
+        <a href="#" class="nav__logo"><span>&lt;/&gt;</span> Bavarian Rank Engine</a>
+        <ul class="nav__links" id="navLinks">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#getit">Get It</a></li>
+        </ul>
+        <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="rauten-band"></div>
+    <div class="container hero__content">
+        <p class="hero__eyebrow">WordPress Plugin · v1.0.0 · GPL-2.0</p>
+        <h1 class="hero__headline">Not again another<br>WordPress SEO plugin.</h1>
+        <span class="hero__headline-accent">Well. Kind of.</span>
+        <div class="hero__divider"></div>
+        <p class="hero__subline">
+            AI meta descriptions. Schema.org. llms.txt.<br>
+            <strong>No subscription. No premium tier.</strong><br>
+            Pay your AI provider directly — not us.
+        </p>
+        <div class="hero__ctas">
+            <a href="https://wordpress.org/plugins/bavarian-rank-engine/" class="btn btn--primary" target="_blank" rel="noopener">
+                &#8595; Download for WordPress
+            </a>
+            <a href="https://git.donau2space.de" class="btn btn--ghost" target="_blank" rel="noopener">
+                View on Git
+            </a>
+        </div>
+    </div>
+    <div class="rauten-band"></div>
+</section>
+
+<!-- THE PITCH -->
+<section class="section pitch" id="pitch">
+    <div class="container">
+        <div class="pitch__grid">
+            <div class="pitch__personal">
+                <p>Made in Bavaria, vibe-coded for Donau2Space.de &mdash; my own AI blog. This plugin scratches my own itch.</p>
+                <p>Blogger by night, developer by accident.</p>
+                <cite>&mdash; Michael, Passau</cite>
+            </div>
+            <div class="pitch__text">
+                <p>There are plenty of SEO plugins for WordPress. Most of them cost a monthly fee. Some cost a lot.</p>
+                <p><strong>Bavarian Rank Engine is free. Forever.</strong> The only cost: your AI API calls &mdash; billed directly by your provider. Typically less than any plugin subscription.</p>
+                <p>It won&apos;t get your site to #1 overnight. It&apos;s a tool. A good one. Built by a blogger, for bloggers &mdash; and anyone else who&apos;d rather spend their money on coffee than SaaS fees.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features" id="features">
+    <div class="container">
+        <h2 class="features__heading">What it does</h2>
+        <p class="features__subheading">Everything you need. Nothing you don&apos;t.</p>
+
+        <div class="features__grid">
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">AI Meta Generator</h3>
+                <p class="feature-card__desc">Auto-writes a 150&ndash;160 character, SEO-optimized meta description the moment a post is published. Custom prompt with <code>{title}</code>, <code>{content}</code>, <code>{excerpt}</code>, <code>{language}</code> placeholders. Fallback extraction works without any API key.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">Bulk Generator</h3>
+                <p class="feature-card__desc">Batch-process your entire back-catalogue. Finds all published posts with no meta description and generates them in configurable batches. Live progress log. Running cost estimate. Rate-limited, retry logic, transient lock.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">Schema.org (GEO)</h3>
+                <p class="feature-card__desc">Injects JSON-LD structured data for AI and search engines &mdash; Organization, Article, Author, Speakable, BreadcrumbList. Auto-suppresses duplicates when Rank Math or Yoast is active.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">llms.txt</h3>
+                <p class="feature-card__desc">Serves a machine-readable content index at <code>/llms.txt</code> for AI systems. Follows the emerging llms.txt standard. ETag / Last-Modified HTTP caching, pagination for large sites, custom sections.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">robots.txt Manager</h3>
+                <p class="feature-card__desc">Block 13 known AI training and data-harvesting crawlers individually from the WordPress admin. GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Bytespider, and more. No manual file editing.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">&#9670;</div>
+                <h3 class="feature-card__title">Crawler Log</h3>
+                <p class="feature-card__desc">See which AI bots are visiting your site. Stores bot name, hashed IP (SHA-256, never plain text), and requested URL. 90-day auto-purge via WP-Cron. 30-day summary on the dashboard.</p>
+            </div>
+
+        </div>
+
+        <div class="features__pills">
+            <span class="pill">Post Editor Meta Box</span>
+            <span class="pill">SEO Analysis Widget</span>
+            <span class="pill">Link Analysis Dashboard</span>
+            <span class="pill">Multi-Provider: OpenAI &middot; Anthropic &middot; Gemini &middot; Grok</span>
+            <span class="pill">Rank Math &middot; Yoast &middot; AIOSEO &middot; SEOPress compatible</span>
+            <span class="pill">Polylang &amp; WPML language detection</span>
+        </div>
+    </div>
+</section>
+
+<!-- SECURITY -->
+<section class="section security" id="security">
+    <div class="container">
+        <div class="security__grid">
+            <div>
+                <h2 class="security__heading">Your keys.<br>Your control.</h2>
+                <div class="security__text">
+                    <p>API keys are obfuscated before database storage using XOR encryption with a key derived from your WordPress authentication salts. They <strong>never appear in plain text</strong> in database dumps or export files.</p>
+                    <p>The admin UI always shows keys masked &mdash; only the last 5 characters visible.</p>
+                    <p>For maximum security: define keys in <code>wp-config.php</code>. The plugin uses them automatically &mdash; <strong>nothing stored in the database at all</strong>.</p>
+                </div>
+            </div>
+            <div class="code-block">
+                <pre><span class="c">// Stored format in DB</span>
+bre1:&lt;base64(xor(key, sha256(AUTH_KEY + SALT)))&gt;
+
+<span class="c">// Admin UI &mdash; always masked</span>
+&bull;&bull;&bull;&bull;&bull;&bull;Ab3c9
+
+<span class="c">// wp-config.php alternative (recommended)</span>
+<span class="k">define</span>(<span class="s">&apos;BRE_OPENAI_KEY&apos;</span>,    <span class="s">&apos;sk-...&apos;</span>);
+<span class="k">define</span>(<span class="s">&apos;BRE_ANTHROPIC_KEY&apos;</span>, <span class="s">&apos;sk-ant-...&apos;</span>);
+<span class="k">define</span>(<span class="s">&apos;BRE_GEMINI_KEY&apos;</span>,    <span class="s">&apos;AI...&apos;</span>);
+<span class="k">define</span>(<span class="s">&apos;BRE_GROK_KEY&apos;</span>,      <span class="s">&apos;xai-...&apos;</span>);</pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing" id="pricing">
+    <div class="container">
+        <h2 class="pricing__headline">Free. <span>Forever.</span></h2>
+        <div class="pricing__text">
+            <p>The plugin costs nothing. No subscription, no premium tier, no license key. Download it, use it, keep it.</p>
+            <p>AI features use your own API key, billed directly by your provider. A single meta description costs roughly 1,500 tokens. With GPT-4o mini: <strong>~$0.001 per post</strong>. Generate 1,000 meta descriptions for less than a dollar &mdash; less than most monthly plugin subscriptions.</p>
+        </div>
+        <div class="pricing__providers">
+            <span class="provider-pill">OpenAI</span>
+            <span class="provider-pill">Anthropic</span>
+            <span class="provider-pill">Google Gemini</span>
+            <span class="provider-pill">xAI Grok</span>
+        </div>
+    </div>
+</section>
+
+<!-- GET IT -->
+<section class="section getit" id="getit">
+    <div class="container">
+        <h2 class="getit__heading">Ready to try it?</h2>
+        <p class="getit__sub">Free download. No account required.</p>
+        <div class="getit__buttons">
+            <a href="https://wordpress.org/plugins/bavarian-rank-engine/" class="btn btn--primary" target="_blank" rel="noopener">
+                &#8595; Download on WordPress.org
+            </a>
+            <a href="https://git.donau2space.de" class="btn btn--ghost" target="_blank" rel="noopener">
+                git.donau2space.de
+            </a>
+            <a href="https://missioncontrol.donau2space.de" class="btn btn--ghost" target="_blank" rel="noopener">
+                Support Forum
+            </a>
+        </div>
+        <p class="getit__requirements">WordPress 6.0+ &nbsp;&middot;&nbsp; PHP 8.0+ &nbsp;&middot;&nbsp; GPL-2.0-or-later</p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container footer__inner">
+        <span class="footer__brand">
+            Bavarian Rank Engine &mdash; by <a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
+        </span>
+        <ul class="footer__links">
+            <li><a href="changelog.html">Changelog</a></li>
+            <li><a href="impressum.html">Impressum &amp; Datenschutz</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
