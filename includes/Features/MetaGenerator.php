@@ -5,6 +5,7 @@ use BavarianRankEngine\Admin\SettingsPage;
 use BavarianRankEngine\ProviderRegistry;
 use BavarianRankEngine\Helpers\TokenEstimator;
 use BavarianRankEngine\Helpers\BulkQueue;
+use BavarianRankEngine\Helpers\FallbackMeta;
 
 class MetaGenerator {
     public function register(): void {
@@ -35,26 +36,30 @@ class MetaGenerator {
         if ( ! in_array( $post->post_type, $settings['meta_post_types'], true ) ) return;
 
         try {
+            $api_key = $settings['api_keys'][ $settings['provider'] ] ?? '';
+            $source  = ! empty( $api_key ) ? 'ai' : 'fallback';
             $description = $this->generate( $post, $settings );
             if ( ! empty( $description ) ) {
-                $this->saveMeta( $post_id, $description );
+                $this->saveMeta( $post_id, $description, $source );
             }
         } catch ( \Exception $e ) {
             error_log( '[BRE] Meta generation failed for post ' . $post_id . ': ' . $e->getMessage() );
+            // Try fallback
+            $fallback = FallbackMeta::extract( $post );
+            if ( $fallback !== '' ) {
+                $this->saveMeta( $post_id, $fallback, 'fallback' );
+            }
         }
     }
 
     public function generate( \WP_Post $post, array $settings ): string {
         $registry = ProviderRegistry::instance();
         $provider = $registry->get( $settings['provider'] );
+        $api_key  = $settings['api_keys'][ $settings['provider'] ] ?? '';
 
-        if ( ! $provider ) {
-            throw new \RuntimeException( 'Provider not found: ' . $settings['provider'] );
-        }
-
-        $api_key = $settings['api_keys'][ $settings['provider'] ] ?? '';
-        if ( empty( $api_key ) ) {
-            throw new \RuntimeException( 'No API key configured for provider: ' . $settings['provider'] );
+        // No provider or no API key → use fallback immediately
+        if ( ! $provider || empty( $api_key ) ) {
+            return FallbackMeta::extract( $post );
         }
 
         $model   = $settings['models'][ $settings['provider'] ] ?? array_key_first( $provider->getModels() );
@@ -120,8 +125,9 @@ class MetaGenerator {
         return false;
     }
 
-    public function saveMeta( int $post_id, string $description ): void {
+    public function saveMeta( int $post_id, string $description, string $source = 'ai' ): void {
         $clean = sanitize_text_field( $description );
+        update_post_meta( $post_id, '_bre_meta_source', sanitize_key( $source ) );
         update_post_meta( $post_id, '_bre_meta_description', $clean );
 
         if ( defined( 'RANK_MATH_VERSION' ) ) {
