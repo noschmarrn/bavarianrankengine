@@ -85,3 +85,42 @@ if ( ! function_exists( 'delete_transient' ) ) {
         return true;
     }
 }
+
+if ( ! function_exists( 'delete_post_meta' ) ) {
+    function delete_post_meta( $post_id, $meta_key, $meta_value = '' ) { return true; }
+}
+if ( ! function_exists( 'update_post_meta' ) ) {
+    function update_post_meta( $post_id, $meta_key, $meta_value, $prev_value = '' ) {
+        $GLOBALS['bre_test_meta'][ $post_id ][ $meta_key ] = $meta_value;
+        return true;
+    }
+}
+if ( ! function_exists( 'get_the_title' ) ) {
+    function get_the_title( $post = 0 ) {
+        if ( is_object( $post ) ) return $post->post_title ?? '';
+        return $GLOBALS['bre_test_meta'][ $post ]['_title'] ?? 'Post ' . $post;
+    }
+}
+if ( ! function_exists( 'get_post' ) ) {
+    function get_post( $post = null, $output = OBJECT, $filter = 'raw' ) {
+        return $post;
+    }
+}
+if ( ! function_exists( 'check_ajax_referer' ) ) {
+    function check_ajax_referer( $action = -1, $query_arg = false, $die = true ) { return true; }
+}
+if ( ! function_exists( 'current_user_can' ) ) {
+    function current_user_can( $capability, ...$args ) { return true; }
+}
+if ( ! function_exists( 'wp_send_json_error' ) ) {
+    function wp_send_json_error( $data = null, $status_code = null, $flags = 0 ) {}
+}
+if ( ! function_exists( 'wp_send_json_success' ) ) {
+    function wp_send_json_success( $data = null, $status_code = null, $flags = 0 ) {}
+}
+if ( ! function_exists( 'error_log' ) ) {
+    function error_log( $message, $message_type = 0 ) {}
+}
+if ( ! function_exists( '__' ) ) {
+    function __( $text, $domain = 'default' ) { return $text; }
+}

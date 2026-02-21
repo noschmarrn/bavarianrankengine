@@ -4,6 +4,7 @@ namespace BavarianRankEngine\Features;
 use BavarianRankEngine\Admin\SettingsPage;
 use BavarianRankEngine\ProviderRegistry;
 use BavarianRankEngine\Helpers\TokenEstimator;
+use BavarianRankEngine\Helpers\BulkQueue;
 
 class MetaGenerator {
     public function register(): void {
@@ -22,6 +23,8 @@ class MetaGenerator {
 
         add_action( 'wp_ajax_bre_bulk_generate', [ $this, 'ajaxBulkGenerate' ] );
         add_action( 'wp_ajax_bre_bulk_stats',    [ $this, 'ajaxBulkStats' ] );
+        add_action( 'wp_ajax_bre_bulk_release',  [ $this, 'ajaxBulkRelease' ] );
+        add_action( 'wp_ajax_bre_bulk_status',   [ $this, 'ajaxBulkStatus' ] );
     }
 
     public function onPublish( int $post_id, \WP_Post $post ): void {
@@ -150,10 +153,38 @@ class MetaGenerator {
         wp_send_json_success( $stats );
     }
 
+    public function ajaxBulkRelease(): void {
+        check_ajax_referer( 'bre_admin', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error();
+        BulkQueue::release();
+        wp_send_json_success();
+    }
+
+    public function ajaxBulkStatus(): void {
+        check_ajax_referer( 'bre_admin', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error();
+        wp_send_json_success( [
+            'locked'   => BulkQueue::isLocked(),
+            'lock_age' => BulkQueue::lockAge(),
+        ] );
+    }
+
     public function ajaxBulkGenerate(): void {
         check_ajax_referer( 'bre_admin', 'nonce' );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error( __( 'Insufficient permissions.', 'bavarian-rank-engine' ) );
+        }
+
+        // Acquire lock on first batch
+        if ( ! empty( $_POST['is_first'] ) ) {
+            if ( ! BulkQueue::acquire() ) {
+                wp_send_json_error( [
+                    'locked'   => true,
+                    'lock_age' => BulkQueue::lockAge(),
+                    'message'  => __( 'Ein Bulk-Prozess läuft bereits.', 'bavarian-rank-engine' ),
+                ] );
+                return;
+            }
         }
 
         $post_type = sanitize_key( $_POST['post_type'] ?? 'post' );
@@ -172,34 +203,59 @@ class MetaGenerator {
             }
         }
 
-        $post_ids = $this->getPostsWithoutMeta( $post_type, $limit );
-        $results  = [];
+        $post_ids    = $this->getPostsWithoutMeta( $post_type, $limit );
+        $results     = [];
+        $max_retries = 3;
 
         foreach ( $post_ids as $post_id ) {
-            $post = get_post( $post_id );
-            try {
-                $desc = $this->generate( $post, $settings );
-                $this->saveMeta( $post_id, $desc );
-                $results[] = [
-                    'id'          => $post_id,
-                    'title'       => get_the_title( $post_id ),
-                    'description' => $desc,
-                    'success'     => true,
-                ];
-            } catch ( \Exception $e ) {
+            $post       = get_post( $post_id );
+            $success    = false;
+            $last_error = '';
+
+            for ( $attempt = 1; $attempt <= $max_retries; $attempt++ ) {
+                try {
+                    $desc = $this->generate( $post, $settings );
+                    $this->saveMeta( $post_id, $desc );
+                    delete_post_meta( $post_id, '_bre_bulk_failed' );
+                    $results[] = [
+                        'id'          => $post_id,
+                        'title'       => get_the_title( $post_id ),
+                        'description' => $desc,
+                        'success'     => true,
+                        'attempts'    => $attempt,
+                    ];
+                    $success = true;
+                    break;
+                } catch ( \Exception $e ) {
+                    $last_error = $e->getMessage();
+                    error_log( '[BRE] Post ' . $post_id . ' attempt ' . $attempt . '/' . $max_retries . ': ' . $last_error );
+                    if ( $attempt < $max_retries ) {
+                        sleep( 1 );
+                    }
+                }
+            }
+
+            if ( ! $success ) {
+                update_post_meta( $post_id, '_bre_bulk_failed', $last_error );
                 $results[] = [
                     'id'      => $post_id,
                     'title'   => get_the_title( $post_id ),
-                    'error'   => $e->getMessage(),
+                    'error'   => $last_error,
                     'success' => false,
                 ];
             }
+        }
+
+        // Release lock when JS signals last batch
+        if ( ! empty( $_POST['is_last'] ) ) {
+            BulkQueue::release();
         }
 
         wp_send_json_success( [
             'results'   => $results,
             'processed' => count( $results ),
             'remaining' => $this->countPostsWithoutMeta( $post_type ),
+            'locked'    => BulkQueue::isLocked(),
         ] );
     }
 
