@@ -66,3 +66,22 @@ if ( ! function_exists( 'get_post_meta' ) ) {
         return $single ? $val : ( $val !== '' ? [ $val ] : [] );
     }
 }
+
+$GLOBALS['bre_transients'] = [];
+if ( ! function_exists( 'set_transient' ) ) {
+    function set_transient( $key, $value, $expiry = 0 ) {
+        $GLOBALS['bre_transients'][ $key ] = $value;
+        return true;
+    }
+}
+if ( ! function_exists( 'get_transient' ) ) {
+    function get_transient( $key ) {
+        return $GLOBALS['bre_transients'][ $key ] ?? false;
+    }
+}
+if ( ! function_exists( 'delete_transient' ) ) {
+    function delete_transient( $key ) {
+        unset( $GLOBALS['bre_transients'][ $key ] );
+        return true;
+    }
+}
