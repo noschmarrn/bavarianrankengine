@@ -25,6 +25,7 @@ class Core {
         require_once BRE_DIR . 'includes/Providers/GrokProvider.php';
         require_once BRE_DIR . 'includes/Helpers/KeyVault.php';
         require_once BRE_DIR . 'includes/Helpers/TokenEstimator.php';
+        require_once BRE_DIR . 'includes/Helpers/FallbackMeta.php';
         require_once BRE_DIR . 'includes/Helpers/BulkQueue.php';
         require_once BRE_DIR . 'includes/Features/MetaGenerator.php';
         require_once BRE_DIR . 'includes/Features/SchemaEnhancer.php';
