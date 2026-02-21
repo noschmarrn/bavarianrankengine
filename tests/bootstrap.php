@@ -56,3 +56,13 @@ if ( ! function_exists( 'get_post_types' ) ) {
 if ( ! function_exists( 'add_settings_error' ) ) {
     function add_settings_error( ...$args ) {}
 }
+
+// Dynamic post meta stub for tests
+$GLOBALS['bre_test_meta'] = [];
+// Replace or add get_post_meta stub:
+if ( ! function_exists( 'get_post_meta' ) ) {
+    function get_post_meta( $post_id, $key = '', $single = false ) {
+        $val = $GLOBALS['bre_test_meta'][ $post_id ][ $key ] ?? '';
+        return $single ? $val : ( $val !== '' ? [ $val ] : [] );
+    }
+}

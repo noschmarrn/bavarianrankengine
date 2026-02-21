@@ -157,7 +157,7 @@ class MetaGenerator {
         }
 
         $post_type = sanitize_key( $_POST['post_type'] ?? 'post' );
-        $limit     = min( 5, max( 1, (int) ( $_POST['batch_size'] ?? 5 ) ) );
+        $limit     = min( 20, max( 1, (int) ( $_POST['batch_size'] ?? 5 ) ) );
         $settings  = SettingsPage::getSettings();
 
         if ( ! empty( $_POST['provider'] ) ) {
@@ -236,24 +236,32 @@ class MetaGenerator {
     private function getPostsWithoutMeta( string $post_type, int $limit ): array {
         global $wpdb;
 
-        $fetch_limit = min( $limit * 10, 5000 );
-        $all_ids     = $wpdb->get_col( $wpdb->prepare(
-            "SELECT ID FROM {$wpdb->posts}
-             WHERE post_type = %s AND post_status = 'publish'
-             ORDER BY ID DESC
-             LIMIT %d",
-            $post_type,
-            $fetch_limit
-        ) );
+        $meta_fields = [
+            '_bre_meta_description', 'rank_math_description',
+            '_yoast_wpseo_metadesc', '_aioseo_description',
+            '_seopress_titles_desc', '_meta_description',
+        ];
 
-        $without_meta = [];
-        foreach ( $all_ids as $id ) {
-            if ( ! $this->hasExistingMeta( (int) $id ) ) {
-                $without_meta[] = (int) $id;
-                if ( count( $without_meta ) >= $limit ) break;
-            }
+        $not_exists = '';
+        foreach ( $meta_fields as $field ) {
+            $not_exists .= $wpdb->prepare(
+                " AND NOT EXISTS (
+                SELECT 1 FROM {$wpdb->postmeta} pm
+                WHERE pm.post_id = p.ID
+                  AND pm.meta_key = %s
+                  AND pm.meta_value != ''
+            )",
+                $field
+            );
         }
 
-        return $without_meta;
+        return array_map( 'intval', $wpdb->get_col( $wpdb->prepare(
+            "SELECT p.ID FROM {$wpdb->posts} p
+         WHERE p.post_type = %s AND p.post_status = 'publish'"
+            . $not_exists .
+            " ORDER BY p.ID DESC LIMIT %d",
+            $post_type,
+            $limit
+        ) ) );
     }
 }
