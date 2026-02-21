@@ -6,7 +6,7 @@ set -euo pipefail
 # Output: /var/www/dev/plugins/bavarian-rank-engine.zip
 # ─────────────────────────────────────────────────────────────────
 
-PLUGIN_SRC="/var/www/dev/plugins/seo-geo"
+PLUGIN_SRC="/var/www/dev/plugins/bre-dev"
 OUT_DIR="/var/www/dev/plugins/bavarian-rank-engine"
 ZIP_FILE="/var/www/dev/plugins/bavarian-rank-engine.zip"
 
