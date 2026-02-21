@@ -59,6 +59,21 @@ class ProviderPage {
             $clean['models'][ sanitize_key( $provider_id ) ] = sanitize_text_field( $model );
         }
 
+        $clean['costs'] = [];
+        foreach ( ( $input['costs'] ?? [] ) as $provider_id => $models ) {
+            $provider_id = sanitize_key( $provider_id );
+            foreach ( (array) $models as $model_id => $prices ) {
+                $in  = (float) str_replace( ',', '.', $prices['input']  ?? '0' );
+                $out = (float) str_replace( ',', '.', $prices['output'] ?? '0' );
+                if ( $in > 0 || $out > 0 ) {
+                    $clean['costs'][ $provider_id ][ sanitize_text_field( $model_id ) ] = [
+                        'input'  => max( 0.0, $in ),
+                        'output' => max( 0.0, $out ),
+                    ];
+                }
+            }
+        }
+
         return $clean;
     }
 
