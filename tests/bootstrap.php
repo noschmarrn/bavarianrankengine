@@ -124,3 +124,22 @@ if ( ! function_exists( 'error_log' ) ) {
 if ( ! function_exists( '__' ) ) {
     function __( $text, $domain = 'default' ) { return $text; }
 }
+
+if ( ! function_exists( 'home_url' ) ) {
+    function home_url( $path = '' ) { return 'https://example.com' . $path; }
+}
+if ( ! function_exists( 'wp_reset_postdata' ) ) {
+    function wp_reset_postdata() {}
+}
+if ( ! function_exists( 'get_permalink' ) ) {
+    function get_permalink( $post = 0 ) {
+        $id = is_object( $post ) ? $post->ID : $post;
+        return 'https://example.com/?p=' . $id;
+    }
+}
+if ( ! function_exists( 'get_the_date' ) ) {
+    function get_the_date( $format = '', $post = null ) { return '2024-01-01'; }
+}
+if ( ! function_exists( 'status_header' ) ) {
+    function status_header( $code ) {}
+}

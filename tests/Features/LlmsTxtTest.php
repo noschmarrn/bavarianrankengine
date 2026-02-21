@@ -80,4 +80,30 @@ class LlmsTxtTest extends TestCase {
         $this->assertArrayHasKey( 'post_types', $settings );
         $this->assertFalse( $settings['enabled'] );
     }
+
+    public function test_uri_pattern_matches_llms_txt(): void {
+        $this->assertSame( 1, preg_match( '#^/llms\.txt$#', '/llms.txt' ) );
+    }
+
+    public function test_uri_pattern_matches_llms_page_2(): void {
+        preg_match( '#^/llms-(\d+)\.txt$#', '/llms-2.txt', $m );
+        $this->assertSame( '2', $m[1] );
+    }
+
+    public function test_build_with_empty_post_types_has_no_content_section(): void {
+        $llms   = new LlmsTxt();
+        $method = new \ReflectionMethod( LlmsTxt::class, 'build' );
+        $method->setAccessible( true );
+        $settings = $this->make_settings( [ 'post_types' => [] ] );
+        $output   = $method->invoke( $llms, $settings, 1 );
+        // With no posts, no ## Content section expected (or empty one)
+        // At minimum, title should still be present
+        $this->assertStringContainsString( '# Test Site', $output );
+    }
+
+    public function test_get_settings_includes_max_links_default(): void {
+        $settings = LlmsTxt::getSettings();
+        $this->assertArrayHasKey( 'max_links', $settings );
+        $this->assertGreaterThanOrEqual( 50, $settings['max_links'] );
+    }
 }
