@@ -30,6 +30,7 @@ class SettingsPage {
             'prompt'            => self::getDefaultPrompt(),
             'schema_enabled'    => [],
             'schema_same_as'    => [],
+            'costs'             => [],
         ];
 
         $saved_provider = get_option( self::OPTION_KEY_PROVIDER, [] );
@@ -90,6 +91,18 @@ class SettingsPage {
         $clean['models'] = [];
         foreach ( ( $input['models'] ?? [] ) as $provider_id => $model ) {
             $clean['models'][ sanitize_key( $provider_id ) ] = sanitize_text_field( $model );
+        }
+
+        $clean['costs'] = [];
+        foreach ( ( $input['costs'] ?? [] ) as $provider_id => $models ) {
+            $provider_id = sanitize_key( $provider_id );
+            foreach ( (array) $models as $model_id => $prices ) {
+                $model_id = sanitize_text_field( $model_id );
+                $clean['costs'][ $provider_id ][ $model_id ] = [
+                    'input'  => max( 0.0, (float) ( $prices['input']  ?? 0 ) ),
+                    'output' => max( 0.0, (float) ( $prices['output'] ?? 0 ) ),
+                ];
+            }
         }
 
         $all_post_types           = array_keys( get_post_types( [ 'public' => true ] ) );

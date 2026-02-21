@@ -5,6 +5,13 @@ use BavarianRankEngine\ProviderRegistry;
 use BavarianRankEngine\Helpers\KeyVault;
 
 class ProviderPage {
+    private const PRICING_URLS = [
+        'openai'    => 'https://openai.com/de-DE/api/pricing',
+        'anthropic' => 'https://platform.claude.com/docs/en/about-claude/pricing',
+        'gemini'    => 'https://ai.google.dev/gemini-api/docs/pricing?hl=de',
+        'grok'      => 'https://docs.x.ai/developers/models',
+    ];
+
     public function register(): void {
         add_action( 'admin_init', [ $this, 'register_settings' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
@@ -96,6 +103,7 @@ class ProviderPage {
             $plain               = KeyVault::decrypt( $stored );
             $masked_keys[ $id ]  = KeyVault::mask( $plain );
         }
+        $pricing_urls = self::PRICING_URLS;
         include BRE_DIR . 'includes/Admin/views/provider.php';
     }
 }

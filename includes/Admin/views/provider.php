@@ -54,6 +54,32 @@
                         </option>
                         <?php endforeach; ?>
                     </select>
+<?php
+$pricing_url = $pricing_urls[ $id ] ?? '';
+if ( $pricing_url ) :
+?>
+                <p style="margin-top:8px;">
+                    <a href="<?php echo esc_url( $pricing_url ); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php esc_html_e( 'Aktuelle Preise ansehen →', 'bavarian-rank-engine' ); ?>
+                    </a>
+                </p>
+<?php endif; ?>
+                <p style="margin-top:12px;"><strong><?php esc_html_e( 'Kosten pro 1 Million Token (für Kostenübersicht im Bulk):', 'bavarian-rank-engine' ); ?></strong></p>
+<?php foreach ( $provider->getModels() as $model_id => $model_label ) :
+    $saved_costs = $settings['costs'][ $id ][ $model_id ] ?? [];
+?>
+                <div style="margin-bottom:6px;display:flex;align-items:center;gap:12px;">
+                    <label style="min-width:180px;font-size:12px;"><?php echo esc_html( $model_label ); ?>:</label>
+                    <span>Input $<input type="number" step="0.0001" min="0"
+                        name="bre_settings[costs][<?php echo esc_attr( $id ); ?>][<?php echo esc_attr( $model_id ); ?>][input]"
+                        value="<?php echo esc_attr( $saved_costs['input'] ?? '' ); ?>"
+                        placeholder="z.B. 0.15" style="width:75px;"> / 1M</span>
+                    <span>Output $<input type="number" step="0.0001" min="0"
+                        name="bre_settings[costs][<?php echo esc_attr( $id ); ?>][<?php echo esc_attr( $model_id ); ?>][output]"
+                        value="<?php echo esc_attr( $saved_costs['output'] ?? '' ); ?>"
+                        placeholder="z.B. 0.60" style="width:75px;"> / 1M</span>
+                </div>
+<?php endforeach; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
