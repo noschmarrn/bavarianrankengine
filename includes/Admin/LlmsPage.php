@@ -7,6 +7,7 @@ class LlmsPage {
     public function register(): void {
         add_action( 'admin_init', [ $this, 'register_settings' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+        add_action( 'wp_ajax_bre_llms_clear_cache', [ $this, 'ajax_clear_cache' ] );
     }
 
     public function register_settings(): void {
@@ -37,7 +38,18 @@ class LlmsPage {
             $all_post_types
         ) );
 
+        $clean['max_links'] = max( 50, (int) ( $input['max_links'] ?? 500 ) );
+
+        LlmsTxt::clear_cache();
+
         return $clean;
+    }
+
+    public function ajax_clear_cache(): void {
+        check_ajax_referer( 'bre_admin', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) wp_send_json_error();
+        \BavarianRankEngine\Features\LlmsTxt::clear_cache();
+        wp_send_json_success( __( 'Cache geleert.', 'bavarian-rank-engine' ) );
     }
 
     public function render(): void {

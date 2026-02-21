@@ -2,6 +2,26 @@
 <div class="wrap bre-settings">
     <h1><?php esc_html_e( 'llms.txt Configuration', 'bavarian-rank-engine' ); ?></h1>
 
+    <div style="margin-bottom:20px;">
+        <button id="bre-llms-clear-cache" class="button">
+            <?php esc_html_e( 'llms.txt Cache leeren', 'bavarian-rank-engine' ); ?>
+        </button>
+        <span id="bre-cache-result" style="margin-left:10px;color:#46b450;"></span>
+        <script>
+        jQuery(document).ready(function($){
+            $('#bre-llms-clear-cache').on('click', function(){
+                $.post(ajaxurl, {
+                    action: 'bre_llms_clear_cache',
+                    nonce: '<?php echo esc_js( wp_create_nonce( 'bre_admin' ) ); ?>'
+                }).done(function(res){
+                    $('#bre-cache-result').text(res.success ? res.data : 'Fehler');
+                    setTimeout(function(){ $('#bre-cache-result').text(''); }, 3000);
+                });
+            });
+        });
+        </script>
+    </div>
+
     <?php settings_errors( 'bre_llms' ); ?>
 
     <p>
@@ -79,6 +99,18 @@
                     </label>
                     <?php endforeach; ?>
                     <p class="description"><?php esc_html_e( 'Which post types to include in the content list.', 'bavarian-rank-engine' ); ?></p>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row"><?php esc_html_e( 'Max. Links pro Seite', 'bavarian-rank-engine' ); ?></th>
+                <td>
+                    <input type="number" name="bre_llms_settings[max_links]"
+                           value="<?php echo esc_attr( $settings['max_links'] ?? 500 ); ?>"
+                           min="50" max="5000" style="width:80px;">
+                    <p class="description">
+                        <?php esc_html_e( 'Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt.', 'bavarian-rank-engine' ); ?>
+                    </p>
                 </td>
             </tr>
 
