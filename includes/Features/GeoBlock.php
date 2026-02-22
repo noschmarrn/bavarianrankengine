@@ -285,7 +285,11 @@ class GeoBlock {
 
 	public function saveMeta( int $post_id, array $data ): void {
 		update_post_meta( $post_id, self::META_SUMMARY, sanitize_text_field( $data['summary'] ?? '' ) );
-		update_post_meta( $post_id, self::META_BULLETS, wp_json_encode( array_map( 'sanitize_text_field', $data['bullets'] ?? array() ) ) );
+		update_post_meta(
+			$post_id,
+			self::META_BULLETS,
+			wp_json_encode( array_map( 'sanitize_text_field', $data['bullets'] ?? array() ), JSON_UNESCAPED_UNICODE )
+		);
 
 		$faq_clean = array_map(
 			function ( $item ) {
@@ -296,7 +300,7 @@ class GeoBlock {
 			},
 			$data['faq'] ?? array()
 		);
-		update_post_meta( $post_id, self::META_FAQ, wp_json_encode( $faq_clean ) );
+		update_post_meta( $post_id, self::META_FAQ, wp_json_encode( $faq_clean, JSON_UNESCAPED_UNICODE ) );
 		update_post_meta( $post_id, self::META_GENERATED, time() );
 	}
 

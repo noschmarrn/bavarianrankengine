@@ -152,7 +152,7 @@ class GeoEditorBox {
 
 		$raw_bullets = sanitize_textarea_field( wp_unslash( $_POST['bre_geo_bullets'] ?? '' ) );
 		$bullets     = array_values( array_filter( array_map( 'trim', explode( "\n", $raw_bullets ) ) ) );
-		update_post_meta( $post_id, GeoBlock::META_BULLETS, wp_json_encode( $bullets ) );
+		update_post_meta( $post_id, GeoBlock::META_BULLETS, wp_json_encode( $bullets, JSON_UNESCAPED_UNICODE ) );
 
 		$raw_faq = sanitize_textarea_field( wp_unslash( $_POST['bre_geo_faq'] ?? '' ) );
 		$faq     = array();
@@ -165,7 +165,7 @@ class GeoEditorBox {
 				);
 			}
 		}
-		update_post_meta( $post_id, GeoBlock::META_FAQ, wp_json_encode( $faq ) );
+		update_post_meta( $post_id, GeoBlock::META_FAQ, wp_json_encode( $faq, JSON_UNESCAPED_UNICODE ) );
 
 		if ( isset( $_POST['bre_geo_prompt_addon'] ) ) {
 			update_post_meta( $post_id, GeoBlock::META_ADDON, sanitize_textarea_field( wp_unslash( $_POST['bre_geo_prompt_addon'] ) ) );

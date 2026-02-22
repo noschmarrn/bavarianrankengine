@@ -63,6 +63,21 @@
             <p class="subpage__meta">Version history for Bavarian Rank Engine</p>
         </div>
 
+        <!-- ═══════════════ v1.1.1 ═══════════════ -->
+        <div class="changelog-version">
+            <h2 class="changelog-version__heading">1.1.1 &mdash; Encoding &amp; Styling Fixes</h2>
+
+            <div class="cl-group">
+                <div class="cl-group__label cl-group__label--new">Bug Fixes</div>
+                <ul>
+                    <li>Fixed: umlauts and special characters (ä, ö, ü, narrow spaces) displayed as raw escape sequences (e.g. <code>u00e4</code>) in the GEO Quick Overview block on the frontend</li>
+                    <li>Fixed: dark / light color scheme setting had no visible effect on the frontend block due to browser CSS cache from v1.1.0</li>
+                    <li>GEO block JSON storage now uses <code>JSON_UNESCAPED_UNICODE</code> — actual UTF-8 bytes are stored instead of <code>\uXXXX</code> escape sequences, eliminating any encoding ambiguity in the round-trip through the database</li>
+                </ul>
+            </div>
+
+        </div><!-- /v1.1.1 -->
+
         <!-- ═══════════════ v1.1.0 ═══════════════ -->
         <div class="changelog-version">
             <h2 class="changelog-version__heading">1.1.0 &mdash; GEO Quick Overview</h2>
