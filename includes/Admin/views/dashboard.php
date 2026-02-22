@@ -41,6 +41,7 @@
 					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-meta' ) ); ?>"><?php esc_html_e( 'Meta Generator Settings', 'bavarian-rank-engine' ); ?></a></li>
 					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-llms' ) ); ?>">llms.txt</a></li>
 					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-bulk' ) ); ?>"><?php esc_html_e( 'Bulk Generator', 'bavarian-rank-engine' ); ?></a></li>
+					<li><a href="https://bavarianrankengine.com/howto.html" target="_blank" rel="noopener"><?php esc_html_e( 'Documentation &amp; How To', 'bavarian-rank-engine' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
