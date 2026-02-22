@@ -3,12 +3,12 @@ set -euo pipefail
 
 # ─────────────────────────────────────────────────────────────────
 # Bavarian Rank Engine — Build & Package Script
-# Output: /var/www/dev/plugins/bavarian-rank-engine.zip
+# Output: /var/www/dev/plugins/bre/zip/bavarian-rank-engine.zip
 # ─────────────────────────────────────────────────────────────────
 
-PLUGIN_SRC="/var/www/dev/plugins/bre-dev"
-OUT_DIR="/var/www/dev/plugins/bavarian-rank-engine"
-ZIP_FILE="/var/www/dev/plugins/bavarian-rank-engine.zip"
+PLUGIN_SRC="/var/www/dev/plugins/bre/bre-dev"
+OUT_DIR="/var/www/dev/plugins/bre/bavarian-rank-engine"
+ZIP_FILE="/var/www/dev/plugins/bre/zip/bavarian-rank-engine.zip"
 
 echo "▶ Cleaning previous build..."
 rm -rf "$OUT_DIR"
@@ -58,7 +58,7 @@ echo "▶ Removing dev-only composer dependencies (vendor/bin)..."
 rm -rf "$OUT_DIR/vendor/bin"
 
 echo "▶ Creating zip archive..."
-cd /var/www/dev/plugins
+cd /var/www/dev/plugins/bre
 zip -r "$ZIP_FILE" bavarian-rank-engine/ --quiet
 
 ZIP_SIZE=$(du -sh "$ZIP_FILE" | cut -f1)
