@@ -158,6 +158,41 @@
 				</td>
 			</tr>
 			<tr>
+				<th scope="row"><?php esc_html_e( 'Color scheme', 'bavarian-rank-engine' ); ?></th>
+				<td>
+					<select name="bre_geo_settings[color_scheme]">
+						<option value="auto" <?php selected( $settings['color_scheme'], 'auto' ); ?>>
+							<?php esc_html_e( 'Auto (follows OS light/dark preference)', 'bavarian-rank-engine' ); ?>
+						</option>
+						<option value="light" <?php selected( $settings['color_scheme'], 'light' ); ?>>
+							<?php esc_html_e( 'Always light', 'bavarian-rank-engine' ); ?>
+						</option>
+						<option value="dark" <?php selected( $settings['color_scheme'], 'dark' ); ?>>
+							<?php esc_html_e( 'Always dark', 'bavarian-rank-engine' ); ?>
+						</option>
+					</select>
+					<p class="description">
+						<?php esc_html_e( 'Auto detects the visitor\'s OS or browser setting via prefers-color-scheme.', 'bavarian-rank-engine' ); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Accent color', 'bavarian-rank-engine' ); ?></th>
+				<td>
+					<input type="color" id="bre-accent-picker" name="bre_geo_settings[accent_color]"
+						value="<?php echo esc_attr( $settings['accent_color'] ?: '#0073aa' ); ?>"
+						style="width:60px;height:34px;padding:2px;border:1px solid #ccd0d4;border-radius:3px;cursor:pointer;"
+						oninput="document.getElementById('bre-accent-text').value=this.value">
+					<input type="text" id="bre-accent-text"
+						value="<?php echo esc_attr( $settings['accent_color'] ?: '#0073aa' ); ?>"
+						placeholder="#0073aa" maxlength="7" style="width:90px;vertical-align:middle;"
+						oninput="document.getElementById('bre-accent-picker').value=this.value">
+					<p class="description">
+						<?php esc_html_e( 'Used for the left border of the summary bar and the expand arrow. Leave empty for the default blue.', 'bavarian-rank-engine' ); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><?php esc_html_e( 'Custom CSS', 'bavarian-rank-engine' ); ?></th>
 				<td>
 					<textarea name="bre_geo_settings[custom_css]" rows="6" class="large-text code"><?php

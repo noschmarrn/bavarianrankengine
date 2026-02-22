@@ -49,6 +49,11 @@ class GeoPage {
 		$clean['output_style'] = in_array( $input['output_style'] ?? '', $allowed_styles, true )
 			? $input['output_style'] : 'details_collapsible';
 
+		$allowed_schemes        = array( 'auto', 'light', 'dark' );
+		$clean['color_scheme']  = in_array( $input['color_scheme'] ?? 'auto', $allowed_schemes, true )
+									? $input['color_scheme'] : 'auto';
+		$clean['accent_color']  = sanitize_hex_color( $input['accent_color'] ?? '' ) ?? '';
+
 		$clean['title']          = sanitize_text_field( $input['title'] ?? 'Quick Overview' );
 		$clean['label_summary']  = sanitize_text_field( $input['label_summary'] ?? 'Summary' );
 		$clean['label_bullets']  = sanitize_text_field( $input['label_bullets'] ?? 'Key Points' );

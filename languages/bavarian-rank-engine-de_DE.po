@@ -705,3 +705,31 @@ msgstr "Meta-Beschreibungen: BRE schreibt in das AIOSEO-Metafeld."
 #: includes/Admin/views/dashboard.php
 msgid "Meta descriptions: BRE writes to the SEOPress meta field."
 msgstr "Meta-Beschreibungen: BRE schreibt in das SEOPress-Metafeld."
+
+#: includes/Admin/views/geo.php
+msgid "Color scheme"
+msgstr "Farbschema"
+
+#: includes/Admin/views/geo.php
+msgid "Auto (follows OS light/dark preference)"
+msgstr "Automatisch (folgt dem OS-Licht/Dunkel-Modus)"
+
+#: includes/Admin/views/geo.php
+msgid "Always light"
+msgstr "Immer hell"
+
+#: includes/Admin/views/geo.php
+msgid "Always dark"
+msgstr "Immer dunkel"
+
+#: includes/Admin/views/geo.php
+msgid "Auto detects the visitor's OS or browser setting via prefers-color-scheme."
+msgstr "Erkennt automatisch die OS- oder Browser-Einstellung des Besuchers via prefers-color-scheme."
+
+#: includes/Admin/views/geo.php
+msgid "Accent color"
+msgstr "Akzentfarbe"
+
+#: includes/Admin/views/geo.php
+msgid "Used for the left border of the summary bar and the expand arrow. Leave empty for the default blue."
+msgstr "Wird für den linken Rand der Zusammenfassungsleiste und den Expand-Pfeil verwendet. Leer lassen für das Standard-Blau."

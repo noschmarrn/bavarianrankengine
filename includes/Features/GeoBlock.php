@@ -46,6 +46,8 @@ class GeoBlock {
 			'label_faq'          => 'FAQ',
 			'minimal_css'        => true,
 			'custom_css'         => '',
+			'color_scheme'       => 'auto',
+			'accent_color'       => '',
 			'prompt_default'     => self::getDefaultPrompt(),
 			'word_threshold'     => 350,
 			'regen_on_update'    => false,
@@ -125,23 +127,71 @@ class GeoBlock {
 
 	private function buildPrompt( \WP_Post $post, string $content, array $settings, string $addon, bool $force_no_faq ): string {
 		$locale_map = array(
-			'de_DE' => 'Deutsch',
-			'de_AT' => 'Deutsch',
-			'de_CH' => 'Deutsch',
-			'en_US' => 'English',
-			'en_GB' => 'English',
-			'fr_FR' => 'Français',
-			'es_ES' => 'Español',
+			'de_DE'          => 'Deutsch',
+			'de_DE_formal'   => 'Deutsch',
+			'de_AT'          => 'Deutsch',
+			'de_CH'          => 'Deutsch',
+			'de_CH_informal' => 'Deutsch',
+			'en_US'          => 'English',
+			'en_GB'          => 'English',
+			'en_AU'          => 'English',
+			'en_CA'          => 'English',
+			'fr_FR'          => 'Français',
+			'fr_BE'          => 'Français',
+			'fr_CA'          => 'Français',
+			'es_ES'          => 'Español',
+			'es_MX'          => 'Español',
+			'it_IT'          => 'Italiano',
+			'nl_NL'          => 'Nederlands',
+			'nl_NL_formal'   => 'Nederlands',
+			'pt_PT'          => 'Português',
+			'pt_BR'          => 'Português do Brasil',
+			'pl_PL'          => 'Polski',
+			'ru_RU'          => 'Русский',
+			'sv_SE'          => 'Svenska',
+			'da_DK'          => 'Dansk',
+			'nb_NO'          => 'Norsk',
+			'fi'             => 'Suomi',
+			'cs_CZ'          => 'Čeština',
+			'sk_SK'          => 'Slovenčina',
+			'hu_HU'          => 'Magyar',
+			'ro_RO'          => 'Română',
+			'bg_BG'          => 'Български',
+			'el'             => 'Ελληνικά',
+			'hr'             => 'Hrvatski',
+			'tr_TR'          => 'Türkçe',
+			'ar'             => 'العربية',
+			'he_IL'          => 'עברית',
+			'zh_CN'          => '中文（简体）',
+			'zh_TW'          => '中文（繁體）',
+			'ja'             => '日本語',
+			'ko_KR'          => '한국어',
+		);
+		$prefix_map = array(
+			'de' => 'Deutsch', 'en' => 'English', 'fr' => 'Français',
+			'es' => 'Español', 'it' => 'Italiano', 'nl' => 'Nederlands',
+			'pt' => 'Português', 'pl' => 'Polski', 'ru' => 'Русский',
+			'sv' => 'Svenska', 'da' => 'Dansk', 'nb' => 'Norsk',
+			'no' => 'Norsk', 'fi' => 'Suomi', 'cs' => 'Čeština',
+			'tr' => 'Türkçe', 'ja' => '日本語', 'ko' => '한국어',
+			'zh' => '中文', 'ar' => 'العربية', 'he' => 'עברית',
+			'hu' => 'Magyar', 'ro' => 'Română', 'bg' => 'Български',
+			'el' => 'Ελληνικά', 'hr' => 'Hrvatski',
 		);
 
-		$language = $locale_map[ get_locale() ] ?? 'Deutsch';
+		$locale   = get_locale();
+		$language = $locale_map[ $locale ]
+					?? $prefix_map[ strtolower( substr( $locale, 0, 2 ) ) ]
+					?? $locale;
+
 		if ( function_exists( 'pll_get_post_language' ) ) {
-			$lang = pll_get_post_language( $post->ID, 'name' );
-			if ( $lang ) {
-				$language = $lang;
+			$pll_lang = pll_get_post_language( $post->ID, 'name' );
+			if ( $pll_lang ) {
+				$language = $pll_lang;
 			}
 		} elseif ( defined( 'ICL_LANGUAGE_CODE' ) ) {
-			$language = ICL_LANGUAGE_CODE;
+			$wpml_code = strtolower( (string) ICL_LANGUAGE_CODE );
+			$language  = $prefix_map[ $wpml_code ] ?? $language;
 		}
 
 		$prompt = $settings['prompt_default'];
@@ -169,11 +219,34 @@ class GeoBlock {
 		if ( ! is_array( $data ) ) {
 			return null;
 		}
+
+		// Some AI providers double-encode unicode in string values
+		// (e.g. ä becomes the literal 6-char sequence \u00e4).
+		// Decode those residual sequences so ä/ö/ü store and display correctly.
+		$data = $this->decodeUnicode( $data );
+
 		// Require at minimum a summary
 		if ( empty( $data['summary'] ) || ! is_string( $data['summary'] ) ) {
 			return null;
 		}
 		return $data;
+	}
+
+	private function decodeUnicode( mixed $val ): mixed {
+		if ( is_string( $val ) ) {
+			return preg_replace_callback(
+				'/\\\\u([0-9a-fA-F]{4})/',
+				static function ( array $m ): string {
+					$char = mb_chr( hexdec( $m[1] ), 'UTF-8' );
+					return $char !== false ? $char : $m[0];
+				},
+				$val
+			);
+		}
+		if ( is_array( $val ) ) {
+			return array_map( array( $this, 'decodeUnicode' ), $val );
+		}
+		return $val;
 	}
 
 	private function qualityGate( array $data, bool $force_no_faq ): array {
@@ -359,8 +432,17 @@ class GeoBlock {
 					. '</div>';
 		}
 
-		$open_attr = ( $style === 'open_always' ) ? ' open' : '';
-		return '<details class="bre-geo" data-bre="geo"' . $open_attr . '>'
+		$open_attr   = ( $style === 'open_always' ) ? ' open' : '';
+		$scheme      = $settings['color_scheme'] ?? 'auto';
+		$scheme_attr = ( $scheme !== 'auto' ) ? ' data-bre-scheme="' . esc_attr( $scheme ) . '"' : '';
+
+		$accent     = $settings['accent_color'] ?? '';
+		$style_attr = '';
+		if ( $accent && preg_match( '/^#[0-9a-fA-F]{3,6}$/', $accent ) ) {
+			$style_attr = ' style="--bre-accent:' . esc_attr( $accent ) . ';"';
+		}
+
+		return '<details class="bre-geo" data-bre="geo"' . $open_attr . $scheme_attr . $style_attr . '>'
 			. '<summary><span class="bre-geo__title">' . $title . '</span></summary>'
 			. $inner
 			. '</details>';
