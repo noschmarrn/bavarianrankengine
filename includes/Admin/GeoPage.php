@@ -49,9 +49,9 @@ class GeoPage {
 		$clean['output_style'] = in_array( $input['output_style'] ?? '', $allowed_styles, true )
 			? $input['output_style'] : 'details_collapsible';
 
-		$clean['title']          = sanitize_text_field( $input['title'] ?? 'Schnellüberblick' );
-		$clean['label_summary']  = sanitize_text_field( $input['label_summary'] ?? 'Kurzfassung' );
-		$clean['label_bullets']  = sanitize_text_field( $input['label_bullets'] ?? 'Kernaussagen' );
+		$clean['title']          = sanitize_text_field( $input['title'] ?? 'Quick Overview' );
+		$clean['label_summary']  = sanitize_text_field( $input['label_summary'] ?? 'Summary' );
+		$clean['label_bullets']  = sanitize_text_field( $input['label_bullets'] ?? 'Key Points' );
 		$clean['label_faq']      = sanitize_text_field( $input['label_faq'] ?? 'FAQ' );
 		$clean['custom_css']     = sanitize_textarea_field( $input['custom_css'] ?? '' );
 		$clean['prompt_default'] = sanitize_textarea_field(

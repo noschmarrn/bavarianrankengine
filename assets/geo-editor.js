@@ -47,13 +47,13 @@ jQuery( function ( $ ) {
 			} ).done( function ( res ) {
 				if ( res.success ) {
 					populateFields( res.data );
-					setStatus( 'Generiert ✓', false );
-					$generate.text( 'Neu generieren' );
+					setStatus( 'Generated ✓', false );
+					$generate.text( 'Regenerate' );
 				} else {
-					setStatus( res.data || 'Fehler', true );
+					setStatus( res.data || 'Error', true );
 				}
 			} ).fail( function () {
-				setStatus( 'Verbindungsfehler', true );
+				setStatus( 'Connection error', true );
 			} ).always( function () {
 				$generate.prop( 'disabled', false );
 			} );
@@ -62,7 +62,7 @@ jQuery( function ( $ ) {
 
 	if ( $clear.length ) {
 		$clear.on( 'click', function () {
-			if ( ! window.confirm( 'GEO-Felder wirklich leeren?' ) ) return;
+			if ( ! window.confirm( 'Really clear GEO fields?' ) ) return;
 			$clear.prop( 'disabled', true );
 			$.post( ajaxurl, {
 				action:  'bre_geo_clear',
@@ -74,7 +74,7 @@ jQuery( function ( $ ) {
 					$bullets.val( '' );
 					$faq.val( '' );
 					$lock.prop( 'checked', false );
-					setStatus( 'Geleert', false );
+					setStatus( 'Cleared', false );
 				}
 			} ).always( function () {
 				$clear.prop( 'disabled', false );

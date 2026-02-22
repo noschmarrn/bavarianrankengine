@@ -21,7 +21,7 @@ class GeoEditorBox {
 		foreach ( $settings['post_types'] as $pt ) {
 			add_meta_box(
 				'bre_geo_box',
-				__( 'GEO Schnellüberblick (BRE)', 'bavarian-rank-engine' ),
+				__( 'GEO Quick Overview (BRE)', 'bavarian-rank-engine' ),
 				array( $this, 'render' ),
 				$pt,
 				'normal',
@@ -49,18 +49,18 @@ class GeoEditorBox {
 				<label>
 					<input type="checkbox" name="bre_geo_enabled" value="1"
 						<?php checked( $enabled, '1' ); ?>>
-					<?php esc_html_e( 'GEO-Block für diesen Beitrag aktiv', 'bavarian-rank-engine' ); ?>
+					<?php esc_html_e( 'Enable GEO block for this post', 'bavarian-rank-engine' ); ?>
 				</label>
 				<label>
 					<input type="checkbox" name="bre_geo_lock" value="1" id="bre-geo-lock"
 						<?php checked( $lock, true ); ?>>
-					<?php esc_html_e( 'Auto-Regeneration sperren', 'bavarian-rank-engine' ); ?>
+					<?php esc_html_e( 'Lock auto-regeneration', 'bavarian-rank-engine' ); ?>
 				</label>
 				<?php if ( $generated_at ) : ?>
 				<span style="font-size:11px;color:#666;">
 					<?php
 					// translators: %s = human-readable date
-					printf( esc_html__( 'Generiert: %s', 'bavarian-rank-engine' ), esc_html( date_i18n( get_option( 'date_format' ) . ' H:i', (int) $generated_at ) ) );
+					printf( esc_html__( 'Generated: %s', 'bavarian-rank-engine' ), esc_html( date_i18n( get_option( 'date_format' ) . ' H:i', (int) $generated_at ) ) );
 					?>
 				</span>
 				<?php endif; ?>
@@ -71,13 +71,13 @@ class GeoEditorBox {
 				<button type="button" class="button" id="bre-geo-generate">
 					<?php
 					empty( $meta['summary'] )
-						? esc_html_e( 'Jetzt generieren', 'bavarian-rank-engine' )
-						: esc_html_e( 'Neu generieren', 'bavarian-rank-engine' );
+						? esc_html_e( 'Generate now', 'bavarian-rank-engine' )
+						: esc_html_e( 'Regenerate', 'bavarian-rank-engine' );
 					?>
 				</button>
 				<?php if ( ! empty( $meta['summary'] ) ) : ?>
 				<button type="button" class="button" id="bre-geo-clear" style="margin-left:6px;">
-					<?php esc_html_e( 'Leeren', 'bavarian-rank-engine' ); ?>
+					<?php esc_html_e( 'Clear', 'bavarian-rank-engine' ); ?>
 				</button>
 				<?php endif; ?>
 				<span id="bre-geo-status" style="margin-left:10px;font-size:12px;"></span>
@@ -85,21 +85,21 @@ class GeoEditorBox {
 			<?php endif; ?>
 
 			<p style="margin-bottom:4px;">
-				<label for="bre-geo-summary"><strong><?php esc_html_e( 'Kurzfassung', 'bavarian-rank-engine' ); ?></strong></label>
+				<label for="bre-geo-summary"><strong><?php esc_html_e( 'Summary', 'bavarian-rank-engine' ); ?></strong></label>
 			</p>
 			<textarea id="bre-geo-summary" name="bre_geo_summary" rows="3"
 				style="width:100%;box-sizing:border-box;"><?php echo esc_textarea( $meta['summary'] ); ?></textarea>
 
 			<p style="margin-bottom:4px;margin-top:10px;">
-				<label for="bre-geo-bullets"><strong><?php esc_html_e( 'Kernaussagen', 'bavarian-rank-engine' ); ?></strong></label>
-				<span style="font-size:11px;color:#666;margin-left:8px;"><?php esc_html_e( '(eine pro Zeile)', 'bavarian-rank-engine' ); ?></span>
+				<label for="bre-geo-bullets"><strong><?php esc_html_e( 'Key Points', 'bavarian-rank-engine' ); ?></strong></label>
+				<span style="font-size:11px;color:#666;margin-left:8px;"><?php esc_html_e( '(one per line)', 'bavarian-rank-engine' ); ?></span>
 			</p>
 			<textarea id="bre-geo-bullets" name="bre_geo_bullets" rows="5"
 				style="width:100%;box-sizing:border-box;"><?php echo esc_textarea( implode( "\n", $meta['bullets'] ) ); ?></textarea>
 
 			<p style="margin-bottom:4px;margin-top:10px;">
 				<label for="bre-geo-faq"><strong><?php esc_html_e( 'FAQ', 'bavarian-rank-engine' ); ?></strong></label>
-				<span style="font-size:11px;color:#666;margin-left:8px;"><?php esc_html_e( '(Format: Frage? | Antwort — eine pro Zeile)', 'bavarian-rank-engine' ); ?></span>
+				<span style="font-size:11px;color:#666;margin-left:8px;"><?php esc_html_e( '(Format: Question? | Answer — one per line)', 'bavarian-rank-engine' ); ?></span>
 			</p>
 			<textarea id="bre-geo-faq" name="bre_geo_faq" rows="4"
 				style="width:100%;box-sizing:border-box;">
@@ -116,7 +116,7 @@ class GeoEditorBox {
 
 			<?php if ( $settings['allow_prompt_addon'] ) : ?>
 			<p style="margin-bottom:4px;margin-top:10px;">
-				<label for="bre-geo-addon"><strong><?php esc_html_e( 'Prompt-Zusatz (optional)', 'bavarian-rank-engine' ); ?></strong></label>
+				<label for="bre-geo-addon"><strong><?php esc_html_e( 'Prompt add-on (optional)', 'bavarian-rank-engine' ); ?></strong></label>
 			</p>
 			<textarea id="bre-geo-addon" name="bre_geo_prompt_addon" rows="2"
 				style="width:100%;box-sizing:border-box;"><?php echo esc_textarea( $prompt_addon ); ?></textarea>
@@ -207,7 +207,7 @@ class GeoEditorBox {
 				)
 			);
 		} else {
-			wp_send_json_error( __( 'Generierung fehlgeschlagen. API-Key und Provider-Einstellungen prüfen.', 'bavarian-rank-engine' ) );
+			wp_send_json_error( __( 'Generation failed. Check API key and provider settings.', 'bavarian-rank-engine' ) );
 		}
 	}
 

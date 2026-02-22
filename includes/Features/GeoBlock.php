@@ -40,9 +40,9 @@ class GeoBlock {
 			'post_types'         => array( 'post', 'page' ),
 			'position'           => 'after_first_p',
 			'output_style'       => 'details_collapsible',
-			'title'              => 'Schnellüberblick',
-			'label_summary'      => 'Kurzfassung',
-			'label_bullets'      => 'Kernaussagen',
+			'title'              => 'Quick Overview',
+			'label_summary'      => 'Summary',
+			'label_bullets'      => 'Key Points',
 			'label_faq'          => 'FAQ',
 			'minimal_css'        => true,
 			'custom_css'         => '',
@@ -56,19 +56,19 @@ class GeoBlock {
 	}
 
 	public static function getDefaultPrompt(): string {
-		return 'Analysiere den folgenden Artikel und erstelle einen strukturierten Schnellüberblick.' . "\n"
-			. 'Antworte ausschließlich mit einem validen JSON-Objekt (keine Markdown-Code-Blöcke, kein Text davor oder danach).' . "\n\n"
-			. 'Sprache: {language}' . "\n"
-			. 'Artikel-Titel: {title}' . "\n\n"
-			. 'Regeln:' . "\n"
-			. '- summary: 40–90 Wörter, neutral, sachlich, keine Werbung, keine Superlative.' . "\n"
-			. '- bullets: 3–7 kurze Kernaussagen. Keine Wiederholungen aus der summary.' . "\n"
-			. '- faq: 0–5 Frage-Antwort-Paare, NUR wenn der Artikel echte Fragen beantwortet. Sonst leeres Array [].' . "\n"
-			. '- Nichts erfinden. Keine Keyword-Häufung. Kurze, klare Sätze.' . "\n"
-			. '- Keine Phrasen wie "In diesem Artikel", "ultimativ", "Gamechanger".' . "\n\n"
-			. 'JSON-Format (exakt):' . "\n"
+		return 'Analyze the following article and create a structured quick overview.' . "\n"
+			. 'Respond exclusively with a valid JSON object (no Markdown code fences, no text before or after).' . "\n\n"
+			. 'Language: {language}' . "\n"
+			. 'Article title: {title}' . "\n\n"
+			. 'Rules:' . "\n"
+			. '- summary: 40–90 words, neutral, factual, no advertising, no superlatives.' . "\n"
+			. '- bullets: 3–7 short key points. No repetition from the summary.' . "\n"
+			. '- faq: 0–5 question-answer pairs, ONLY if the article genuinely answers questions. Otherwise empty array [].' . "\n"
+			. '- Do not invent anything. No keyword stuffing. Short, clear sentences.' . "\n"
+			. '- No phrases like "In this article", "ultimate", "game changer".' . "\n\n"
+			. 'JSON format (exact):' . "\n"
 			. '{"summary":"...","bullets":["...","..."],"faq":[{"q":"...","a":"..."}]}' . "\n\n"
-			. 'Artikel-Inhalt:' . "\n"
+			. 'Article content:' . "\n"
 			. '{content}';
 	}
 	public function generate( int $post_id, bool $force = false ): bool {
@@ -150,10 +150,10 @@ class GeoBlock {
 		$prompt = str_replace( '{language}', $language, $prompt );
 
 		if ( $force_no_faq ) {
-			$prompt .= "\n\nWICHTIG: Setze faq immer auf ein leeres Array: []";
+			$prompt .= "\n\nIMPORTANT: Always set faq to an empty array: []";
 		}
 		if ( ! empty( $addon ) ) {
-			$prompt .= "\n\nZusätzliche Anweisung: " . $addon;
+			$prompt .= "\n\nAdditional instruction: " . $addon;
 		}
 
 		return $prompt;

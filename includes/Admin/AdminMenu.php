@@ -78,7 +78,7 @@ class AdminMenu {
 
 		add_submenu_page(
 			'bavarian-rank',
-			__( 'GEO Schnellüberblick', 'bavarian-rank-engine' ),
+			__( 'GEO Quick Overview', 'bavarian-rank-engine' ),
 			__( 'GEO Block', 'bavarian-rank-engine' ),
 			'manage_options',
 			'bre-geo',

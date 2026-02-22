@@ -496,3 +496,180 @@ msgstr "Ein Bulk-Prozess l\xc3\xa4uft bereits."
 #: includes/Features/LlmsTxt.php:31
 msgid "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
 msgstr "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
+
+#: includes/Admin/AdminMenu.php
+msgid "GEO Quick Overview"
+msgstr "GEO Schnell\xc3\xbcberblick"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "GEO Quick Overview (BRE)"
+msgstr "GEO Schnell\xc3\xbcberblick (BRE)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Enable GEO block for this post"
+msgstr "GEO-Block f\xc3\xbcr diesen Beitrag aktiv"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Lock auto-regeneration"
+msgstr "Auto-Regeneration sperren"
+
+#: includes/Admin/GeoEditorBox.php
+#, php-format
+msgid "Generated: %s"
+msgstr "Generiert: %s"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Generate now"
+msgstr "Jetzt generieren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Regenerate"
+msgstr "Neu generieren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Clear"
+msgstr "Leeren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Summary"
+msgstr "Kurzfassung"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "(one per line)"
+msgstr "(eine pro Zeile)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Key Points"
+msgstr "Kernaussagen"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "(Format: Question? | Answer \xe2\x80\x94 one per line)"
+msgstr "(Format: Frage? | Antwort \xe2\x80\x94 eine pro Zeile)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Prompt add-on (optional)"
+msgstr "Prompt-Zusatz (optional)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Generation failed. Check API key and provider settings."
+msgstr "Generierung fehlgeschlagen. API-Key und Provider-Einstellungen pr\xc3\xbcfen."
+
+#: includes/Admin/views/geo.php
+msgid "Activation"
+msgstr "Aktivierung"
+
+#: includes/Admin/views/geo.php
+msgid "Enable GEO Block"
+msgstr "GEO Block aktivieren"
+
+#: includes/Admin/views/geo.php
+msgid "Output the Quick Overview block on the frontend"
+msgstr "Schnell\xc3\xbcberblick-Block im Frontend ausgeben"
+
+#: includes/Admin/views/geo.php
+msgid "Mode"
+msgstr "Modus"
+
+#: includes/Admin/views/geo.php
+msgid "Auto on publish / update (recommended)"
+msgstr "Auto bei Publish/Update (empfohlen)"
+
+#: includes/Admin/views/geo.php
+msgid "Hybrid: auto only when fields are empty"
+msgstr "Hybrid: Auto nur wenn Felder leer"
+
+#: includes/Admin/views/geo.php
+msgid "Manual only (editor button)"
+msgstr "Nur manuell (Editor-Button)"
+
+#: includes/Admin/views/geo.php
+msgid "Regenerate on update"
+msgstr "Bei Update neu generieren"
+
+#: includes/Admin/views/geo.php
+msgid "Regenerate on every save of a published post"
+msgstr "Bei jedem Speichern eines publizierten Beitrags neu generieren"
+
+#: includes/Admin/views/geo.php
+msgid "Word threshold for FAQ"
+msgstr "Wortschwellwert f\xc3\xbcr FAQ"
+
+#: includes/Admin/views/geo.php
+msgid "Below this word count, no FAQ is generated. Default: 350"
+msgstr "Unter dieser Wortanzahl wird keine FAQ generiert. Standard: 350"
+
+#: includes/Admin/views/geo.php
+msgid "Output"
+msgstr "Ausgabe"
+
+#: includes/Admin/views/geo.php
+msgid "After first paragraph (default)"
+msgstr "Nach dem ersten Absatz (Standard)"
+
+#: includes/Admin/views/geo.php
+msgid "Top of post"
+msgstr "Anfang des Beitrags"
+
+#: includes/Admin/views/geo.php
+msgid "Bottom of post"
+msgstr "Ende des Beitrags"
+
+#: includes/Admin/views/geo.php
+msgid "Output style"
+msgstr "Ausgabe-Stil"
+
+#: includes/Admin/views/geo.php
+msgid "Collapsible <details> (default)"
+msgstr "Einklappbar <details> (Standard)"
+
+#: includes/Admin/views/geo.php
+msgid "Always open"
+msgstr "Immer aufgeklappt"
+
+#: includes/Admin/views/geo.php
+msgid "Store only, no frontend output"
+msgstr "Nur speichern, nicht ausgeben"
+
+#: includes/Admin/views/geo.php
+msgid "Block title"
+msgstr "Block-Titel"
+
+#: includes/Admin/views/geo.php
+msgid "Summary label"
+msgstr "Label Kurzfassung"
+
+#: includes/Admin/views/geo.php
+msgid "Key Points label"
+msgstr "Label Kernaussagen"
+
+#: includes/Admin/views/geo.php
+msgid "FAQ label"
+msgstr "Label FAQ"
+
+#: includes/Admin/views/geo.php
+msgid "Load minimal CSS"
+msgstr "Minimal-CSS laden"
+
+#: includes/Admin/views/geo.php
+msgid "Load base stylesheet for .bre-geo on the frontend"
+msgstr "Basis-Stylesheet f\xc3\xbcr .bre-geo auf dem Frontend laden"
+
+#: includes/Admin/views/geo.php
+msgid "Automatically scoped to .bre-geo{...}. Enter CSS properties only, no selector."
+msgstr "Wird automatisch auf .bre-geo{...} begrenzt. Nur CSS-Eigenschaften eingeben, keinen Selektor."
+
+#: includes/Admin/views/geo.php
+msgid "AI Prompt"
+msgstr "KI Prompt"
+
+#: includes/Admin/views/geo.php
+msgid "Default prompt"
+msgstr "Standard-Prompt"
+
+#: includes/Admin/views/geo.php
+msgid "Per-post prompt add-on"
+msgstr "Prompt-Zusatz pro Beitrag"
+
+#: includes/Admin/views/geo.php
+msgid "Authors can enter a prompt add-on per post in the editor"
+msgstr "Autoren d\xc3\xbcrfen im Editor einen Prompt-Zusatz pro Beitrag eingeben"
