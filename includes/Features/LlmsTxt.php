@@ -9,11 +9,14 @@ class LlmsTxt {
 	private const OPTION_KEY = 'bre_llms_settings';
 	private const CACHE_KEY  = 'bre_llms_cache';
 
+	private const NOTICE_META = 'bre_dismissed_llms_rank_math';
+
 	public function register(): void {
 		add_action( 'parse_request', array( $this, 'maybe_serve' ), 1 );
 		add_action( 'init', array( $this, 'add_rewrite_rule' ) );
 		add_filter( 'query_vars', array( $this, 'add_query_var' ) );
 		add_action( 'admin_notices', array( $this, 'rank_math_notice' ) );
+		add_action( 'wp_ajax_bre_dismiss_llms_notice', array( $this, 'ajax_dismiss_notice' ) );
 	}
 
 	public function maybe_serve(): void {
@@ -31,13 +34,30 @@ class LlmsTxt {
 		if ( ! defined( 'RANK_MATH_VERSION' ) ) {
 			return;
 		}
+		if ( get_user_meta( get_current_user_id(), self::NOTICE_META, true ) ) {
+			return;
+		}
 		$settings = self::getSettings();
 		if ( empty( $settings['enabled'] ) ) {
 			return;
 		}
-		echo '<div class="notice notice-info is-dismissible"><p>'
-			. esc_html__( 'Bavarian Rank Engine bedient llms.txt mit Priorität — kein Handlungsbedarf bei Rank Math.', 'bavarian-rank-engine' )
-			. '</p></div>';
+		$nonce = wp_create_nonce( 'bre_dismiss_llms_notice' );
+		?>
+		<div class="notice notice-info is-dismissible" id="bre-llms-rank-math-notice">
+			<p><?php esc_html_e( 'Bavarian Rank Engine serves llms.txt with priority — no action needed in Rank Math.', 'bavarian-rank-engine' ); ?></p>
+		</div>
+		<script>
+		jQuery(document).on('click','#bre-llms-rank-math-notice .notice-dismiss',function(){
+			jQuery.post(window.ajaxurl,{action:'bre_dismiss_llms_notice',nonce:'<?php echo esc_js( $nonce ); ?>'});
+		});
+		</script>
+		<?php
+	}
+
+	public function ajax_dismiss_notice(): void {
+		check_ajax_referer( 'bre_dismiss_llms_notice', 'nonce' );
+		update_user_meta( get_current_user_id(), self::NOTICE_META, '1' );
+		wp_send_json_success();
 	}
 
 	public function add_rewrite_rule(): void {

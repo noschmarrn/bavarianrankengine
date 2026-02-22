@@ -493,8 +493,8 @@ msgstr "Cache geleert."
 msgid "Ein Bulk-Prozess l\xc3\xa4uft bereits."
 msgstr "Ein Bulk-Prozess l\xc3\xa4uft bereits."
 
-#: includes/Features/LlmsTxt.php:31
-msgid "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
+#: includes/Features/LlmsTxt.php
+msgid "Bavarian Rank Engine serves llms.txt with priority \xe2\x80\x94 no action needed in Rank Math."
 msgstr "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
 
 #: includes/Admin/AdminMenu.php
@@ -673,3 +673,35 @@ msgstr "Prompt-Zusatz pro Beitrag"
 #: includes/Admin/views/geo.php
 msgid "Authors can enter a prompt add-on per post in the editor"
 msgstr "Autoren d\xc3\xbcrfen im Editor einen Prompt-Zusatz pro Beitrag eingeben"
+
+#: includes/Admin/views/dashboard.php
+msgid "Plugin Compatibility"
+msgstr "Plugin-Kompatibilität"
+
+#: includes/Admin/views/dashboard.php
+msgid "The following SEO plugins were detected. BRE adapts automatically."
+msgstr "Folgende SEO-Plugins wurden erkannt. BRE passt sich automatisch an."
+
+#: includes/Admin/views/dashboard.php
+msgid "llms.txt: BRE serves the file with priority — Rank Math is bypassed."
+msgstr "llms.txt: BRE liefert die Datei mit Priorität — Rank Math wird umgangen."
+
+#: includes/Admin/views/dashboard.php
+msgid "Schema.org: BRE suppresses its own JSON-LD to avoid duplicates."
+msgstr "Schema.org: BRE unterdrückt sein eigenes JSON-LD, um Duplikate zu vermeiden."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the Rank Math meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das Rank-Math-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the Yoast meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das Yoast-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the AIOSEO meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das AIOSEO-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the SEOPress meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das SEOPress-Metafeld."

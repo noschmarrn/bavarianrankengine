@@ -53,6 +53,61 @@
 			</div>
 		</div>
 
+		<?php
+		$bre_compat = array(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		if ( defined( 'RANK_MATH_VERSION' ) ) {
+			$bre_compat[] = array(
+				'name'  => 'Rank Math',
+				'notes' => array(
+					__( 'llms.txt: BRE serves the file with priority — Rank Math is bypassed.', 'bavarian-rank-engine' ),
+					__( 'Schema.org: BRE suppresses its own JSON-LD to avoid duplicates.', 'bavarian-rank-engine' ),
+					__( 'Meta descriptions: BRE writes to the Rank Math meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( defined( 'WPSEO_VERSION' ) ) {
+			$bre_compat[] = array(
+				'name'  => 'Yoast SEO',
+				'notes' => array(
+					__( 'Schema.org: BRE suppresses its own JSON-LD to avoid duplicates.', 'bavarian-rank-engine' ),
+					__( 'Meta descriptions: BRE writes to the Yoast meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( defined( 'AIOSEO_VERSION' ) ) {
+			$bre_compat[] = array(
+				'name'  => 'All in One SEO',
+				'notes' => array(
+					__( 'Meta descriptions: BRE writes to the AIOSEO meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( class_exists( 'SeoPress_Titles_Admin' ) ) {
+			$bre_compat[] = array(
+				'name'  => 'SEOPress',
+				'notes' => array(
+					__( 'Meta descriptions: BRE writes to the SEOPress meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( ! empty( $bre_compat ) ) :
+		?>
+		<div class="postbox">
+			<div class="postbox-header"><h2><?php esc_html_e( 'Plugin Compatibility', 'bavarian-rank-engine' ); ?></h2></div>
+			<div class="inside">
+				<p style="color:#666;margin-top:0;"><?php esc_html_e( 'The following SEO plugins were detected. BRE adapts automatically.', 'bavarian-rank-engine' ); ?></p>
+				<?php foreach ( $bre_compat as $plugin ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
+				<p style="margin-bottom:4px;"><strong><?php echo esc_html( $plugin['name'] ); ?></strong></p>
+				<ul style="margin:0 0 12px 20px;">
+					<?php foreach ( $plugin['notes'] as $note ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
+					<li><?php echo esc_html( $note ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="postbox">
 			<div class="postbox-header"><h2><?php esc_html_e( 'Interne Link-Analyse', 'bavarian-rank-engine' ); ?></h2></div>
 			<div class="inside" id="bre-link-analysis-content">
