@@ -557,6 +557,92 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================================
+   STORY / TRUST SIGNAL SECTION
+   ============================================================ */
+.story {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+}
+
+.story__label {
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-light);
+    margin-bottom: 2rem;
+}
+
+.story__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.story__blockquote {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 0 0 1.5rem;
+}
+
+.story__author {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding-left: 1.5rem;
+    line-height: 1.7;
+}
+
+.story__author strong {
+    color: var(--text);
+}
+
+.story__author a {
+    color: var(--accent-light);
+    text-decoration: none;
+}
+
+.story__author a:hover {
+    text-decoration: underline;
+}
+
+.story__heading {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+}
+
+.story__text p {
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+
+.story__text p:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.story__link {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-light);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+.story__link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
    GET IT / CTA SECTION
    ============================================================ */
 .getit {
@@ -760,7 +846,8 @@ img { max-width: 100%; display: block; }
     }
 
     .pitch__grid,
-    .security__grid {
+    .security__grid,
+    .story__grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }

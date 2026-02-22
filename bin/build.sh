@@ -19,6 +19,9 @@ echo "▶ Copying plugin files..."
 rsync -a \
     --exclude='.git/' \
     --exclude='.gitignore' \
+    --exclude='.claude/' \
+    --exclude='website/' \
+    --exclude='README.md' \
     --exclude='node_modules/' \
     --exclude='vendor/phpunit/' \
     --exclude='vendor/nikic/' \

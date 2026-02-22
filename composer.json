@@ -2,7 +2,12 @@
     "name": "donau2space/bavarian-rank-engine",
     "description": "Bavarian Rank Engine WordPress Plugin",
     "require-dev": {
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "squizlabs/php_codesniffer": "^3.13",
+        "wp-coding-standards/wpcs": "^3.3",
+        "phpcsstandards/phpcsutils": "^1.2",
+        "phpcsstandards/phpcsextra": "^1.5",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -15,6 +20,11 @@
     "autoload-dev": {
         "psr-4": {
             "BavarianRankEngine\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

@@ -1,0 +1,63 @@
+/* Bavarian Rank Engine — GEO Block (scoped to .bre-geo) */
+.bre-geo {
+	margin: 1.5em 0;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	background: #fafafa;
+	padding: 0;
+}
+
+.bre-geo summary {
+	cursor: pointer;
+	padding: 0.75em 1em;
+	font-weight: 600;
+	list-style: none;
+	display: flex;
+	align-items: center;
+}
+
+.bre-geo summary::-webkit-details-marker { display: none; }
+
+.bre-geo summary::before {
+	content: '▶';
+	display: inline-block;
+	margin-right: 0.5em;
+	font-size: 0.7em;
+	transition: transform 0.2s;
+}
+
+.bre-geo[open] summary::before { transform: rotate(90deg); }
+
+.bre-geo__title { flex: 1; }
+
+.bre-geo__section {
+	padding: 0.75em 1em;
+	border-top: 1px solid #e0e0e0;
+}
+
+.bre-geo__section h3 {
+	font-size: 0.8em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #666;
+	margin: 0 0 0.5em;
+}
+
+.bre-geo__bullets ul {
+	margin: 0;
+	padding-left: 1.25em;
+}
+
+.bre-geo__bullets li { margin-bottom: 0.25em; }
+
+.bre-geo__faq dl { margin: 0; }
+
+.bre-geo__faq dt {
+	font-weight: 600;
+	margin-top: 0.5em;
+}
+
+.bre-geo__faq dd {
+	margin-left: 0;
+	color: #444;
+}
