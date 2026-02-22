@@ -213,7 +213,7 @@ class MetaGenerator {
 					array(
 						'locked'   => true,
 						'lock_age' => BulkQueue::lockAge(),
-						'message'  => __( 'Ein Bulk-Prozess läuft bereits.', 'bavarian-rank-engine' ),
+						'message'  => __( 'A bulk process is already running.', 'bavarian-rank-engine' ),
 					)
 				);
 				return;

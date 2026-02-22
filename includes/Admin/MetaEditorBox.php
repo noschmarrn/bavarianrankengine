@@ -35,10 +35,10 @@ class MetaEditorBox {
 		$source      = get_post_meta( $post->ID, '_bre_meta_source', true ) ?: 'none';
 
 		$source_labels = array(
-			'ai'       => __( 'KI generiert', 'bavarian-rank-engine' ),
-			'fallback' => __( 'Fallback (erster Absatz)', 'bavarian-rank-engine' ),
-			'manual'   => __( 'Manuell bearbeitet', 'bavarian-rank-engine' ),
-			'none'     => __( 'Noch nicht generiert', 'bavarian-rank-engine' ),
+			'ai'       => __( 'AI generated', 'bavarian-rank-engine' ),
+			'fallback' => __( 'Fallback (first paragraph)', 'bavarian-rank-engine' ),
+			'manual'   => __( 'Manually edited', 'bavarian-rank-engine' ),
+			'none'     => __( 'Not yet generated', 'bavarian-rank-engine' ),
 		);
 
 		$settings = SettingsPage::getSettings();
@@ -68,7 +68,7 @@ class MetaEditorBox {
 					class="button button-small"
 					data-post-id="<?php echo esc_attr( $post->ID ); ?>"
 					data-nonce="<?php echo esc_attr( wp_create_nonce( 'bre_admin' ) ); ?>">
-				<?php esc_html_e( 'Mit KI neu generieren', 'bavarian-rank-engine' ); ?>
+				<?php esc_html_e( 'Regenerate with AI', 'bavarian-rank-engine' ); ?>
 			</button>
 			<?php endif; ?>
 		</p>

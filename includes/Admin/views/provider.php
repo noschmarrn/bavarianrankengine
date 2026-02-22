@@ -63,11 +63,11 @@
 					?>
 				<p style="margin-top:8px;">
 					<a href="<?php echo esc_url( $pricing_url ); ?>" target="_blank" rel="noopener noreferrer">
-						<?php esc_html_e( 'Aktuelle Preise ansehen →', 'bavarian-rank-engine' ); ?>
+						<?php esc_html_e( 'View current pricing →', 'bavarian-rank-engine' ); ?>
 					</a>
 				</p>
 <?php endif; ?>
-				<p style="margin-top:12px;"><strong><?php esc_html_e( 'Kosten pro 1 Million Token (für Kostenübersicht im Bulk):', 'bavarian-rank-engine' ); ?></strong></p>
+				<p style="margin-top:12px;"><strong><?php esc_html_e( 'Cost per 1 million tokens (for the Bulk cost overview):', 'bavarian-rank-engine' ); ?></strong></p>
 				<?php
 				foreach ( $provider->getModels() as $model_id => $model_label ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

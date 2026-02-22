@@ -17,7 +17,7 @@ class SeoWidget {
 		foreach ( $post_types as $pt ) {
 			add_meta_box(
 				'bre_seo_widget',
-				__( 'SEO Analyse (BRE)', 'bavarian-rank-engine' ),
+				__( 'SEO Analysis (BRE)', 'bavarian-rank-engine' ),
 				array( $this, 'render' ),
 				$pt,
 				'side',
@@ -32,22 +32,22 @@ class SeoWidget {
 		<div id="bre-seo-widget" data-site-url="<?php echo esc_attr( home_url() ); ?>">
 			<table style="width:100%;border-collapse:collapse;font-size:12px;line-height:1.8;">
 				<tr>
-					<td style="color:#888;"><?php esc_html_e( 'Titel:', 'bavarian-rank-engine' ); ?></td>
+					<td style="color:#888;"><?php esc_html_e( 'Title:', 'bavarian-rank-engine' ); ?></td>
 					<td id="bre-title-stat" style="text-align:right;font-weight:bold;">
 						<?php echo esc_html( $title_len ); ?> / 60
 					</td>
 				</tr>
 				<tr>
-					<td style="color:#888;"><?php esc_html_e( 'Wörter:', 'bavarian-rank-engine' ); ?></td>
+					<td style="color:#888;"><?php esc_html_e( 'Words:', 'bavarian-rank-engine' ); ?></td>
 					<td id="bre-words-stat" style="text-align:right;">—</td>
 				</tr>
 				<tr>
-					<td style="color:#888;"><?php esc_html_e( 'Lesezeit:', 'bavarian-rank-engine' ); ?></td>
+					<td style="color:#888;"><?php esc_html_e( 'Reading Time:', 'bavarian-rank-engine' ); ?></td>
 					<td id="bre-read-stat" style="text-align:right;">—</td>
 				</tr>
 			</table>
 			<hr style="margin:8px 0;border:none;border-top:1px solid #eee;">
-			<strong style="font-size:11px;color:#555;"><?php esc_html_e( 'Überschriften', 'bavarian-rank-engine' ); ?></strong>
+			<strong style="font-size:11px;color:#555;"><?php esc_html_e( 'Headings', 'bavarian-rank-engine' ); ?></strong>
 			<div id="bre-headings-stat" style="font-size:11px;margin-top:4px;color:#333;">—</div>
 			<hr style="margin:8px 0;border:none;border-top:1px solid #eee;">
 			<strong style="font-size:11px;color:#555;"><?php esc_html_e( 'Links', 'bavarian-rank-engine' ); ?></strong>

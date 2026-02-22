@@ -5,7 +5,7 @@
 
 	<div style="margin-bottom:20px;">
 		<button id="bre-llms-clear-cache" class="button">
-			<?php esc_html_e( 'llms.txt Cache leeren', 'bavarian-rank-engine' ); ?>
+			<?php esc_html_e( 'Clear llms.txt Cache', 'bavarian-rank-engine' ); ?>
 		</button>
 		<span id="bre-cache-result" style="margin-left:10px;color:#46b450;"></span>
 		<script>
@@ -15,7 +15,7 @@
 					action: 'bre_llms_clear_cache',
 					nonce: '<?php echo esc_js( wp_create_nonce( 'bre_admin' ) ); ?>'
 				}).done(function(res){
-					$('#bre-cache-result').text(res.success ? res.data : 'Fehler');
+					$('#bre-cache-result').text(res.success ? res.data : <?php echo wp_json_encode( __( 'Error.', 'bavarian-rank-engine' ) ); ?>);
 					setTimeout(function(){ $('#bre-cache-result').text(''); }, 3000);
 				});
 			});
@@ -104,13 +104,13 @@
 			</tr>
 
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Max. Links pro Seite', 'bavarian-rank-engine' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Max. links per page', 'bavarian-rank-engine' ); ?></th>
 				<td>
 					<input type="number" name="bre_llms_settings[max_links]"
 							value="<?php echo esc_attr( $settings['max_links'] ?? 500 ); ?>"
 							min="50" max="5000" style="width:80px;">
 					<p class="description">
-						<?php esc_html_e( 'Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt.', 'bavarian-rank-engine' ); ?>
+						<?php esc_html_e( 'With more posts, llms-2.txt, llms-3.txt etc. are created and linked automatically.', 'bavarian-rank-engine' ); ?>
 					</p>
 				</td>
 			</tr>

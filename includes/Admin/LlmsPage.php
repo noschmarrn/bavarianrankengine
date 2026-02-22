@@ -63,7 +63,7 @@ class LlmsPage {
 			wp_send_json_error();
 		}
 		\BavarianRankEngine\Features\LlmsTxt::clear_cache();
-		wp_send_json_success( __( 'Cache geleert.', 'bavarian-rank-engine' ) );
+		wp_send_json_success( __( 'Cache cleared.', 'bavarian-rank-engine' ) );
 	}
 
 	public function render(): void {

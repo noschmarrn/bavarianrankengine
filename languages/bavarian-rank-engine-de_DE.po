@@ -47,6 +47,7 @@ msgstr "Meta-Generator"
 #: includes/Admin/AdminMenu.php:59
 #: includes/Admin/AdminMenu.php:60
 #: includes/Admin/views/bulk.php:3
+#: includes/Admin/views/dashboard.php:42
 msgid "Bulk Generator"
 msgstr "Massen-Generator"
 
@@ -98,10 +99,6 @@ msgstr "KI-Anbieter-Einstellungen"
 msgid "Meta Generator Settings"
 msgstr "Meta-Generator-Einstellungen"
 
-#: includes/Admin/views/dashboard.php:42
-msgid "Bulk Generator"
-msgstr "Massen-Generator"
-
 #: includes/Admin/views/dashboard.php:48
 msgid "Status"
 msgstr "Status"
@@ -114,33 +111,73 @@ msgstr "Version:"
 msgid "Active Provider:"
 msgstr "Aktiver Anbieter:"
 
-#: includes/Admin/views/dashboard.php:56
-msgid "Interne Link-Analyse"
+#: includes/Admin/views/dashboard.php
+msgid "New here?"
+msgstr "Neu hier?"
+
+#: includes/Admin/views/dashboard.php
+msgid "Read the setup guide — get running in five minutes →"
+msgstr "Einrichtungsanleitung lesen — in fünf Minuten startklar →"
+
+#: includes/Admin/views/dashboard.php
+msgid "Internal Link Analysis"
 msgstr "Interne Link-Analyse"
 
-#: includes/Admin/views/dashboard.php:58
-msgid "Wird geladen\xe2\x80\xa6"
-msgstr "Wird geladen\xe2\x80\xa6"
+#: includes/Admin/views/dashboard.php
+msgid "Loading…"
+msgstr "Wird geladen…"
 
-#: includes/Admin/views/dashboard.php:63
-msgid "AI Crawler \xe2\x80\x94 letzte 30 Tage"
-msgstr "AI Crawler \xe2\x80\x94 letzte 30 Tage"
+#: includes/Admin/views/dashboard.php
+msgid "AI Crawlers — Last 30 Days"
+msgstr "AI Crawler — letzte 30 Tage"
 
-#: includes/Admin/views/dashboard.php:67
-msgid "Noch keine AI-Crawls aufgezeichnet."
+#: includes/Admin/views/dashboard.php
+msgid "No AI crawlers recorded yet."
 msgstr "Noch keine AI-Crawls aufgezeichnet."
 
-#: includes/Admin/views/dashboard.php:71
+#: includes/Admin/views/dashboard.php
 msgid "Bot"
 msgstr "Bot"
 
-#: includes/Admin/views/dashboard.php:72
-msgid "Besuche"
+#: includes/Admin/views/dashboard.php
+msgid "Visits"
 msgstr "Besuche"
 
-#: includes/Admin/views/dashboard.php:73
-msgid "Zuletzt"
+#: includes/Admin/views/dashboard.php
+msgid "Last Seen"
 msgstr "Zuletzt"
+
+#: includes/Admin/views/dashboard.php
+msgid "Analysis error."
+msgstr "Analysefehler."
+
+#: includes/Admin/views/dashboard.php
+msgid "Posts without internal links"
+msgstr "Posts ohne interne Links"
+
+#: includes/Admin/views/dashboard.php
+msgid "All posts have internal links."
+msgstr "Alle Posts haben interne Links."
+
+#: includes/Admin/views/dashboard.php
+msgid "Posts with many external links (≥"
+msgstr "Posts mit vielen externen Links (≥"
+
+#: includes/Admin/views/dashboard.php
+msgid "No posts with excessive external links."
+msgstr "Keine auffälligen Posts."
+
+#: includes/Admin/views/dashboard.php
+msgid "Pillar Pages (Top 5)"
+msgstr "Pillar Pages (Top 5)"
+
+#: includes/Admin/views/dashboard.php
+msgid "No data."
+msgstr "Keine Daten."
+
+#: includes/Admin/views/dashboard.php
+msgid "Connection error."
+msgstr "Verbindungsfehler."
 
 #: includes/Admin/views/provider.php:13
 #: includes/Admin/views/bulk.php:15
@@ -172,13 +209,13 @@ msgstr "Verbindung testen"
 msgid "Model:"
 msgstr "Modell:"
 
-#: includes/Admin/views/provider.php:63
-msgid "Aktuelle Preise ansehen \xe2\x86\x92"
-msgstr "Aktuelle Preise ansehen \xe2\x86\x92"
+#: includes/Admin/views/provider.php
+msgid "View current pricing →"
+msgstr "Aktuelle Preise ansehen →"
 
-#: includes/Admin/views/provider.php:67
-msgid "Kosten pro 1 Million Token (f\xc3\xbcr Kostens\xc3\xbcbersicht im Bulk):"
-msgstr "Kosten pro 1 Million Token (f\xc3\xbcr Kostens\xc3\xbcbersicht im Bulk):"
+#: includes/Admin/views/provider.php
+msgid "Cost per 1 million tokens (for the Bulk cost overview):"
+msgstr "Kosten pro 1 Million Token (für Kostenübersicht im Bulk):"
 
 #: includes/Admin/views/provider.php:88
 #: includes/Admin/views/meta.php:101
@@ -218,9 +255,21 @@ msgstr "0 / 0 verarbeitet"
 msgid "llms.txt Configuration"
 msgstr "llms.txt Konfiguration"
 
-#: includes/Admin/views/llms.php:7
-msgid "llms.txt Cache leeren"
+#: includes/Admin/views/llms.php
+msgid "Clear llms.txt Cache"
 msgstr "llms.txt Cache leeren"
+
+#: includes/Admin/views/llms.php
+msgid "Error."
+msgstr "Fehler."
+
+#: includes/Admin/views/llms.php
+msgid "Max. links per page"
+msgstr "Max. Links pro Seite"
+
+#: includes/Admin/views/llms.php
+msgid "With more posts, llms-2.txt, llms-3.txt etc. are created and linked automatically."
+msgstr "Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt."
 
 #: includes/Admin/views/llms.php:28
 msgid "Your llms.txt will be served at:"
@@ -371,77 +420,73 @@ msgstr "Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
 msgid "robots.txt \xe2\x80\x94 AI Bots"
 msgstr "robots.txt \xe2\x80\x94 AI Bots"
 
-#: includes/Admin/views/robots.php:5
-msgid "Bekannte AI-Bots f\xc3\xbcr diese Website blockieren."
-msgstr "Bekannte AI-Bots f\xc3\xbcr diese Website blockieren."
+#: includes/Admin/views/robots.php
+msgid "Block known AI bots for this site."
+msgstr "Bekannte KI-Bots für diese Website blockieren."
 
-#: includes/Admin/views/robots.php:6
-msgid "Hinweis: Bots m\xc3\xbcssen sich nicht daran halten."
-msgstr "Hinweis: Bots m\xc3\xbcssen sich nicht daran halten."
+#: includes/Admin/views/robots.php
+msgid "Note: Bots are not required to comply."
+msgstr "Hinweis: Bots müssen sich nicht daran halten."
 
-#: includes/Admin/views/robots.php:15
+#: includes/Admin/views/robots.php
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: includes/Admin/views/robots.php:16
-msgid "Beschreibung"
+#: includes/Admin/views/robots.php
+msgid "Description"
 msgstr "Beschreibung"
 
-#: includes/Admin/views/robots.php:17
-msgid "Blockieren"
+#: includes/Admin/views/robots.php
+msgid "Block"
 msgstr "Blockieren"
 
-#: includes/Admin/views/robots.php:36
-msgid "Einstellungen speichern"
-msgstr "Einstellungen speichern"
-
-#: includes/Admin/views/robots.php:41
-msgid "Aktuelle robots.txt ansehen \xe2\x86\x92"
-msgstr "Aktuelle robots.txt ansehen \xe2\x86\x92"
+#: includes/Admin/views/robots.php
+msgid "View current robots.txt →"
+msgstr "Aktuelle robots.txt ansehen →"
 
 #: includes/Admin/MetaEditorBox.php:20
 msgid "Meta Description (BRE)"
 msgstr "Meta-Beschreibung (BRE)"
 
-#: includes/Admin/MetaEditorBox.php:34
-msgid "KI generiert"
+#: includes/Admin/MetaEditorBox.php
+msgid "AI generated"
 msgstr "KI generiert"
 
-#: includes/Admin/MetaEditorBox.php:35
-msgid "Fallback (erster Absatz)"
+#: includes/Admin/MetaEditorBox.php
+msgid "Fallback (first paragraph)"
 msgstr "Fallback (erster Absatz)"
 
-#: includes/Admin/MetaEditorBox.php:36
-msgid "Manuell bearbeitet"
+#: includes/Admin/MetaEditorBox.php
+msgid "Manually edited"
 msgstr "Manuell bearbeitet"
 
-#: includes/Admin/MetaEditorBox.php:37
-msgid "Noch nicht generiert"
+#: includes/Admin/MetaEditorBox.php
+msgid "Not yet generated"
 msgstr "Noch nicht generiert"
 
-#: includes/Admin/MetaEditorBox.php:67
-msgid "Mit KI neu generieren"
+#: includes/Admin/MetaEditorBox.php
+msgid "Regenerate with AI"
 msgstr "Mit KI neu generieren"
 
-#: includes/Admin/SeoWidget.php:16
-msgid "SEO Analyse (BRE)"
+#: includes/Admin/SeoWidget.php
+msgid "SEO Analysis (BRE)"
 msgstr "SEO Analyse (BRE)"
 
-#: includes/Admin/SeoWidget.php:31
-msgid "Titel:"
+#: includes/Admin/SeoWidget.php
+msgid "Title:"
 msgstr "Titel:"
 
-#: includes/Admin/SeoWidget.php:37
-msgid "W\xc3\xb6rter:"
-msgstr "W\xc3\xb6rter:"
+#: includes/Admin/SeoWidget.php
+msgid "Words:"
+msgstr "Wörter:"
 
-#: includes/Admin/SeoWidget.php:41
-msgid "Lesezeit:"
+#: includes/Admin/SeoWidget.php
+msgid "Reading Time:"
 msgstr "Lesezeit:"
 
-#: includes/Admin/SeoWidget.php:46
-msgid "\xc3\x9cberschriften"
-msgstr "\xc3\x9cberschriften"
+#: includes/Admin/SeoWidget.php
+msgid "Headings"
+msgstr "Überschriften"
 
 #: includes/Admin/SeoWidget.php:49
 msgid "Links"
@@ -485,13 +530,13 @@ msgstr "Kein API-Schl\xc3\xbcssel gespeichert. Bitte zuerst speichern."
 msgid "Unknown provider."
 msgstr "Unbekannter Anbieter."
 
-#: includes/Admin/LlmsPage.php:52
-msgid "Cache geleert."
+#: includes/Admin/LlmsPage.php
+msgid "Cache cleared."
 msgstr "Cache geleert."
 
-#: includes/Features/MetaGenerator.php:191
-msgid "Ein Bulk-Prozess l\xc3\xa4uft bereits."
-msgstr "Ein Bulk-Prozess l\xc3\xa4uft bereits."
+#: includes/Features/MetaGenerator.php
+msgid "A bulk process is already running."
+msgstr "Ein Bulk-Prozess läuft bereits."
 
 #: includes/Features/LlmsTxt.php
 msgid "Bavarian Rank Engine serves llms.txt with priority \xe2\x80\x94 no action needed in Rank Math."
