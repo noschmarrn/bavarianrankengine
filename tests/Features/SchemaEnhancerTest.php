@@ -40,4 +40,28 @@ class SchemaEnhancerTest extends TestCase {
         $this->assertEquals( 'PT5M',  SchemaEnhancer::minutesToIsoDuration( 5 ) );
         $this->assertEquals( 'PT0M',  SchemaEnhancer::minutesToIsoDuration( 0 ) );
     }
+
+    public function test_extract_video_detects_youtube_embed_url(): void {
+        $content = '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>';
+        $result  = SchemaEnhancer::extractVideoFromContent( $content );
+        $this->assertEquals( 'dQw4w9WgXcQ', $result['videoId'] );
+        $this->assertEquals( 'youtube',     $result['platform'] );
+    }
+
+    public function test_extract_video_detects_youtu_be_url(): void {
+        $content = '<a href="https://youtu.be/dQw4w9WgXcQ">Video</a>';
+        $result  = SchemaEnhancer::extractVideoFromContent( $content );
+        $this->assertEquals( 'dQw4w9WgXcQ', $result['videoId'] );
+    }
+
+    public function test_extract_video_detects_vimeo(): void {
+        $content = '<iframe src="https://player.vimeo.com/video/123456789"></iframe>';
+        $result  = SchemaEnhancer::extractVideoFromContent( $content );
+        $this->assertEquals( '123456789', $result['videoId'] );
+        $this->assertEquals( 'vimeo',     $result['platform'] );
+    }
+
+    public function test_extract_video_returns_null_for_no_video(): void {
+        $this->assertNull( SchemaEnhancer::extractVideoFromContent( '<p>No video here.</p>' ) );
+    }
 }

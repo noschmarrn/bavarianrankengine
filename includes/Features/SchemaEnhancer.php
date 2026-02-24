@@ -285,4 +285,55 @@ class SchemaEnhancer {
         }
         return $schema;
     }
+
+
+    /**
+     * Extracts first YouTube or Vimeo video from HTML content.
+     * Returns ['platform' => 'youtube'|'vimeo', 'videoId' => string] or null.
+     */
+    public static function extractVideoFromContent( string $content ): ?array {
+        // YouTube embed or youtu.be
+        if ( preg_match(
+            '#(?:youtube\.com/embed/|youtu\.be/)([a-zA-Z0-9_\-]{11})#',
+            $content,
+            $m
+        ) ) {
+            return array( 'platform' => 'youtube', 'videoId' => $m[1] );
+        }
+        // Vimeo
+        if ( preg_match( '#player\.vimeo\.com/video/(\d+)#', $content, $m ) ) {
+            return array( 'platform' => 'vimeo', 'videoId' => $m[1] );
+        }
+        return null;
+    }
+
+    /**
+     * WP-dependent wrapper: builds VideoObject from first video found in post content.
+     */
+    private function buildVideoObject(): ?array {
+        global $post;
+        $content = isset( $post->post_content ) ? $post->post_content : '';
+        $video   = self::extractVideoFromContent( $content );
+        if ( ! $video ) {
+            return null;
+        }
+        if ( $video['platform'] === 'youtube' ) {
+            $embed_url     = 'https://www.youtube.com/embed/' . $video['videoId'];
+            $thumbnail_url = 'https://i.ytimg.com/vi/' . $video['videoId'] . '/hqdefault.jpg';
+        } else {
+            $embed_url     = 'https://player.vimeo.com/video/' . $video['videoId'];
+            $thumbnail_url = '';
+        }
+        $schema = array(
+            '@context'   => 'https://schema.org',
+            '@type'      => 'VideoObject',
+            'name'       => get_the_title(),
+            'embedUrl'   => $embed_url,
+            'uploadDate' => get_the_date( 'c' ),
+        );
+        if ( $thumbnail_url ) {
+            $schema['thumbnailUrl'] = $thumbnail_url;
+        }
+        return $schema;
+    }
 }
