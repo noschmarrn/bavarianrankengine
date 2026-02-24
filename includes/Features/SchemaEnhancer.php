@@ -177,4 +177,48 @@ class SchemaEnhancer {
 			'itemListElement' => $items,
 		);
 	}
+
+	/**
+	 * Pure helper — converts GEO FAQ pairs to FAQPage schema.
+	 * Returns null when the list is empty (skip empty schemas).
+	 *
+	 * @param array $faq  Array of ['q' => string, 'a' => string] pairs.
+	 */
+	public static function faqPairsToSchema( array $faq ): ?array {
+		$entities = [];
+		foreach ( $faq as $item ) {
+			if ( empty( $item['q'] ) || empty( $item['a'] ) ) {
+				continue;
+			}
+			$entities[] = [
+				'@type'          => 'Question',
+				'name'           => $item['q'],
+				'acceptedAnswer' => [
+					'@type' => 'Answer',
+					'text'  => $item['a'],
+				],
+			];
+		}
+		if ( empty( $entities ) ) {
+			return null;
+		}
+		return [
+			'@context'   => 'https://schema.org',
+			'@type'      => 'FAQPage',
+			'mainEntity' => $entities,
+		];
+	}
+
+	/**
+	 * WP-dependent wrapper: reads from GeoBlock post meta.
+	 */
+	private function buildFaqSchema(): ?array {
+		$post_id = get_the_ID();
+		if ( ! $post_id ) {
+			return null;
+		}
+		$meta = \BavarianRankEngine\Features\GeoBlock::getMeta( $post_id );
+		return self::faqPairsToSchema( $meta['faq'] ?? [] );
+	}
+
 }
