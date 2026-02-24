@@ -80,7 +80,8 @@ class SchemaEnhancer {
 			if ( in_array( 'blog_posting', $enabled, true ) ) {
 				$schemas[] = $this->buildBlogPosting();
 			}
-			if ( in_array( 'image_object', $enabled, true ) ) {
+			if ( in_array( 'image_object', $enabled, true )
+				&& ! in_array( 'blog_posting', $enabled, true ) ) {
 				$img = $this->buildImageObject();
 				if ( $img ) {
 					$schemas[] = $img;
@@ -95,25 +96,25 @@ class SchemaEnhancer {
 
 			// Metabox-types — only output if post's schema type matches
 			$schema_type = get_post_meta( get_the_ID(), SchemaMetaBox::META_TYPE, true );
-			if ( $schema_type === 'howto' && in_array( 'howto', $enabled, true ) ) {
+			if ( 'howto' === $schema_type && in_array( 'howto', $enabled, true ) ) {
 				$howto = $this->buildHowToSchema();
 				if ( $howto ) {
 					$schemas[] = $howto;
 				}
 			}
-			if ( $schema_type === 'review' && in_array( 'review', $enabled, true ) ) {
+			if ( 'review' === $schema_type && in_array( 'review', $enabled, true ) ) {
 				$review = $this->buildReviewSchema();
 				if ( $review ) {
 					$schemas[] = $review;
 				}
 			}
-			if ( $schema_type === 'recipe' && in_array( 'recipe', $enabled, true ) ) {
+			if ( 'recipe' === $schema_type && in_array( 'recipe', $enabled, true ) ) {
 				$recipe = $this->buildRecipeSchema();
 				if ( $recipe ) {
 					$schemas[] = $recipe;
 				}
 			}
-			if ( $schema_type === 'event' && in_array( 'event', $enabled, true ) ) {
+			if ( 'event' === $schema_type && in_array( 'event', $enabled, true ) ) {
 				$event = $this->buildEventSchema();
 				if ( $event ) {
 					$schemas[] = $event;
@@ -236,28 +237,28 @@ class SchemaEnhancer {
 	 * @param array $faq  Array of ['q' => string, 'a' => string] pairs.
 	 */
 	public static function faqPairsToSchema( array $faq ): ?array {
-		$entities = [];
+		$entities = array();
 		foreach ( $faq as $item ) {
 			if ( empty( $item['q'] ) || empty( $item['a'] ) ) {
 				continue;
 			}
-			$entities[] = [
+			$entities[] = array(
 				'@type'          => 'Question',
 				'name'           => $item['q'],
-				'acceptedAnswer' => [
+				'acceptedAnswer' => array(
 					'@type' => 'Answer',
 					'text'  => $item['a'],
-				],
-			];
+				),
+			);
 		}
 		if ( empty( $entities ) ) {
 			return null;
 		}
-		return [
+		return array(
 			'@context'   => 'https://schema.org',
 			'@type'      => 'FAQPage',
 			'mainEntity' => $entities,
-		];
+		);
 	}
 
 	/**
@@ -269,124 +270,125 @@ class SchemaEnhancer {
 			return null;
 		}
 		$meta = \BavarianRankEngine\Features\GeoBlock::getMeta( $post_id );
-		return self::faqPairsToSchema( $meta['faq'] ?? [] );
+		return self::faqPairsToSchema( $meta['faq'] ?? array() );
 	}
 
 
-    /**
-     * Converts integer minutes to ISO 8601 duration string (e.g. 90 -> "PT90M").
-     */
-    public static function minutesToIsoDuration( int $minutes ): string {
-        return 'PT' . $minutes . 'M';
-    }
+	/**
+	 * Converts integer minutes to ISO 8601 duration string (e.g. 90 -> "PT90M").
+	 */
+	public static function minutesToIsoDuration( int $minutes ): string {
+		return 'PT' . $minutes . 'M';
+	}
 
-    /**
-     * BlogPosting (or Article for non-post types) with embedded author + image.
-     */
-    private function buildBlogPosting(): array {
-        $type   = get_post_type() === 'post' ? 'BlogPosting' : 'Article';
-        $schema = array(
-            '@context'      => 'https://schema.org',
-            '@type'         => $type,
-            'headline'      => get_the_title(),
-            'url'           => get_permalink(),
-            'datePublished' => get_the_date( 'c' ),
-            'dateModified'  => get_the_modified_date( 'c' ),
-            'description'   => get_post_meta( get_the_ID(), '_bre_meta_description', true )
-                               ?: get_the_excerpt(),
-            'publisher'     => array(
-                '@type' => 'Organization',
-                'name'  => get_bloginfo( 'name' ),
-                'url'   => home_url( '/' ),
-            ),
-            'author'        => array(
-                '@type' => 'Person',
-                'name'  => get_the_author(),
-                'url'   => get_author_posts_url( (int) get_the_author_meta( 'ID' ) ),
-            ),
-        );
-        $img = $this->buildImageObject();
-        if ( $img ) {
-            $schema['image'] = $img;
-        }
-        return $schema;
-    }
+	/**
+	 * BlogPosting (or Article for non-post types) with embedded author + image.
+	 */
+	private function buildBlogPosting(): array {
+		$type   = get_post_type() === 'post' ? 'BlogPosting' : 'Article';
+		$schema = array(
+			'@context'      => 'https://schema.org',
+			'@type'         => $type,
+			'headline'      => get_the_title(),
+			'url'           => get_permalink(),
+			'datePublished' => get_the_date( 'c' ),
+			'dateModified'  => get_the_modified_date( 'c' ),
+			'description'   => get_post_meta( get_the_ID(), '_bre_meta_description', true )
+							   ?: get_the_excerpt(),
+			'publisher'     => array(
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+				'url'   => home_url( '/' ),
+			),
+			'author'        => array(
+				'@type' => 'Person',
+				'name'  => get_the_author(),
+				'url'   => get_author_posts_url( (int) get_the_author_meta( 'ID' ) ),
+			),
+		);
+		$img = $this->buildImageObject();
+		if ( $img ) {
+			$schema['image'] = $img;
+		}
+		return $schema;
+	}
 
-    /**
-     * ImageObject from featured image. Returns null when no thumbnail is set.
-     */
-    private function buildImageObject(): ?array {
-        if ( ! has_post_thumbnail() ) {
-            return null;
-        }
-        $src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-        if ( ! $src ) {
-            return null;
-        }
-        $schema = array(
-            '@context'   => 'https://schema.org',
-            '@type'      => 'ImageObject',
-            'contentUrl' => $src[0],
-        );
-        if ( ! empty( $src[1] ) ) {
-            $schema['width'] = (int) $src[1];
-        }
-        if ( ! empty( $src[2] ) ) {
-            $schema['height'] = (int) $src[2];
-        }
-        return $schema;
-    }
+	/**
+	 * ImageObject from featured image. Returns null when no thumbnail is set.
+	 */
+	private function buildImageObject(): ?array {
+		if ( ! has_post_thumbnail() ) {
+			return null;
+		}
+		$src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+		if ( ! $src ) {
+			return null;
+		}
+		$schema = array(
+			'@context'   => 'https://schema.org',
+			'@type'      => 'ImageObject',
+			'contentUrl' => $src[0],
+		);
+		if ( ! empty( $src[1] ) ) {
+			$schema['width'] = (int) $src[1];
+		}
+		if ( ! empty( $src[2] ) ) {
+			$schema['height'] = (int) $src[2];
+		}
+		return $schema;
+	}
 
 
-    /**
-     * Extracts first YouTube or Vimeo video from HTML content.
-     * Returns ['platform' => 'youtube'|'vimeo', 'videoId' => string] or null.
-     */
-    public static function extractVideoFromContent( string $content ): ?array {
-        // YouTube embed or youtu.be
-        if ( preg_match(
-            '#(?:youtube\.com/embed/|youtu\.be/)([a-zA-Z0-9_\-]{11})#',
-            $content,
-            $m
-        ) ) {
-            return array( 'platform' => 'youtube', 'videoId' => $m[1] );
-        }
-        // Vimeo
-        if ( preg_match( '#player\.vimeo\.com/video/(\d+)#', $content, $m ) ) {
-            return array( 'platform' => 'vimeo', 'videoId' => $m[1] );
-        }
-        return null;
-    }
+	/**
+	 * Extracts first YouTube or Vimeo video from HTML content.
+	 * Returns ['platform' => 'youtube'|'vimeo', 'videoId' => string] or null.
+	 */
+	public static function extractVideoFromContent( string $content ): ?array {
+		// YouTube embed or youtu.be
+		if ( preg_match(
+			'#(?:youtube\.com/embed/|youtu\.be/)([a-zA-Z0-9_\-]{11})#',
+			$content,
+			$m
+		) ) {
+			return array( 'platform' => 'youtube', 'videoId' => $m[1] );
+		}
+		// Vimeo
+		if ( preg_match( '#player\.vimeo\.com/video/(\d+)#', $content, $m ) ) {
+			return array( 'platform' => 'vimeo', 'videoId' => $m[1] );
+		}
+		return null;
+	}
 
-    /**
-     * WP-dependent wrapper: builds VideoObject from first video found in post content.
-     */
-    private function buildVideoObject(): ?array {
-        global $post;
-        $content = isset( $post->post_content ) ? $post->post_content : '';
-        $video   = self::extractVideoFromContent( $content );
-        if ( ! $video ) {
-            return null;
-        }
-        if ( $video['platform'] === 'youtube' ) {
-            $embed_url     = 'https://www.youtube.com/embed/' . $video['videoId'];
-            $thumbnail_url = 'https://i.ytimg.com/vi/' . $video['videoId'] . '/hqdefault.jpg';
-        } else {
-            $embed_url     = 'https://player.vimeo.com/video/' . $video['videoId'];
-            $thumbnail_url = '';
-        }
-        $schema = array(
-            '@context'   => 'https://schema.org',
-            '@type'      => 'VideoObject',
-            'name'       => get_the_title(),
-            'embedUrl'   => $embed_url,
-            'uploadDate' => get_the_date( 'c' ),
-        );
-        if ( $thumbnail_url ) {
-            $schema['thumbnailUrl'] = $thumbnail_url;
-        }
-        return $schema;
-    }
+	/**
+	 * WP-dependent wrapper: builds VideoObject from first video found in post content.
+	 */
+	private function buildVideoObject(): ?array {
+		global $post;
+		$content = isset( $post->post_content ) ? $post->post_content : '';
+		$video   = self::extractVideoFromContent( $content );
+		if ( ! $video ) {
+			return null;
+		}
+		if ( $video['platform'] === 'youtube' ) {
+			$embed_url     = 'https://www.youtube.com/embed/' . $video['videoId'];
+			$thumbnail_url = 'https://i.ytimg.com/vi/' . $video['videoId'] . '/hqdefault.jpg';
+		} else {
+			$embed_url     = 'https://player.vimeo.com/video/' . $video['videoId'];
+			$thumbnail_url = '';
+		}
+		$schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'VideoObject',
+			'name'        => get_the_title(),
+			'description' => get_post_meta( get_the_ID(), '_bre_meta_description', true ) ?: get_the_excerpt(),
+			'embedUrl'    => $embed_url,
+			'uploadDate'  => get_the_date( 'c' ),
+		);
+		if ( $thumbnail_url ) {
+			$schema['thumbnailUrl'] = $thumbnail_url;
+		}
+		return $schema;
+	}
 
 	/**
 	 * Pure builder for HowTo schema.

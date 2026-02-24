@@ -56,8 +56,10 @@ class SchemaMetaBox {
 			return;
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$input = isset( $_POST['bre_schema'] ) && is_array( $_POST['bre_schema'] )
-			? $_POST['bre_schema']
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			? wp_unslash( $_POST['bre_schema'] )
 			: array();
 		$clean = self::sanitizeData( $input );
 		update_post_meta( $post_id, self::META_TYPE, $clean['schema_type'] );
