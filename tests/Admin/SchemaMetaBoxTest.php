@@ -60,4 +60,18 @@ class SchemaMetaBoxTest extends TestCase {
         $this->assertCount( 2,        $clean['data']['recipe']['ingredients'] );
         $this->assertCount( 2,        $clean['data']['recipe']['instructions'] );
     }
+
+    public function test_sanitize_data_event_extracts_fields(): void {
+        $input = array(
+            'schema_type'    => 'event',
+            'event_name'     => 'WordCamp',
+            'event_start'    => '2026-06-01',
+            'event_end'      => '2026-06-02',
+            'event_location' => 'Munich',
+            'event_online'   => '1',
+        );
+        $clean = SchemaMetaBox::sanitizeData( $input );
+        $this->assertEquals( 'WordCamp', $clean['data']['event']['name'] );
+        $this->assertTrue(               $clean['data']['event']['online'] );
+    }
 }

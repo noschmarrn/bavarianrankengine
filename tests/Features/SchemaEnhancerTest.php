@@ -114,4 +114,32 @@ class SchemaEnhancerTest extends TestCase {
         $this->assertEquals( 'HowToStep',           $schema['recipeInstructions'][0]['@type'] );
         $this->assertEquals( 'Wasser kochen',       $schema['recipeInstructions'][0]['text'] );
     }
+
+    public function test_build_event_offline_location(): void {
+        $d = array(
+            'name'     => 'WordCamp München',
+            'start'    => '2026-06-01',
+            'end'      => '2026-06-02',
+            'location' => 'Munich, Germany',
+            'online'   => false,
+        );
+        $schema = SchemaEnhancer::buildEventFromData( $d );
+        $this->assertEquals( 'Event',            $schema['@type'] );
+        $this->assertEquals( 'WordCamp München', $schema['name'] );
+        $this->assertEquals( '2026-06-01',       $schema['startDate'] );
+        $this->assertEquals( 'Place',            $schema['location']['@type'] );
+        $this->assertEquals( 'EventScheduled',   $schema['eventStatus'] );
+    }
+
+    public function test_build_event_online_uses_virtual_location(): void {
+        $d = array(
+            'name'     => 'Webinar',
+            'start'    => '2026-05-01',
+            'end'      => '',
+            'location' => 'https://zoom.us/j/123',
+            'online'   => true,
+        );
+        $schema = SchemaEnhancer::buildEventFromData( $d );
+        $this->assertEquals( 'VirtualLocation', $schema['location']['@type'] );
+    }
 }

@@ -464,4 +464,45 @@ class SchemaEnhancer {
 		return self::buildRecipeFromData( $recipe );
 	}
 
+
+	/**
+	 * Pure builder for Event schema.
+	 *
+	 * @param array $d Keys: name, start (date string), end (date string),
+	 *                 location (string), online (bool)
+	 */
+	public static function buildEventFromData( array $d ): array {
+		$is_online     = ! empty( $d['online'] );
+		$location_type = $is_online ? 'VirtualLocation' : 'Place';
+		$location      = array( '@type' => $location_type, 'name' => $d['location'] ?? '' );
+		if ( $is_online && ! empty( $d['location'] ) ) {
+			$location['url'] = $d['location'];
+		}
+		$schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'Event',
+			'name'        => $d['name'] ?? '',
+			'startDate'   => $d['start'] ?? '',
+			'location'    => $location,
+			'eventStatus' => 'EventScheduled',
+		);
+		if ( ! empty( $d['end'] ) ) {
+			$schema['endDate'] = $d['end'];
+		}
+		return $schema;
+	}
+
+	/**
+	 * WP-dependent: builds Event from post meta.
+	 */
+	private function buildEventSchema(): ?array {
+		$post_id  = get_the_ID();
+		$raw_data = get_post_meta( $post_id, SchemaMetaBox::META_DATA, true ) ?: '{}';
+		$data     = json_decode( $raw_data, true );
+		$event    = isset( $data['event'] ) && is_array( $data['event'] ) ? $data['event'] : array();
+		if ( empty( $event['name'] ) || empty( $event['start'] ) ) {
+			return null;
+		}
+		return self::buildEventFromData( $event );
+	}
 }

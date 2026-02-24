@@ -94,7 +94,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?></textarea></label>
 		</p>
 	</div>
-	<!-- More type fields will be added -->
+	<!-- Event fields -->
+	<div class="bre-schema-fields" data-bre-type="event" style="display:none;">
+		<p>
+			<label><strong><?php esc_html_e( 'Event-Name', 'bavarian-rank-engine' ); ?></strong><br>
+			<input type="text" name="bre_schema[event_name]"
+				value="<?php echo esc_attr( $data['event']['name'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p>
+			<label><?php esc_html_e( 'Startdatum', 'bavarian-rank-engine' ); ?><br>
+			<input type="date" name="bre_schema[event_start]"
+				value="<?php echo esc_attr( $data['event']['start'] ?? '' ); ?>"></label>
+		</p>
+		<p>
+			<label><?php esc_html_e( 'Enddatum (optional)', 'bavarian-rank-engine' ); ?><br>
+			<input type="date" name="bre_schema[event_end]"
+				value="<?php echo esc_attr( $data['event']['end'] ?? '' ); ?>"></label>
+		</p>
+		<p>
+			<label><?php esc_html_e( 'Ort oder URL', 'bavarian-rank-engine' ); ?><br>
+			<input type="text" name="bre_schema[event_location]"
+				value="<?php echo esc_attr( $data['event']['location'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p>
+			<label>
+				<input type="checkbox" name="bre_schema[event_online]" value="1"
+					<?php checked( ! empty( $data['event']['online'] ) ); ?>>
+				<?php esc_html_e( 'Online-Event', 'bavarian-rank-engine' ); ?>
+			</label>
+		</p>
+	</div>
 </div>
 <script>
 (function () {

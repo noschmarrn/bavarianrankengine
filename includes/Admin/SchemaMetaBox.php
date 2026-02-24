@@ -112,6 +112,16 @@ class SchemaMetaBox {
 			);
 		}
 
+		if ( $type === 'event' ) {
+			$data['event'] = array(
+				'name'     => sanitize_text_field( $input['event_name']     ?? '' ),
+				'start'    => sanitize_text_field( $input['event_start']    ?? '' ),
+				'end'      => sanitize_text_field( $input['event_end']      ?? '' ),
+				'location' => sanitize_text_field( $input['event_location'] ?? '' ),
+				'online'   => ! empty( $input['event_online'] ),
+			);
+		}
+
 		return array(
 			'schema_type' => $type,
 			'data'        => $data,
