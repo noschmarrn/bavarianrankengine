@@ -57,6 +57,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 				style="width:60px;"></label>
 		</p>
 	</div>
+	<!-- Recipe fields -->
+	<div class="bre-schema-fields" data-bre-type="recipe" style="display:none;">
+		<p>
+			<label><strong><?php esc_html_e( 'Rezeptname', 'bavarian-rank-engine' ); ?></strong><br>
+			<input type="text" name="bre_schema[recipe_name]"
+				value="<?php echo esc_attr( $data['recipe']['name'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p style="display:flex;gap:8px;">
+			<label style="flex:1;"><?php esc_html_e( 'Vorbereitung (Min)', 'bavarian-rank-engine' ); ?><br>
+			<input type="number" name="bre_schema[recipe_prep]" min="0"
+				value="<?php echo esc_attr( $data['recipe']['prep'] ?? '' ); ?>"
+				style="width:100%;"></label>
+			<label style="flex:1;"><?php esc_html_e( 'Kochzeit (Min)', 'bavarian-rank-engine' ); ?><br>
+			<input type="number" name="bre_schema[recipe_cook]" min="0"
+				value="<?php echo esc_attr( $data['recipe']['cook'] ?? '' ); ?>"
+				style="width:100%;"></label>
+		</p>
+		<p>
+			<label><?php esc_html_e( 'Portionen', 'bavarian-rank-engine' ); ?><br>
+			<input type="text" name="bre_schema[recipe_servings]"
+				value="<?php echo esc_attr( $data['recipe']['servings'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p>
+			<label><strong><?php esc_html_e( 'Zutaten (eine pro Zeile)', 'bavarian-rank-engine' ); ?></strong><br>
+			<textarea name="bre_schema[recipe_ingredients]" rows="4" class="widefat"><?php
+				echo esc_textarea( implode( "\n", $data['recipe']['ingredients'] ?? array() ) );
+			?></textarea></label>
+		</p>
+		<p>
+			<label><strong><?php esc_html_e( 'Anleitung (ein Schritt pro Zeile)', 'bavarian-rank-engine' ); ?></strong><br>
+			<textarea name="bre_schema[recipe_instructions]" rows="5" class="widefat"><?php
+				echo esc_textarea( implode( "\n", $data['recipe']['instructions'] ?? array() ) );
+			?></textarea></label>
+		</p>
+	</div>
 	<!-- More type fields will be added -->
 </div>
 <script>

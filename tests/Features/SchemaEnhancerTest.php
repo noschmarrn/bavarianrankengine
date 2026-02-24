@@ -94,4 +94,24 @@ class SchemaEnhancerTest extends TestCase {
         $schema = SchemaEnhancer::buildReviewFromData( 'X', 10, 'A' );
         $this->assertEquals( 5, $schema['reviewRating']['ratingValue'] );
     }
+
+    public function test_build_recipe_from_data_correct_structure(): void {
+        $d = array(
+            'name'         => 'Spaghetti Bolognese',
+            'prep'         => 15,
+            'cook'         => 30,
+            'servings'     => '4 Portionen',
+            'ingredients'  => array( '400g Spaghetti', '250g Hackfleisch' ),
+            'instructions' => array( 'Wasser kochen', 'Sauce anbraten' ),
+        );
+        $schema = SchemaEnhancer::buildRecipeFromData( $d );
+        $this->assertEquals( 'Recipe',              $schema['@type'] );
+        $this->assertEquals( 'Spaghetti Bolognese', $schema['name'] );
+        $this->assertEquals( 'PT15M',               $schema['prepTime'] );
+        $this->assertEquals( 'PT30M',               $schema['cookTime'] );
+        $this->assertEquals( '4 Portionen',         $schema['recipeYield'] );
+        $this->assertCount( 2,                      $schema['recipeIngredient'] );
+        $this->assertEquals( 'HowToStep',           $schema['recipeInstructions'][0]['@type'] );
+        $this->assertEquals( 'Wasser kochen',       $schema['recipeInstructions'][0]['text'] );
+    }
 }

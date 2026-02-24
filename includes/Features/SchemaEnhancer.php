@@ -420,4 +420,48 @@ class SchemaEnhancer {
 		}
 		return self::buildReviewFromData( $item, $rating, get_the_author() );
 	}
+	/**
+	 * Pure builder for Recipe schema.
+	 *
+	 * @param array $d Keys: name, prep (int minutes), cook (int minutes),
+	 *                 servings (string), ingredients (string[]), instructions (string[])
+	 */
+	public static function buildRecipeFromData( array $d ): array {
+		$steps = array();
+		foreach ( array_filter( array_map( 'trim', $d['instructions'] ?? array() ) ) as $step ) {
+			$steps[] = array( '@type' => 'HowToStep', 'text' => $step );
+		}
+		$schema = array(
+			'@context'           => 'https://schema.org',
+			'@type'              => 'Recipe',
+			'name'               => $d['name'] ?? '',
+			'recipeIngredient'   => array_values( array_filter( array_map( 'trim', $d['ingredients'] ?? array() ) ) ),
+			'recipeInstructions' => $steps,
+		);
+		if ( ! empty( $d['prep'] ) ) {
+			$schema['prepTime'] = self::minutesToIsoDuration( (int) $d['prep'] );
+		}
+		if ( ! empty( $d['cook'] ) ) {
+			$schema['cookTime'] = self::minutesToIsoDuration( (int) $d['cook'] );
+		}
+		if ( ! empty( $d['servings'] ) ) {
+			$schema['recipeYield'] = $d['servings'];
+		}
+		return $schema;
+	}
+
+	/**
+	 * WP-dependent: builds Recipe from post meta.
+	 */
+	private function buildRecipeSchema(): ?array {
+		$post_id  = get_the_ID();
+		$raw_data = get_post_meta( $post_id, SchemaMetaBox::META_DATA, true ) ?: '{}';
+		$data     = json_decode( $raw_data, true );
+		$recipe   = isset( $data['recipe'] ) && is_array( $data['recipe'] ) ? $data['recipe'] : array();
+		if ( empty( $recipe['name'] ) ) {
+			return null;
+		}
+		return self::buildRecipeFromData( $recipe );
+	}
+
 }

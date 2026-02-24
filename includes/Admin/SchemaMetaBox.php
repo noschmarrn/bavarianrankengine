@@ -98,6 +98,20 @@ class SchemaMetaBox {
 			);
 		}
 
+
+		if ( $type === 'recipe' ) {
+			$raw_ing          = sanitize_textarea_field( $input['recipe_ingredients']  ?? '' );
+			$raw_inst         = sanitize_textarea_field( $input['recipe_instructions'] ?? '' );
+			$data['recipe']   = array(
+				'name'         => sanitize_text_field( $input['recipe_name'] ?? '' ),
+				'prep'         => max( 0, (int) ( $input['recipe_prep']     ?? 0 ) ),
+				'cook'         => max( 0, (int) ( $input['recipe_cook']     ?? 0 ) ),
+				'servings'     => sanitize_text_field( $input['recipe_servings'] ?? '' ),
+				'ingredients'  => array_values( array_filter( array_map( 'trim', explode( "\n", $raw_ing ) ) ) ),
+				'instructions' => array_values( array_filter( array_map( 'trim', explode( "\n", $raw_inst ) ) ) ),
+			);
+		}
+
 		return array(
 			'schema_type' => $type,
 			'data'        => $data,
