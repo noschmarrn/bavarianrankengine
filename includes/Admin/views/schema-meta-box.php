@@ -1,0 +1,45 @@
+<?php
+/**
+ * BRE Schema Metabox view.
+ *
+ * Variables available: $type (string), $data (array), $enabled (array).
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
+<div class="bre-schema-metabox">
+	<p>
+		<label for="bre-schema-type"><strong><?php esc_html_e( 'Schema-Typ', 'bavarian-rank-engine' ); ?></strong></label><br>
+		<select name="bre_schema[schema_type]" id="bre-schema-type">
+			<option value="" <?php selected( $type, '' ); ?>><?php esc_html_e( '— Kein Schema —', 'bavarian-rank-engine' ); ?></option>
+			<?php if ( in_array( 'howto', $enabled, true ) ) : ?>
+			<option value="howto" <?php selected( $type, 'howto' ); ?>><?php esc_html_e( 'HowTo Anleitung', 'bavarian-rank-engine' ); ?></option>
+			<?php endif; ?>
+			<?php if ( in_array( 'review', $enabled, true ) ) : ?>
+			<option value="review" <?php selected( $type, 'review' ); ?>><?php esc_html_e( 'Review / Bewertung', 'bavarian-rank-engine' ); ?></option>
+			<?php endif; ?>
+			<?php if ( in_array( 'recipe', $enabled, true ) ) : ?>
+			<option value="recipe" <?php selected( $type, 'recipe' ); ?>><?php esc_html_e( 'Rezept', 'bavarian-rank-engine' ); ?></option>
+			<?php endif; ?>
+			<?php if ( in_array( 'event', $enabled, true ) ) : ?>
+			<option value="event" <?php selected( $type, 'event' ); ?>><?php esc_html_e( 'Event', 'bavarian-rank-engine' ); ?></option>
+			<?php endif; ?>
+		</select>
+	</p>
+	<!-- Type-specific fields injected by schema type tasks -->
+</div>
+<script>
+(function () {
+	var sel = document.getElementById( 'bre-schema-type' );
+	function toggle() {
+		document.querySelectorAll( '.bre-schema-fields' ).forEach( function ( el ) {
+			el.style.display = el.dataset.breType === sel.value ? '' : 'none';
+		} );
+	}
+	if ( sel ) {
+		sel.addEventListener( 'change', toggle );
+		toggle();
+	}
+}());
+</script>
