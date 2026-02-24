@@ -221,4 +221,68 @@ class SchemaEnhancer {
 		return self::faqPairsToSchema( $meta['faq'] ?? [] );
 	}
 
+
+    /**
+     * Converts integer minutes to ISO 8601 duration string (e.g. 90 -> "PT90M").
+     */
+    public static function minutesToIsoDuration( int $minutes ): string {
+        return 'PT' . $minutes . 'M';
+    }
+
+    /**
+     * BlogPosting (or Article for non-post types) with embedded author + image.
+     */
+    private function buildBlogPosting(): array {
+        $type   = get_post_type() === 'post' ? 'BlogPosting' : 'Article';
+        $schema = array(
+            '@context'      => 'https://schema.org',
+            '@type'         => $type,
+            'headline'      => get_the_title(),
+            'url'           => get_permalink(),
+            'datePublished' => get_the_date( 'c' ),
+            'dateModified'  => get_the_modified_date( 'c' ),
+            'description'   => get_post_meta( get_the_ID(), '_bre_meta_description', true )
+                               ?: get_the_excerpt(),
+            'publisher'     => array(
+                '@type' => 'Organization',
+                'name'  => get_bloginfo( 'name' ),
+                'url'   => home_url( '/' ),
+            ),
+            'author'        => array(
+                '@type' => 'Person',
+                'name'  => get_the_author(),
+                'url'   => get_author_posts_url( (int) get_the_author_meta( 'ID' ) ),
+            ),
+        );
+        $img = $this->buildImageObject();
+        if ( $img ) {
+            $schema['image'] = $img;
+        }
+        return $schema;
+    }
+
+    /**
+     * ImageObject from featured image. Returns null when no thumbnail is set.
+     */
+    private function buildImageObject(): ?array {
+        if ( ! has_post_thumbnail() ) {
+            return null;
+        }
+        $src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+        if ( ! $src ) {
+            return null;
+        }
+        $schema = array(
+            '@context'   => 'https://schema.org',
+            '@type'      => 'ImageObject',
+            'contentUrl' => $src[0],
+        );
+        if ( ! empty( $src[1] ) ) {
+            $schema['width'] = (int) $src[1];
+        }
+        if ( ! empty( $src[2] ) ) {
+            $schema['height'] = (int) $src[2];
+        }
+        return $schema;
+    }
 }

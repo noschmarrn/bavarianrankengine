@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    define( 'ABSPATH', dirname( __DIR__ ) . '/' );
+}
+
 /**
  * PHPUnit bootstrap: autoloader + minimal WordPress function stubs.
  */

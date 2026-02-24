@@ -34,4 +34,10 @@ class SchemaEnhancerTest extends TestCase {
         $schema = SchemaEnhancer::faqPairsToSchema( $faq );
         $this->assertCount( 1, $schema['mainEntity'] );
     }
+
+    public function test_minutes_to_iso_duration_values(): void {
+        $this->assertEquals( 'PT90M', SchemaEnhancer::minutesToIsoDuration( 90 ) );
+        $this->assertEquals( 'PT5M',  SchemaEnhancer::minutesToIsoDuration( 5 ) );
+        $this->assertEquals( 'PT0M',  SchemaEnhancer::minutesToIsoDuration( 0 ) );
+    }
 }
