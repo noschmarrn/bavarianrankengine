@@ -90,6 +90,14 @@ class SchemaMetaBox {
 			);
 		}
 
+
+		if ( $type === 'review' ) {
+			$data['review'] = array(
+				'item'   => sanitize_text_field( $input['review_item'] ?? '' ),
+				'rating' => max( 1, min( 5, (int) ( $input['review_rating'] ?? 3 ) ) ),
+			);
+		}
+
 		return array(
 			'schema_type' => $type,
 			'data'        => $data,

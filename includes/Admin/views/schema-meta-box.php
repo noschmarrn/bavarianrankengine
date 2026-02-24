@@ -42,6 +42,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?></textarea></label>
 		</p>
 	</div>
+	<!-- Review fields -->
+	<div class="bre-schema-fields" data-bre-type="review" style="display:none;">
+		<p>
+			<label><strong><?php esc_html_e( 'Bewertetes Produkt / Dienst', 'bavarian-rank-engine' ); ?></strong><br>
+			<input type="text" name="bre_schema[review_item]"
+				value="<?php echo esc_attr( $data['review']['item'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p>
+			<label><strong><?php esc_html_e( 'Bewertung (1–5)', 'bavarian-rank-engine' ); ?></strong><br>
+			<input type="number" name="bre_schema[review_rating]" min="1" max="5" step="1"
+				value="<?php echo esc_attr( $data['review']['rating'] ?? 3 ); ?>"
+				style="width:60px;"></label>
+		</p>
+	</div>
 	<!-- More type fields will be added -->
 </div>
 <script>

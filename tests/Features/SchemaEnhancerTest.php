@@ -78,4 +78,20 @@ class SchemaEnhancerTest extends TestCase {
         $schema = SchemaEnhancer::buildHowToFromData( 'Test', array( 'Schritt 1', '', '  ', 'Schritt 2' ) );
         $this->assertCount( 2, $schema['step'] );
     }
+
+    public function test_build_review_from_data_correct_structure(): void {
+        $schema = SchemaEnhancer::buildReviewFromData( 'Sony WH-1000XM5', 4, 'Max Muster' );
+        $this->assertEquals( 'Review',          $schema['@type'] );
+        $this->assertEquals( 'Sony WH-1000XM5', $schema['itemReviewed']['name'] );
+        $this->assertEquals( 4,                 $schema['reviewRating']['ratingValue'] );
+        $this->assertEquals( 5,                 $schema['reviewRating']['bestRating'] );
+        $this->assertEquals( 'Max Muster',      $schema['author']['name'] );
+    }
+
+    public function test_build_review_clamps_rating_between_1_and_5(): void {
+        $schema = SchemaEnhancer::buildReviewFromData( 'X', 0, 'A' );
+        $this->assertEquals( 1, $schema['reviewRating']['ratingValue'] );
+        $schema = SchemaEnhancer::buildReviewFromData( 'X', 10, 'A' );
+        $this->assertEquals( 5, $schema['reviewRating']['ratingValue'] );
+    }
 }

@@ -32,4 +32,15 @@ class SchemaMetaBoxTest extends TestCase {
         $this->assertCount( 3,                 $clean['data']['howto']['steps'] );
         $this->assertEquals( 'Wasser kochen',  $clean['data']['howto']['steps'][0] );
     }
+
+    public function test_sanitize_data_review_extracts_fields(): void {
+        $input = array(
+            'schema_type'   => 'review',
+            'review_item'   => 'Sony Kopfhörer',
+            'review_rating' => '4',
+        );
+        $clean = SchemaMetaBox::sanitizeData( $input );
+        $this->assertEquals( 'Sony Kopfhörer', $clean['data']['review']['item'] );
+        $this->assertEquals( 4,                $clean['data']['review']['rating'] );
+    }
 }

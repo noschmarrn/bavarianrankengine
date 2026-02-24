@@ -375,4 +375,49 @@ class SchemaEnhancer {
 		}
 		return self::buildHowToFromData( $name, $steps );
 	}
+
+	/**
+	 * Pure builder for Review schema.
+	 *
+	 * @param string $item    Name of the reviewed item.
+	 * @param int    $rating  Rating 1-5.
+	 * @param string $author  Reviewer name.
+	 */
+	public static function buildReviewFromData( string $item, int $rating, string $author ): array {
+		$rating = max( 1, min( 5, $rating ) );
+		return array(
+			'@context'     => 'https://schema.org',
+			'@type'        => 'Review',
+			'itemReviewed' => array(
+				'@type' => 'Thing',
+				'name'  => $item,
+			),
+			'reviewRating' => array(
+				'@type'       => 'Rating',
+				'ratingValue' => $rating,
+				'bestRating'  => 5,
+				'worstRating' => 1,
+			),
+			'author'       => array(
+				'@type' => 'Person',
+				'name'  => $author,
+			),
+		);
+	}
+
+	/**
+	 * WP-dependent: builds Review from post meta.
+	 */
+	private function buildReviewSchema(): ?array {
+		$post_id  = get_the_ID();
+		$raw_data = get_post_meta( $post_id, SchemaMetaBox::META_DATA, true ) ?: '{}';
+		$data     = json_decode( $raw_data, true );
+		$review   = isset( $data['review'] ) && is_array( $data['review'] ) ? $data['review'] : array();
+		$item     = $review['item'] ?? '';
+		$rating   = (int) ( $review['rating'] ?? 0 );
+		if ( empty( $item ) || $rating < 1 ) {
+			return null;
+		}
+		return self::buildReviewFromData( $item, $rating, get_the_author() );
+	}
 }
