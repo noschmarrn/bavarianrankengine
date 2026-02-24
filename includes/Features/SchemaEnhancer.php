@@ -69,6 +69,56 @@ class SchemaEnhancer {
 			if ( in_array( 'speakable', $enabled, true ) ) {
 				$schemas[] = $this->buildSpeakableSchema();
 			}
+
+			// Auto-types
+			if ( in_array( 'faq_schema', $enabled, true ) ) {
+				$faq = $this->buildFaqSchema();
+				if ( $faq ) {
+					$schemas[] = $faq;
+				}
+			}
+			if ( in_array( 'blog_posting', $enabled, true ) ) {
+				$schemas[] = $this->buildBlogPosting();
+			}
+			if ( in_array( 'image_object', $enabled, true ) ) {
+				$img = $this->buildImageObject();
+				if ( $img ) {
+					$schemas[] = $img;
+				}
+			}
+			if ( in_array( 'video_object', $enabled, true ) ) {
+				$vid = $this->buildVideoObject();
+				if ( $vid ) {
+					$schemas[] = $vid;
+				}
+			}
+
+			// Metabox-types — only output if post's schema type matches
+			$schema_type = get_post_meta( get_the_ID(), SchemaMetaBox::META_TYPE, true );
+			if ( $schema_type === 'howto' && in_array( 'howto', $enabled, true ) ) {
+				$howto = $this->buildHowToSchema();
+				if ( $howto ) {
+					$schemas[] = $howto;
+				}
+			}
+			if ( $schema_type === 'review' && in_array( 'review', $enabled, true ) ) {
+				$review = $this->buildReviewSchema();
+				if ( $review ) {
+					$schemas[] = $review;
+				}
+			}
+			if ( $schema_type === 'recipe' && in_array( 'recipe', $enabled, true ) ) {
+				$recipe = $this->buildRecipeSchema();
+				if ( $recipe ) {
+					$schemas[] = $recipe;
+				}
+			}
+			if ( $schema_type === 'event' && in_array( 'event', $enabled, true ) ) {
+				$event = $this->buildEventSchema();
+				if ( $event ) {
+					$schemas[] = $event;
+				}
+			}
 		}
 
 		if ( in_array( 'breadcrumb', $enabled, true )
