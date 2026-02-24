@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use BavarianRankEngine\Admin\SettingsPage;
+use BavarianRankEngine\Admin\SchemaMetaBox;
 
 class SchemaEnhancer {
 	public function register(): void {
@@ -336,4 +337,42 @@ class SchemaEnhancer {
         }
         return $schema;
     }
+
+	/**
+	 * Pure builder for HowTo schema.
+	 *
+	 * @param string   $name  The how-to title.
+	 * @param string[] $steps Each step as a string.
+	 */
+	public static function buildHowToFromData( string $name, array $steps ): array {
+		$how_to_steps = array();
+		foreach ( array_filter( array_map( 'trim', $steps ) ) as $step ) {
+			$how_to_steps[] = array(
+				'@type' => 'HowToStep',
+				'name'  => $step,
+			);
+		}
+		return array(
+			'@context' => 'https://schema.org',
+			'@type'    => 'HowTo',
+			'name'     => $name,
+			'step'     => $how_to_steps,
+		);
+	}
+
+	/**
+	 * WP-dependent: builds HowTo from post meta.
+	 */
+	private function buildHowToSchema(): ?array {
+		$post_id  = get_the_ID();
+		$raw_data = get_post_meta( $post_id, SchemaMetaBox::META_DATA, true ) ?: '{}';
+		$data     = json_decode( $raw_data, true );
+		$howto    = isset( $data['howto'] ) && is_array( $data['howto'] ) ? $data['howto'] : array();
+		$name     = $howto['name'] ?? '';
+		$steps    = $howto['steps'] ?? array();
+		if ( empty( $name ) || empty( $steps ) ) {
+			return null;
+		}
+		return self::buildHowToFromData( $name, $steps );
+	}
 }

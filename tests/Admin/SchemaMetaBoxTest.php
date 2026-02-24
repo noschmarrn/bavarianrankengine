@@ -19,4 +19,17 @@ class SchemaMetaBoxTest extends TestCase {
             $this->assertEquals( $type, $clean['schema_type'] );
         }
     }
+
+    public function test_sanitize_data_howto_extracts_steps(): void {
+        $input = array(
+            'schema_type' => 'howto',
+            'howto_name'  => 'Pasta kochen',
+            'howto_steps' => "Wasser kochen\nPasta hinzufügen\nAbtropfen",
+        );
+        $clean = SchemaMetaBox::sanitizeData( $input );
+        $this->assertEquals( 'howto',          $clean['schema_type'] );
+        $this->assertEquals( 'Pasta kochen',   $clean['data']['howto']['name'] );
+        $this->assertCount( 3,                 $clean['data']['howto']['steps'] );
+        $this->assertEquals( 'Wasser kochen',  $clean['data']['howto']['steps'][0] );
+    }
 }

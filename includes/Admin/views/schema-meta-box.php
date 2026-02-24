@@ -27,7 +27,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		</select>
 	</p>
-	<!-- Type-specific fields injected by schema type tasks -->
+	<!-- HowTo fields -->
+	<div class="bre-schema-fields" data-bre-type="howto" style="display:none;">
+		<p>
+			<label><strong><?php esc_html_e( 'Name der Anleitung', 'bavarian-rank-engine' ); ?></strong><br>
+			<input type="text" name="bre_schema[howto_name]"
+				value="<?php echo esc_attr( $data['howto']['name'] ?? '' ); ?>"
+				class="widefat"></label>
+		</p>
+		<p>
+			<label><strong><?php esc_html_e( 'Schritte (eine Zeile = ein Schritt)', 'bavarian-rank-engine' ); ?></strong><br>
+			<textarea name="bre_schema[howto_steps]" rows="5" class="widefat"><?php
+				echo esc_textarea( implode( "\n", $data['howto']['steps'] ?? array() ) );
+			?></textarea></label>
+		</p>
+	</div>
+	<!-- More type fields will be added -->
 </div>
 <script>
 (function () {

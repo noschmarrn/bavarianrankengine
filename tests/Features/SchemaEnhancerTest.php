@@ -64,4 +64,18 @@ class SchemaEnhancerTest extends TestCase {
     public function test_extract_video_returns_null_for_no_video(): void {
         $this->assertNull( SchemaEnhancer::extractVideoFromContent( '<p>No video here.</p>' ) );
     }
+
+    public function test_build_howto_from_data_returns_correct_structure(): void {
+        $schema = SchemaEnhancer::buildHowToFromData( 'Pasta kochen', array( 'Wasser kochen', 'Pasta hinzufügen', 'Abtropfen' ) );
+        $this->assertEquals( 'HowTo',         $schema['@type'] );
+        $this->assertEquals( 'Pasta kochen',  $schema['name'] );
+        $this->assertCount( 3,                $schema['step'] );
+        $this->assertEquals( 'HowToStep',     $schema['step'][0]['@type'] );
+        $this->assertEquals( 'Wasser kochen', $schema['step'][0]['name'] );
+    }
+
+    public function test_build_howto_filters_empty_steps(): void {
+        $schema = SchemaEnhancer::buildHowToFromData( 'Test', array( 'Schritt 1', '', '  ', 'Schritt 2' ) );
+        $this->assertCount( 2, $schema['step'] );
+    }
 }

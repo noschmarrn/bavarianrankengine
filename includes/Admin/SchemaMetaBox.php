@@ -80,6 +80,16 @@ class SchemaMetaBox {
 			$type = '';
 		}
 		$data = array();
+
+		if ( $type === 'howto' ) {
+			$raw_steps     = sanitize_textarea_field( $input['howto_steps'] ?? '' );
+			$steps         = array_values( array_filter( array_map( 'trim', explode( "\n", $raw_steps ) ) ) );
+			$data['howto'] = array(
+				'name'  => sanitize_text_field( $input['howto_name'] ?? '' ),
+				'steps' => $steps,
+			);
+		}
+
 		return array(
 			'schema_type' => $type,
 			'data'        => $data,
