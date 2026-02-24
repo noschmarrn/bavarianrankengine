@@ -213,3 +213,65 @@ if ( ! function_exists( 'current_time' ) ) {
         return $type === 'timestamp' ? time() : date( 'Y-m-d H:i:s' );
     }
 }
+
+if ( ! function_exists( 'get_the_ID' ) ) {
+    function get_the_ID() {
+        return $GLOBALS['bre_current_post_id'] ?? 0;
+    }
+}
+if ( ! function_exists( 'is_singular' ) ) {
+    function is_singular( $post_types = '' ) {
+        return $GLOBALS['bre_is_singular'] ?? false;
+    }
+}
+if ( ! function_exists( 'get_post_type' ) ) {
+    function get_post_type( $post = null ) {
+        return $GLOBALS['bre_post_type'] ?? 'post';
+    }
+}
+if ( ! function_exists( 'get_bloginfo' ) ) {
+    function get_bloginfo( $show = '', $filter = 'raw' ) {
+        $map = [ 'name' => 'Test Blog', 'url' => 'https://example.com' ];
+        return $map[ $show ] ?? '';
+    }
+}
+if ( ! function_exists( 'get_the_author' ) ) {
+    function get_the_author() {
+        return $GLOBALS['bre_author_name'] ?? 'Test Author';
+    }
+}
+if ( ! function_exists( 'get_the_author_meta' ) ) {
+    function get_the_author_meta( $field, $user_id = 0 ) {
+        return $GLOBALS['bre_author_meta'][ $field ] ?? '';
+    }
+}
+if ( ! function_exists( 'get_author_posts_url' ) ) {
+    function get_author_posts_url( $author_id, $author_nicename = '' ) {
+        return 'https://example.com/author/' . $author_id;
+    }
+}
+if ( ! function_exists( 'has_post_thumbnail' ) ) {
+    function has_post_thumbnail( $post = null ) {
+        return $GLOBALS['bre_has_thumbnail'] ?? false;
+    }
+}
+if ( ! function_exists( 'get_post_thumbnail_id' ) ) {
+    function get_post_thumbnail_id( $post = null ) {
+        return $GLOBALS['bre_thumbnail_id'] ?? 0;
+    }
+}
+if ( ! function_exists( 'wp_get_attachment_image_src' ) ) {
+    function wp_get_attachment_image_src( $attachment_id, $size = 'thumbnail', $icon = false ) {
+        return $GLOBALS['bre_attachment_src'] ?? false;
+    }
+}
+if ( ! function_exists( 'get_the_modified_date' ) ) {
+    function get_the_modified_date( $format = '', $post = null ) {
+        return '2024-06-01';
+    }
+}
+if ( ! function_exists( 'get_the_excerpt' ) ) {
+    function get_the_excerpt( $post = null ) {
+        return '';
+    }
+}
