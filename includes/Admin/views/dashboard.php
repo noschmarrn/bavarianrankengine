@@ -28,18 +28,18 @@
 					<p><?php esc_html_e( 'No post types configured.', 'bavarian-rank-engine' ); ?></p>
 				<?php else : ?>
 				<?php foreach ( $meta_stats as $pt => $stat ) : ?>
-				<div style="margin-bottom:14px;">
-				    <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;">
-				        <strong><?php echo esc_html( $pt ); ?></strong>
-				        <span style="color:#666;">
-				            <?php echo esc_html( $stat['with_meta'] ); ?>/<?php echo esc_html( $stat['total'] ); ?>
-				            &mdash; <?php echo esc_html( $stat['pct'] ); ?>%
-				        </span>
-				    </div>
-				    <div class="bre-progress-bar">
-				        <div class="bre-progress-fill <?php echo esc_attr( $stat['pct'] >= 80 ? 'bre-ok' : ( $stat['pct'] >= 40 ? 'bre-warn' : 'bre-bad' ) ); ?>"
-				             style="width:<?php echo esc_attr( $stat['pct'] ); ?>%"></div>
-				    </div>
+				<div class="bre-coverage-row">
+					<div class="bre-coverage-label">
+						<strong><?php echo esc_html( $pt ); ?></strong>
+						<span class="bre-coverage-stat">
+							<?php echo esc_html( $stat['with_meta'] ); ?>/<?php echo esc_html( $stat['total'] ); ?>
+							&mdash; <?php echo esc_html( $stat['pct'] ); ?>%
+						</span>
+					</div>
+					<div class="bre-progress-bar">
+						<div class="bre-progress-fill <?php echo esc_attr( $stat['pct'] >= 80 ? 'bre-ok' : ( $stat['pct'] >= 40 ? 'bre-warn' : 'bre-bad' ) ); ?>"
+							style="width:<?php echo esc_attr( $stat['pct'] ); ?>%"></div>
+					</div>
 				</div>
 				<?php endforeach; ?>
 				<?php endif; ?>

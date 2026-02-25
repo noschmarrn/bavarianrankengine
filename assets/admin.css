@@ -97,3 +97,13 @@
     margin-right: 6px;
     vertical-align: middle;
 }
+
+/* --- Meta coverage --- */
+.bre-coverage-row { margin-bottom: 14px; }
+.bre-coverage-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+.bre-coverage-stat { color: #666; }
