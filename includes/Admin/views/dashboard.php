@@ -3,11 +3,21 @@
 <div class="wrap bre-settings">
 	<h1><?php esc_html_e( 'Bavarian Rank Engine — Dashboard', 'bavarian-rank-engine' ); ?></h1>
 
-	<div class="notice notice-info inline" style="margin:16px 0 0;padding:10px 14px;">
-		<p style="margin:0;">&#128075; <?php esc_html_e( 'New here?', 'bavarian-rank-engine' ); ?>
-			<strong><a href="<?php echo esc_url( 'https://bavarianrankengine.com/howto.html' ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Read the setup guide — get running in five minutes →', 'bavarian-rank-engine' ); ?></a></strong>
-		</p>
-	</div>
+<?php if ( $bre_show_welcome ) : ?>
+<div class="bre-welcome-notice" id="bre-welcome-notice">
+	<button type="button" class="bre-dismiss" id="bre-dismiss-welcome"
+			aria-label="<?php esc_attr_e( 'Dismiss', 'bavarian-rank-engine' ); ?>">&#215;</button>
+	<p style="margin:0 0 6px;font-size:15px;">
+		&#127866; <strong><?php esc_html_e( 'Servus! Welcome to Bavarian Rank Engine.', 'bavarian-rank-engine' ); ?></strong>
+	</p>
+	<p style="margin:0;color:#444;">
+		<?php esc_html_e( 'No Lederhosen required — your SEO is already in good hands.', 'bavarian-rank-engine' ); ?>
+		<a href="<?php echo esc_url( 'https://bavarianrankengine.com/howto.html' ); ?>" target="_blank" rel="noopener">
+			<?php esc_html_e( 'Read the setup guide and be running in five minutes →', 'bavarian-rank-engine' ); ?>
+		</a>
+	</p>
+</div>
+<?php endif; ?>
 
 	<div class="bre-dashboard-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:20px;">
 

@@ -9,6 +9,7 @@ class AdminMenu {
 	public function register(): void {
 		add_action( 'admin_menu', array( $this, 'add_menus' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'wp_ajax_bre_dismiss_welcome', array( $this, 'ajax_dismiss_welcome' ) );
 	}
 
 	public function enqueue_assets( string $hook ): void {
@@ -126,7 +127,30 @@ class AdminMenu {
 		$meta_stats = $this->get_meta_stats( $post_types );
 		$bre_compat = $this->get_compat_info();
 
+		$bre_show_welcome = $this->should_show_welcome();
 		include BRE_DIR . 'includes/Admin/views/dashboard.php';
+	}
+
+	private function should_show_welcome(): bool {
+		if ( get_user_meta( get_current_user_id(), 'bre_welcome_dismissed', true ) ) {
+			return false;
+		}
+		$activated = (int) get_option( 'bre_first_activated', 0 );
+		if ( ! $activated ) {
+			// First admin visit on a legacy install — set timestamp now and show
+			update_option( 'bre_first_activated', time() );
+			return true;
+		}
+		return ( time() - $activated ) < DAY_IN_SECONDS;
+	}
+
+	public function ajax_dismiss_welcome(): void {
+		check_ajax_referer( 'bre_admin', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error();
+		}
+		update_user_meta( get_current_user_id(), 'bre_welcome_dismissed', 1 );
+		wp_send_json_success();
 	}
 
 	private function get_meta_stats( array $post_types ): array {

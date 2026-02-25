@@ -45,4 +45,12 @@ jQuery( function ( $ ) {
             }
         } );
     } );
+
+    $( '#bre-dismiss-welcome' ).on( 'click', function () {
+        $( '#bre-welcome-notice' ).slideUp( 200 );
+        $.post( breAdmin.ajaxUrl, {
+            action: 'bre_dismiss_welcome',
+            nonce:  breAdmin.nonce,
+        } );
+    } );
 } );
