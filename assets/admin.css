@@ -121,3 +121,17 @@
     font-weight: 600;
     font-size: 13px;
 }
+
+/* --- AI enable toggle --- */
+.bre-ai-toggle-wrap {
+    background: #fff8e5;
+    border-left: 4px solid #ffb900;
+    border-radius: 0 4px 4px 0;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+.bre-ai-cost-notice {
+    margin: 8px 0 0;
+    color: #856404;
+    font-size: 13px;
+}

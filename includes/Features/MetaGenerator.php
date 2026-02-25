@@ -75,6 +75,10 @@ class MetaGenerator {
 			return FallbackMeta::extract( $post );
 		}
 
+		if ( empty( $settings['ai_enabled'] ) ) {
+			return FallbackMeta::extract( $post );
+		}
+
 		$model   = $settings['models'][ $settings['provider'] ] ?? array_key_first( $provider->getModels() );
 		$content = $this->prepareContent( $post, $settings );
 		$prompt  = $this->buildPrompt( $post, $content, $settings );

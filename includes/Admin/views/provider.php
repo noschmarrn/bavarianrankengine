@@ -8,6 +8,18 @@
 	<form method="post" action="options.php">
 		<?php settings_fields( 'bre_provider' ); ?>
 
+		<div class="bre-ai-toggle-wrap">
+			<label style="font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+				<input type="checkbox" name="bre_settings[ai_enabled]" value="1" id="bre-ai-enabled"
+					   <?php checked( $settings['ai_enabled'] ?? true, true ); ?>>
+				<?php esc_html_e( 'Enable AI generation', 'bavarian-rank-engine' ); ?>
+			</label>
+			<p class="bre-ai-cost-notice">
+				&#9888; <?php esc_html_e( 'This feature will incur costs with your AI provider. Make sure you understand the pricing before entering an API key.', 'bavarian-rank-engine' ); ?>
+			</p>
+		</div>
+		<div id="bre-ai-fields">
+
 		<h2><?php esc_html_e( 'AI Provider', 'bavarian-rank-engine' ); ?></h2>
 		<table class="form-table">
 			<tr>
@@ -90,12 +102,14 @@
 			<?php endforeach; ?>
 		</table>
 
+		</div><!-- /#bre-ai-fields -->
+
 		<?php submit_button( __( 'Save Settings', 'bavarian-rank-engine' ) ); ?>
 	</form>
 
-	<hr>
-	<p style="color:#999;font-size:12px;">
+	<p class="bre-footer">
 		Bavarian Rank Engine <?php echo esc_html( BRE_VERSION ); ?> &mdash;
-		<?php esc_html_e( 'developed with', 'bavarian-rank-engine' ); ?> ♥ <a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
+		<?php esc_html_e( 'developed with', 'bavarian-rank-engine' ); ?> ♥
+		<a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
 	</p>
 </div>

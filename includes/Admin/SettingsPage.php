@@ -15,6 +15,11 @@ class SettingsPage {
 	public const OPTION_KEY_META = 'bre_meta_settings';
 
 	/**
+	 * Option key for schema settings.
+	 */
+	public const OPTION_KEY_SCHEMA = 'bre_schema_settings';
+
+	/**
 	 * Returns merged settings from both option keys with defaults applied.
 	 * Called by MetaGenerator, SchemaEnhancer, BulkPage, and admin pages.
 	 */
@@ -31,6 +36,7 @@ class SettingsPage {
 			'schema_enabled'    => array(),
 			'schema_same_as'    => array(),
 			'costs'             => array(),
+			'ai_enabled'        => true,
 		);
 
 		$saved_provider = get_option( self::OPTION_KEY_PROVIDER, array() );
@@ -39,7 +45,11 @@ class SettingsPage {
 		$saved_meta = get_option( self::OPTION_KEY_META, array() );
 		$saved_meta = is_array( $saved_meta ) ? $saved_meta : array();
 
-		$settings = array_merge( $defaults, $saved_provider, $saved_meta );
+		// Schema has its own option key since v1.3.0; falls back to bre_meta_settings for existing installs.
+		$saved_schema = get_option( self::OPTION_KEY_SCHEMA, array() );
+		$saved_schema = is_array( $saved_schema ) ? $saved_schema : array();
+
+		$settings = array_merge( $defaults, $saved_provider, $saved_meta, $saved_schema );
 
 		foreach ( $settings['api_keys'] as $id => $stored ) {
 			$decrypted = KeyVault::decrypt( $stored );
@@ -113,7 +123,22 @@ class SettingsPage {
 			)
 		);
 
-		$schema_types            = array( 'organization', 'author', 'speakable', 'article_about', 'breadcrumb', 'ai_meta_tags' );
+		$schema_types            = array(
+			'organization',
+			'author',
+			'speakable',
+			'article_about',
+			'breadcrumb',
+			'ai_meta_tags',
+			'faq_schema',
+			'blog_posting',
+			'image_object',
+			'video_object',
+			'howto',
+			'review',
+			'recipe',
+			'event',
+		);
 		$clean['schema_enabled'] = array_values(
 			array_intersect(
 				array_map( 'sanitize_key', (array) ( $input['schema_enabled'] ?? array() ) ),

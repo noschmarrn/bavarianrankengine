@@ -59,6 +59,7 @@ class ProviderPage {
 		$clean    = array();
 
 		$clean['provider'] = sanitize_key( $input['provider'] ?? 'openai' );
+		$clean['ai_enabled'] = ! empty( $input['ai_enabled'] );
 
 		$clean['api_keys'] = array();
 		foreach ( ( $input['api_keys'] ?? array() ) as $provider_id => $raw ) {

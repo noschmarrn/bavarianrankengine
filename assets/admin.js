@@ -53,4 +53,15 @@ jQuery( function ( $ ) {
             nonce:  breAdmin.nonce,
         } );
     } );
+    function bre_update_ai_fields() {
+        if ( $( '#bre-ai-enabled' ).is( ':checked' ) ) {
+            $( '#bre-ai-fields' ).show();
+        } else {
+            $( '#bre-ai-fields' ).hide();
+        }
+    }
+    if ( $( '#bre-ai-enabled' ).length ) {
+        bre_update_ai_fields();
+        $( '#bre-ai-enabled' ).on( 'change', bre_update_ai_fields );
+    }
 } );
