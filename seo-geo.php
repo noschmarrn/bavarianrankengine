@@ -3,7 +3,7 @@
  * Plugin Name:       Bavarian Rank Engine
  * Plugin URI:        https://bavarianrankengine.com
  * Description:       AI-powered meta descriptions, GEO structured data, and llms.txt for WordPress.
- * Version:           1.2.1
+ * Version:           1.2.2
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            mifupadev
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BRE_VERSION', '1.2.1' );
+define( 'BRE_VERSION', '1.2.2' );
 define( 'BRE_FILE', __FILE__ );
 define( 'BRE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BRE_URL', plugin_dir_url( __FILE__ ) );

@@ -3,7 +3,7 @@ Contributors: mifupadev
 Tags: seo, ai, meta description, schema, llms.txt
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -150,9 +150,21 @@ Yes. Implement the `BavarianRankEngine\Providers\ProviderInterface` interface (f
 
 == Changelog ==
 
+= 1.2.2 =
+* New: Dismissible welcome notice with 24 h auto-expiry and Bavarian flavour
+* New: AI enable toggle with cost warning on AI Provider page
+* New: Estimated token usage and cost in Status widget
+* Improved: Dashboard UI — progress bars for meta coverage, styled quick links, crawler dot indicators
+* Fix: Plugin Check warnings (variable definitions in template moved to controller)
+* Fix: Hardcoded German strings in admin.js replaced with localized equivalents
+* Perf: 5-minute transient caching for dashboard DB queries
+
+= 1.2.1 =
+* New: Dedicated "Schema.org" admin menu item under Bavarian Rank — schema settings moved out of Meta Generator into their own page with a separate option key
+
 = 1.2.0 =
-* Neu: Schema-Suite v2 — FAQPage (automatisch aus GEO Quick Overview), BlogPosting, ImageObject, VideoObject
-* Neu: Post-Editor Metabox für HowTo, Review (Sternebewertung), Recipe und Event Schema
+* New: Schema Suite v2 — FAQPage (auto-generated from GEO Quick Overview data), BlogPosting/Article (with embedded author and featured image), ImageObject, and VideoObject (YouTube/Vimeo auto-detected from post content)
+* New: Post editor meta box for HowTo, Review (star rating 1–5), Recipe, and Event schema types — per-post data entry, saved as post meta, output as JSON-LD automatically
 
 = 1.1.0 =
 * New: GEO Schnellüberblick block — AI-generated per-post summary with short summary, key bullet points, and optional FAQ.
