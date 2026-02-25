@@ -168,6 +168,7 @@ class MetaGenerator {
 		}
 
 		do_action( 'bre_meta_saved', $post_id, $description ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		delete_transient( 'bre_meta_stats' );
 	}
 
 	public function ajaxBulkStats(): void {

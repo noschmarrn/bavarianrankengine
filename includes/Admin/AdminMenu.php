@@ -141,6 +141,12 @@ class AdminMenu {
 			);
 		}
 
+		$crawlers = get_transient( 'bre_crawler_summary' );
+		if ( false === $crawlers ) {
+			$crawlers = \BavarianRankEngine\Features\CrawlerLog::get_recent_summary( 30 );
+			set_transient( 'bre_crawler_summary', $crawlers, 5 * MINUTE_IN_SECONDS );
+		}
+
 		include BRE_DIR . 'includes/Admin/views/dashboard.php';
 	}
 
@@ -167,21 +173,27 @@ class AdminMenu {
 	}
 
 	private function get_meta_stats( array $post_types ): array {
+		$cache_key = 'bre_meta_stats';
+		$cached    = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
 		global $wpdb;
 		$stats = array();
 		foreach ( $post_types as $pt ) {
-			$total        = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+			$total     = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = %s AND post_status = 'publish'",
 					$pt
 				)
 			);
-			$with_meta    = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+			$with_meta = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
-                     INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
-                     WHERE p.post_type = %s AND p.post_status = 'publish'
-                     AND pm.meta_key = %s AND pm.meta_value != ''",
+                 INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+                 WHERE p.post_type = %s AND p.post_status = 'publish'
+                 AND pm.meta_key = %s AND pm.meta_value != ''",
 					$pt,
 					'_bre_meta_description'
 				)
@@ -192,6 +204,8 @@ class AdminMenu {
 				'pct'       => $total > 0 ? round( ( $with_meta / $total ) * 100 ) : 0,
 			);
 		}
+
+		set_transient( $cache_key, $stats, 5 * MINUTE_IN_SECONDS );
 		return $stats;
 	}
 

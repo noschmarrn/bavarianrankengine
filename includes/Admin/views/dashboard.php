@@ -133,8 +133,7 @@
 		<div class="postbox">
 			<div class="postbox-header"><h2><?php esc_html_e( 'AI Crawlers — Last 30 Days', 'bavarian-rank-engine' ); ?></h2></div>
 			<div class="inside">
-				<?php $crawlers = \BavarianRankEngine\Features\CrawlerLog::get_recent_summary( 30 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
-				<?php if ( empty( $crawlers ) ) : ?>
+								<?php if ( empty( $crawlers ) ) : ?>
 					<p><?php esc_html_e( 'No AI crawlers recorded yet.', 'bavarian-rank-engine' ); ?></p>
 				<?php else : ?>
 				<table class="widefat striped">
