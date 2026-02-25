@@ -8,6 +8,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AdminMenu {
 	public function register(): void {
 		add_action( 'admin_menu', array( $this, 'add_menus' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+	}
+
+	public function enqueue_assets( string $hook ): void {
+		if ( $hook !== 'toplevel_page_bavarian-rank' ) {
+			return;
+		}
+		wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', array(), BRE_VERSION );
+		wp_enqueue_script( 'bre-admin', BRE_URL . 'assets/admin.js', array( 'jquery' ), BRE_VERSION, true );
+		wp_localize_script(
+			'bre-admin',
+			'breAdmin',
+			array(
+				'nonce'   => wp_create_nonce( 'bre_admin' ),
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			)
+		);
 	}
 
 	public function add_menus(): void {
@@ -47,6 +64,15 @@ class AdminMenu {
 			'manage_options',
 			'bre-meta',
 			array( new MetaPage(), 'render' )
+		);
+
+		add_submenu_page(
+			'bavarian-rank',
+			__( 'Schema.org', 'bavarian-rank-engine' ),
+			__( 'Schema.org', 'bavarian-rank-engine' ),
+			'manage_options',
+			'bre-schema',
+			array( new SchemaPage(), 'render' )
 		);
 
 		add_submenu_page(
@@ -95,6 +121,7 @@ class AdminMenu {
 		$provider   = $settings['provider'] ?? 'openai';
 		$post_types = $settings['meta_post_types'] ?? array( 'post', 'page' );
 		$meta_stats = $this->get_meta_stats( $post_types );
+		$bre_compat = $this->get_compat_info();
 
 		include BRE_DIR . 'includes/Admin/views/dashboard.php';
 	}
@@ -126,5 +153,45 @@ class AdminMenu {
 			);
 		}
 		return $stats;
+	}
+
+	private function get_compat_info(): array {
+		$compat = array();
+		if ( defined( 'RANK_MATH_VERSION' ) ) {
+			$compat[] = array(
+				'name'  => 'Rank Math',
+				'notes' => array(
+					__( 'llms.txt: BRE serves the file with priority — Rank Math is bypassed.', 'bavarian-rank-engine' ),
+					__( 'Schema.org: BRE suppresses its own JSON-LD to avoid duplicates.', 'bavarian-rank-engine' ),
+					__( 'Meta descriptions: BRE writes to the Rank Math meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( defined( 'WPSEO_VERSION' ) ) {
+			$compat[] = array(
+				'name'  => 'Yoast SEO',
+				'notes' => array(
+					__( 'Schema.org: BRE suppresses its own JSON-LD to avoid duplicates.', 'bavarian-rank-engine' ),
+					__( 'Meta descriptions: BRE writes to the Yoast meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( defined( 'AIOSEO_VERSION' ) ) {
+			$compat[] = array(
+				'name'  => 'All in One SEO',
+				'notes' => array(
+					__( 'Meta descriptions: BRE writes to the AIOSEO meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		if ( class_exists( 'SeoPress_Titles_Admin' ) ) {
+			$compat[] = array(
+				'name'  => 'SEOPress',
+				'notes' => array(
+					__( 'Meta descriptions: BRE writes to the SEOPress meta field.', 'bavarian-rank-engine' ),
+				),
+			);
+		}
+		return $compat;
 	}
 }
