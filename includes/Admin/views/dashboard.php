@@ -72,8 +72,37 @@
 		<div class="postbox">
 			<div class="postbox-header"><h2><?php esc_html_e( 'Status', 'bavarian-rank-engine' ); ?></h2></div>
 			<div class="inside">
-				<p><strong><?php esc_html_e( 'Version:', 'bavarian-rank-engine' ); ?></strong> <?php echo esc_html( BRE_VERSION ); ?></p>
-				<p><strong><?php esc_html_e( 'Active Provider:', 'bavarian-rank-engine' ); ?></strong> <?php echo esc_html( $provider ); ?></p>
+				<table style="width:100%;border-collapse:collapse;">
+					<tr>
+						<td class="bre-stat-label"><?php esc_html_e( 'Version', 'bavarian-rank-engine' ); ?></td>
+						<td class="bre-stat-value"><?php echo esc_html( BRE_VERSION ); ?></td>
+					</tr>
+					<tr>
+						<td class="bre-stat-label"><?php esc_html_e( 'Active Provider', 'bavarian-rank-engine' ); ?></td>
+						<td class="bre-stat-value"><?php echo esc_html( $provider ); ?></td>
+					</tr>
+					<tr>
+						<td class="bre-stat-label"><?php esc_html_e( 'AI metas generated', 'bavarian-rank-engine' ); ?></td>
+						<td class="bre-stat-value"><?php echo esc_html( number_format_i18n( (int) ( $usage_stats['count'] ?? 0 ) ) ); ?></td>
+					</tr>
+					<tr>
+						<td class="bre-stat-label"><?php esc_html_e( 'Tokens used (est.)', 'bavarian-rank-engine' ); ?></td>
+						<td class="bre-stat-value">
+							~<?php echo esc_html( number_format_i18n( (int) ( $usage_stats['tokens_in'] ?? 0 ) + (int) ( $usage_stats['tokens_out'] ?? 0 ) ) ); ?>
+						</td>
+					</tr>
+					<?php if ( null !== $cost_usd ) : ?>
+					<tr>
+						<td class="bre-stat-label"><?php esc_html_e( 'Est. cost (USD)', 'bavarian-rank-engine' ); ?></td>
+						<td class="bre-stat-value">~$<?php echo esc_html( number_format( $cost_usd, 4 ) ); ?></td>
+					</tr>
+					<?php endif; ?>
+				</table>
+				<p style="margin:12px 0 0;">
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-provider' ) ); ?>" class="button button-secondary" style="font-size:12px;">
+						<?php esc_html_e( 'Configure AI Provider', 'bavarian-rank-engine' ); ?>
+					</a>
+				</p>
 			</div>
 		</div>
 

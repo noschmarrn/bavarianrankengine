@@ -107,3 +107,17 @@
     font-size: 13px;
 }
 .bre-coverage-stat { color: #666; }
+
+/* --- Status widget --- */
+.bre-stat-label {
+    padding: 5px 8px 5px 0;
+    color: #666;
+    font-size: 12px;
+    width: 55%;
+    vertical-align: top;
+}
+.bre-stat-value {
+    padding: 5px 0;
+    font-weight: 600;
+    font-size: 13px;
+}

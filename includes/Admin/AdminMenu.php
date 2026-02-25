@@ -128,6 +128,19 @@ class AdminMenu {
 		$bre_compat = $this->get_compat_info();
 
 		$bre_show_welcome = $this->should_show_welcome();
+
+		$usage_stats  = get_option( 'bre_usage_stats', array( 'tokens_in' => 0, 'tokens_out' => 0, 'count' => 0 ) );
+		$model        = $settings['models'][ $provider ] ?? '';
+		$costs_config = $settings['costs'][ $provider ][ $model ] ?? array();
+		$cost_usd     = null;
+		if ( ! empty( $costs_config['input'] ) || ! empty( $costs_config['output'] ) ) {
+			$cost_usd = round(
+				( (int) ( $usage_stats['tokens_in'] ?? 0 ) / 1_000_000 ) * (float) ( $costs_config['input'] ?? 0 )
+				+ ( (int) ( $usage_stats['tokens_out'] ?? 0 ) / 1_000_000 ) * (float) ( $costs_config['output'] ?? 0 ),
+				4
+			);
+		}
+
 		include BRE_DIR . 'includes/Admin/views/dashboard.php';
 	}
 
