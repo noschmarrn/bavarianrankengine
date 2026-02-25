@@ -48,3 +48,52 @@
     padding: 2px 6px;
 }
 .bre-dismiss:hover { color: #333; }
+
+/* --- Progress bars --- */
+.bre-progress-bar {
+    height: 8px;
+    background: #f0f0f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bre-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width .3s ease;
+}
+.bre-progress-fill.bre-ok   { background: #46b450; }
+.bre-progress-fill.bre-warn { background: #ffb900; }
+.bre-progress-fill.bre-bad  { background: #dc3232; }
+
+/* --- Quick links --- */
+.bre-quick-links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.bre-quick-links-list li {
+    border-bottom: 1px solid #f0f0f1;
+}
+.bre-quick-links-list li:last-child { border-bottom: none; }
+.bre-quick-links-list a {
+    display: block;
+    padding: 9px 6px;
+    text-decoration: none;
+    color: #2271b1;
+    transition: padding-left .12s;
+}
+.bre-quick-links-list a:hover {
+    color: #135e96;
+    padding-left: 12px;
+}
+
+/* --- Crawler dot --- */
+.bre-bot-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #46b450;
+    margin-right: 6px;
+    vertical-align: middle;
+}

@@ -27,24 +27,21 @@
 				<?php if ( empty( $meta_stats ) ) : ?>
 					<p><?php esc_html_e( 'No post types configured.', 'bavarian-rank-engine' ); ?></p>
 				<?php else : ?>
-				<table class="widefat striped">
-					<thead><tr>
-						<th><?php esc_html_e( 'Post Type', 'bavarian-rank-engine' ); ?></th>
-						<th><?php esc_html_e( 'Published', 'bavarian-rank-engine' ); ?></th>
-						<th><?php esc_html_e( 'With Meta', 'bavarian-rank-engine' ); ?></th>
-						<th><?php esc_html_e( 'Coverage', 'bavarian-rank-engine' ); ?></th>
-					</tr></thead>
-					<tbody>
-					<?php foreach ( $meta_stats as $pt => $stat ) : ?>
-						<tr>
-							<td><strong><?php echo esc_html( $pt ); ?></strong></td>
-							<td><?php echo esc_html( $stat['total'] ); ?></td>
-							<td><?php echo esc_html( $stat['with_meta'] ); ?></td>
-							<td><?php echo esc_html( $stat['pct'] ); ?>%</td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
+				<?php foreach ( $meta_stats as $pt => $stat ) : ?>
+				<div style="margin-bottom:14px;">
+				    <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;">
+				        <strong><?php echo esc_html( $pt ); ?></strong>
+				        <span style="color:#666;">
+				            <?php echo esc_html( $stat['with_meta'] ); ?>/<?php echo esc_html( $stat['total'] ); ?>
+				            &mdash; <?php echo esc_html( $stat['pct'] ); ?>%
+				        </span>
+				    </div>
+				    <div class="bre-progress-bar">
+				        <div class="bre-progress-fill <?php echo esc_attr( $stat['pct'] >= 80 ? 'bre-ok' : ( $stat['pct'] >= 40 ? 'bre-warn' : 'bre-bad' ) ); ?>"
+				             style="width:<?php echo esc_attr( $stat['pct'] ); ?>%"></div>
+				    </div>
+				</div>
+				<?php endforeach; ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -52,12 +49,22 @@
 		<div class="postbox">
 			<div class="postbox-header"><h2><?php esc_html_e( 'Quick Links', 'bavarian-rank-engine' ); ?></h2></div>
 			<div class="inside">
-				<ul style="margin:0;padding:0 0 0 20px;">
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-provider' ) ); ?>"><?php esc_html_e( 'AI Provider Settings', 'bavarian-rank-engine' ); ?></a></li>
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-meta' ) ); ?>"><?php esc_html_e( 'Meta Generator Settings', 'bavarian-rank-engine' ); ?></a></li>
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-llms' ) ); ?>">llms.txt</a></li>
-					<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-bulk' ) ); ?>"><?php esc_html_e( 'Bulk Generator', 'bavarian-rank-engine' ); ?></a></li>
-					<li><a href="<?php echo esc_url( 'https://bavarianrankengine.com/howto.html' ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Documentation &amp; How To', 'bavarian-rank-engine' ); ?></a></li>
+				<ul class="bre-quick-links-list">
+				    <li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-provider' ) ); ?>">
+				        &#x1F511; <?php esc_html_e( 'AI Provider Settings', 'bavarian-rank-engine' ); ?>
+				    </a></li>
+				    <li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-meta' ) ); ?>">
+				        &#x270F;&#xFE0F; <?php esc_html_e( 'Meta Generator Settings', 'bavarian-rank-engine' ); ?>
+				    </a></li>
+				    <li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-llms' ) ); ?>">
+				        &#x1F4C4; llms.txt
+				    </a></li>
+				    <li><a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-bulk' ) ); ?>">
+				        &#x26A1; <?php esc_html_e( 'Bulk Generator', 'bavarian-rank-engine' ); ?>
+				    </a></li>
+				    <li><a href="<?php echo esc_url( 'https://bavarianrankengine.com/howto.html' ); ?>" target="_blank" rel="noopener">
+				        &#x1F4D6; <?php esc_html_e( 'Documentation &amp; How To', 'bavarian-rank-engine' ); ?>
+				    </a></li>
 				</ul>
 			</div>
 		</div>
@@ -110,7 +117,7 @@
 					<tbody>
 					<?php foreach ( $crawlers as $row ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<tr>
-						<td><code><?php echo esc_html( $row['bot_name'] ); ?></code></td>
+						<td><span class="bre-bot-dot"></span><code><?php echo esc_html( $row['bot_name'] ); ?></code></td>
 						<td><?php echo esc_html( $row['visits'] ); ?></td>
 						<td><?php echo esc_html( $row['last_seen'] ); ?></td>
 					</tr>
