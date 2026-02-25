@@ -43,8 +43,11 @@ class ProviderPage {
 			'bre-admin',
 			'breAdmin',
 			array(
-				'nonce'   => wp_create_nonce( 'bre_admin' ),
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'        => wp_create_nonce( 'bre_admin' ),
+				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+				'testing'      => __( 'Testing…', 'bavarian-rank-engine' ),
+				'networkError' => __( 'Network error', 'bavarian-rank-engine' ),
+				'resetConfirm' => __( 'Really reset the prompt?', 'bavarian-rank-engine' ),
 			)
 		);
 	}

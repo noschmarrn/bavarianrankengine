@@ -125,9 +125,9 @@
 		'connectionError'  => __( 'Connection error.', 'bavarian-rank-engine' ),
 	) ); ?>;
 	jQuery(function($){
-		$.post(ajaxurl, {
+		$.post(breAdmin.ajaxUrl, {
 			action: 'bre_link_analysis',
-			nonce: '<?php echo esc_js( wp_create_nonce( 'bre_admin' ) ); ?>'
+			nonce: breAdmin.nonce
 		}).done(function(res){
 			if(!res.success){
 				$('#bre-link-analysis-content').text(breL10n.analysisError);

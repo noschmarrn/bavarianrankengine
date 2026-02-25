@@ -13,7 +13,7 @@ jQuery( function ( $ ) {
         var providerId = btn.data( 'provider' );
         var resultEl   = $( '#test-result-' + providerId );
 
-        resultEl.removeClass( 'success error' ).text( 'Teste\u2026' );
+        resultEl.removeClass( 'success error' ).text( breAdmin.testing );
         btn.prop( 'disabled', true );
 
         $.post( breAdmin.ajaxUrl, {
@@ -28,14 +28,14 @@ jQuery( function ( $ ) {
                 resultEl.addClass( 'error' ).text( '\u2717 ' + res.data );
             }
         } ).fail( function () {
-            resultEl.addClass( 'error' ).text( '\u2717 Netzwerkfehler' );
+            resultEl.addClass( 'error' ).text( '\u2717 ' + breAdmin.networkError );
         } ).always( function () {
             btn.prop( 'disabled', false );
         } );
     } );
 
     $( '#bre-reset-prompt' ).on( 'click', function () {
-        if ( ! confirm( 'Prompt wirklich zur\u00fccksetzen?' ) ) return;
+        if ( ! confirm( breAdmin.resetConfirm ) ) return;
         $.post( breAdmin.ajaxUrl, {
             action: 'bre_get_default_prompt',
             nonce:  breAdmin.nonce,
