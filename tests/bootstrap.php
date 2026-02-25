@@ -52,6 +52,13 @@ if ( ! function_exists( 'get_option' ) ) {
     }
 }
 
+if ( ! function_exists( 'update_option' ) ) {
+    function update_option( $option, $value, $autoload = null ) {
+        $GLOBALS['bre_test_options'][ $option ] = $value;
+        return true;
+    }
+}
+
 if ( ! function_exists( 'get_post_types' ) ) {
     function get_post_types( $args = [], $output = 'names' ) {
         return [ 'post' => 'post', 'page' => 'page' ];
@@ -277,5 +284,15 @@ if ( ! function_exists( 'get_the_modified_date' ) ) {
 if ( ! function_exists( 'get_the_excerpt' ) ) {
     function get_the_excerpt( $post = null ) {
         return '';
+    }
+}
+if ( ! function_exists( 'wp_strip_all_tags' ) ) {
+    function wp_strip_all_tags( $text, $remove_breaks = false ) {
+        $text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
+        $text = strip_tags( $text );
+        if ( $remove_breaks ) {
+            $text = preg_replace( '/[\r\n\t ]+/', ' ', $text );
+        }
+        return trim( $text );
     }
 }

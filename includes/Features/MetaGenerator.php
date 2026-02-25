@@ -79,7 +79,11 @@ class MetaGenerator {
 		$content = $this->prepareContent( $post, $settings );
 		$prompt  = $this->buildPrompt( $post, $content, $settings );
 
-		return $provider->generateText( $prompt, $api_key, $model, 300 );
+		$result      = $provider->generateText( $prompt, $api_key, $model, 300 );
+		$tokens_in  = TokenEstimator::estimate( $prompt );
+		$tokens_out = TokenEstimator::estimate( $result );
+		self::record_usage( $tokens_in, $tokens_out );
+		return $result;
 	}
 
 	private function prepareContent( \WP_Post $post, array $settings ): string {
@@ -367,5 +371,13 @@ class MetaGenerator {
 				)
 			)
 		);
+	}
+
+	public static function record_usage( int $tokens_in, int $tokens_out ): void {
+		$stats               = get_option( 'bre_usage_stats', array( 'tokens_in' => 0, 'tokens_out' => 0, 'count' => 0 ) );
+		$stats['tokens_in']  = (int) ( $stats['tokens_in'] ?? 0 ) + $tokens_in;
+		$stats['tokens_out'] = (int) ( $stats['tokens_out'] ?? 0 ) + $tokens_out;
+		$stats['count']      = (int) ( $stats['count'] ?? 0 ) + 1;
+		update_option( 'bre_usage_stats', $stats, false );
 	}
 }
