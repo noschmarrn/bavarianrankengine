@@ -22,19 +22,11 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Create ZIP
-        run: |
-          mkdir -p /tmp/release/bavarian-rank-engine
-          rsync -a \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='README.de.md' \
-            . /tmp/release/bavarian-rank-engine/
-          cd /tmp/release
-          zip -r bavarian-rank-engine.zip bavarian-rank-engine/
+        run: zip -r bavarian-rank-engine.zip bavarian-rank-engine/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: "Bavarian Rank Engine v${{ steps.version.outputs.version }}"
-          files: /tmp/release/bavarian-rank-engine.zip
+          files: bavarian-rank-engine.zip
           generate_release_notes: true
