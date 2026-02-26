@@ -1,135 +1,370 @@
 # Bavarian Rank Engine
 
-**Version 1.2.2** — AI-powered meta descriptions, GEO structured data, llms.txt, and crawler management for WordPress.
+![PHP 8.0+](https://img.shields.io/badge/PHP-8.0%2B-blue)
+![WordPress 6.0+](https://img.shields.io/badge/WordPress-6.0%2B-21759b)
+![License: GPL-2.0](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
+![Version](https://img.shields.io/badge/Version-1.2.2-orange)
+![Tests](https://img.shields.io/badge/Tests-82%20passing-brightgreen)
 
-Developed by [noschmarrn](https://github.com/noschmarrn) · [Plugin website](https://bavarianrankengine.com)
+🇩🇪 [Deutsche Version → README.de.md](README.de.md)
+
+**Website:** [bavarianrankengine.com](https://bavarianrankengine.com) &nbsp;·&nbsp; [How To](https://bavarianrankengine.com/howto.html) &nbsp;·&nbsp; [FAQ](https://bavarianrankengine.com/faq.html) &nbsp;·&nbsp; [Changelog](https://bavarianrankengine.com/changelog.html)
+
+---
+
+Bavarian Rank Engine is a lightweight SEO & GEO plugin for WordPress. It generates AI-powered meta descriptions, outputs Schema.org structured data, creates GEO content blocks for AI engines, and manages crawler access via robots.txt and llms.txt — all in one plugin, nothing hidden behind a paywall.
+
+It works with or without an AI key. It integrates without conflicts into Rank Math, Yoast, AIOSEO, and SEOPress. No SaaS. No telemetry. No upsells.
+
+---
+
+## Why This Plugin Exists
+
+Most WordPress SEO plugins have evolved in the same direction: bloated feature sets, dashboards full of metrics nobody needed, and a pricing model that locks the useful functionality behind a monthly subscription.
+
+The AI wave made it worse. Plugins started offering "AI-powered" features — but as a proxy service. You pay a monthly fee, your content goes through their servers, they call the AI API on your behalf and add a margin on top.
+
+BRE takes a different approach:
+
+- **Direct API access.** You store your own key from OpenAI, Anthropic, Google, or xAI. BRE calls the API directly. No middleman, no margin, no data passing through third-party servers.
+- **Clear output, not noise.** Meta descriptions, structured data, GEO content blocks, bot management. No readability scores, no keyword density meters, no upsell banners.
+- **No subscription.** GPL-2.0. Free to use on any number of sites. The only costs are API usage — typically fractions of a cent per post.
+- **No telemetry.** BRE sends no data home. No usage tracking, no remote logging, no analytics leaving your server.
+- **Works without AI.** No API key? The fallback extractor generates a usable meta description from post content using sentence boundary detection. Every post gets a description.
+
+Built in Passau, Bavaria — for [Donau2Space](https://donau2space.de), a personal AI blog, where exactly this was needed — and nothing more.
+
+---
+
+## Table of Contents
+
+- [Why This Plugin Exists](#why-this-plugin-exists)
+- [Directory Structure](#directory-structure)
+- [Features](#features)
+- [Data Storage](#data-storage)
+- [Security](#security)
+- [AI Providers](#ai-providers)
+- [Hooks & Extensibility](#hooks--extensibility)
+- [AJAX Endpoints](#ajax-endpoints)
+- [Installation](#installation)
+- [Tech Stack](#tech-stack)
+- [License](#license)
+
+---
+
+## Directory Structure
+
+```
+bavarian-rank-engine/
+├── bavarian-rank-engine.php      # Plugin header, constants (BRE_VERSION, BRE_DIR, BRE_URL)
+├── uninstall.php                 # Cleanup on plugin deletion
+├── assets/
+│   ├── admin.css                 # Shared admin stylesheet
+│   ├── admin.js                  # Provider selector, connection test
+│   ├── bulk.js                   # Bulk generator AJAX loop + progress UI
+│   ├── editor-meta.js            # Meta editor box: live counter, AI regen button
+│   ├── geo-editor.js             # GEO block editor: generate / clear button
+│   ├── geo-frontend.css          # Minimal stylesheet for .bre-geo on frontend
+│   └── seo-widget.js             # SEO analysis widget: live evaluation in editor
+├── includes/
+│   ├── Core.php                  # Singleton bootstrap, loads all dependencies
+│   ├── Admin/
+│   │   ├── AdminMenu.php         # Menu structure + dashboard render
+│   │   ├── BulkPage.php          # Bulk generator admin page
+│   │   ├── GeoEditorBox.php      # GEO block meta box in post editor
+│   │   ├── GeoPage.php           # GEO block settings page
+│   │   ├── LinkAnalysis.php      # AJAX handler for link analysis dashboard
+│   │   ├── LlmsPage.php          # llms.txt settings page
+│   │   ├── MetaEditorBox.php     # Meta description meta box in post editor
+│   │   ├── MetaPage.php          # Meta generator settings page
+│   │   ├── ProviderPage.php      # AI provider settings page
+│   │   ├── RobotsPage.php        # robots.txt manager settings page
+│   │   ├── SchemaMetaBox.php     # Schema.org per-post meta box
+│   │   ├── SchemaPage.php        # Schema.org settings page
+│   │   ├── SeoWidget.php         # SEO analysis sidebar widget
+│   │   ├── SettingsPage.php      # Central getSettings() — merges all option keys
+│   │   └── views/                # PHP templates for all admin pages
+│   ├── Features/
+│   │   ├── CrawlerLog.php        # Log AI bot visits (own DB table)
+│   │   ├── GeoBlock.php          # GEO Quick Overview block (frontend output)
+│   │   ├── LlmsTxt.php           # /llms.txt endpoint with ETag/cache
+│   │   ├── MetaGenerator.php     # Core logic: AI call, save, bulk, AJAX
+│   │   ├── RobotsTxt.php         # robots.txt bot blocking via WP filter
+│   │   └── SchemaEnhancer.php    # JSON-LD Schema.org output in wp_head
+│   ├── Helpers/
+│   │   ├── BulkQueue.php         # Mutex lock for bulk processes (transient-based)
+│   │   ├── FallbackMeta.php      # Meta extraction from post content without AI
+│   │   ├── KeyVault.php          # API key obfuscation before writing to DB
+│   │   └── TokenEstimator.php    # Rough token estimate for cost preview in bulk
+│   └── Providers/
+│       ├── ProviderInterface.php # Interface: getId, getName, getModels, testConnection, generateText
+│       ├── ProviderRegistry.php  # Registry pattern: register and retrieve providers
+│       ├── AnthropicProvider.php # Claude API (Messages API)
+│       ├── GeminiProvider.php    # Google Gemini (generateContent API)
+│       ├── GrokProvider.php      # xAI Grok (OpenAI-compatible endpoint)
+│       └── OpenAIProvider.php    # OpenAI GPT (Chat Completions API)
+└── vendor/                       # Composer dependencies (production only)
+```
 
 ---
 
 ## Features
 
 ### AI Meta Generator
-Automatically generates SEO-optimized meta descriptions using your chosen AI provider when a post is published. Supports a fully customizable prompt with `{title}`, `{content}`, `{excerpt}`, and `{language}` placeholders. Language is auto-detected from Polylang, WPML, or the WordPress locale. If no API key is configured or the AI call fails, a clean 150–160 character excerpt is extracted from post content as a fallback.
 
-Meta descriptions are written both to BRE's own `_bre_meta_description` post meta key and to the active SEO plugin's native field (Rank Math, Yoast SEO, AIOSEO, SEOPress). Existing descriptions from any of these plugins are detected and skipped, so the generator never overwrites human-written copy.
+Generates SEO-optimized meta descriptions (150–160 characters) automatically when a post is published. The prompt is fully customizable; supported placeholders: `{title}`, `{content}`, `{excerpt}`, `{language}`.
 
-### Bulk Generator
-Batch-processes all published posts that have no meta description yet. Runs in the browser via repeated AJAX calls with a configurable batch size (1–20 posts per request) and a fixed 6-second inter-batch delay for rate limiting. A transient-based lock (`bre_bulk_running`, TTL 15 minutes) prevents concurrent runs. Each post is attempted up to three times before being marked as failed. Live progress, per-post results, and a running cost estimate are shown in the admin UI.
+**Language detection:** The target language is automatically detected from Polylang, WPML, or the WordPress locale and passed in the prompt — no configuration needed.
 
-### Schema.org Enhancer (GEO)
-Injects JSON-LD structured data and meta tags into `wp_head`. Individually toggleable types:
+**SEO plugin integration:** Generated descriptions are written not only to `_bre_meta_description` but also directly to the native field of the active SEO plugin:
 
-| Type | Description |
+| SEO Plugin | Meta Field |
 |---|---|
-| `organization` | Site name, URL, logo, and optional `sameAs` social links |
-| `article_about` | Article schema with headline, dates, description, and publisher |
-| `author` | Person schema with author name, URL, and optional Twitter `sameAs` |
-| `speakable` | SpeakableSpecification pointing at `h1` and first paragraph selectors |
-| `breadcrumb` | BreadcrumbList (skipped when Rank Math or Yoast is active to avoid duplicates) |
-| `ai_meta_tags` | `<meta name="robots">` and `<meta name="googlebot">` tags with `max-snippet:-1, max-image-preview:large` directives |
+| Rank Math | `rank_math_description` |
+| Yoast SEO | `_yoast_wpseo_metadesc` |
+| AIOSEO | `_aioseo_description` |
+| SEOPress | `_seopress_titles_desc` |
+| (none active) | BRE outputs `<meta name="description">` itself |
 
-The standalone `<meta name="description">` output is suppressed when Rank Math, Yoast, or AIOSEO is active.
+**Token mode:** Either the full post content is sent (`full`) or it is trimmed to a configurable token count (100–8000) (`limit`). Trimming is handled by `TokenEstimator` — a word-based estimate without external libraries, using a ratio of ~0.75 words per token.
+
+**Fallback without AI:** `FallbackMeta::extract()` always delivers a usable description — even without an API key or on error. Extraction prefers sentence boundaries (`. `, `! `, `? `), falls back to word boundaries, and only uses a hard cut with `…` as a last resort. Fully multibyte-safe via `mb_substr` / `mb_strrpos`.
+
+---
+
+### GEO Block (Quick Overview)
+
+Generates AI-powered content blocks directly in post text for Generative Engine Optimization:
+
+- **Summary** — brief overview of the post
+- **Key Points** — bullet list of the most important points
+- **FAQ** — question-answer pairs (only above a configurable word threshold, default: 350 words)
+
+**Insert position** (configurable): after the first paragraph (default), top, bottom.
+
+**Display modes:**
+
+| Mode | Behavior |
+|---|---|
+| `details_collapsible` | Native HTML `<details>` — collapsed, no JavaScript needed |
+| `open_always` | Block always visible |
+| `store_only_no_frontend` | Store in DB only, no frontend output (e.g. for FAQPage schema) |
+
+All labels (title, summary, key points, FAQ), the accent color, color scheme (auto/light/dark), and custom CSS are configurable via the admin page — no coding required.
+
+**Per-post prompt add-on:** Authors can enter a custom prompt addition via a meta box in the post editor that is appended to the base prompt. Can be enabled/disabled globally.
+
+---
+
+### Schema.org Enhancer
+
+Outputs JSON-LD structured data and meta tags in `<head>`. Settings under **Bavarian Rank → Schema.org**. Each type is individually toggleable:
+
+| Type | Schema.org Type | Notes |
+|---|---|---|
+| `organization` | `Organization` | Name, URL, logo, `sameAs` links (social profiles) |
+| `author` | `Person` | Author name, profile URL, optional Twitter `sameAs` |
+| `speakable` | `WebPage` + `SpeakableSpecification` | CSS selectors on H1 and first paragraph |
+| `article_about` | `Article` | Headline, publish/modified, description, publisher |
+| `breadcrumb` | `BreadcrumbList` | Automatically suppressed when Rank Math or Yoast is active |
+| `ai_meta_tags` | — | `<meta name="robots">` + `<meta name="googlebot">` with `max-snippet:-1` |
+| `faq_schema` | `FAQPage` | Automatically populated from GEO block data |
+| `blog_posting` | `BlogPosting` / `Article` | With embedded `author` and featured image |
+| `image_object` | `ImageObject` | Featured image with dimensions and caption |
+| `video_object` | `VideoObject` | YouTube/Vimeo automatically detected and embedded |
+| `howto` | `HowTo` | Step-by-step guide — data via meta box in post editor |
+| `review` | `Review` | Rating with `ratingValue` — data via meta box |
+| `recipe` | `Recipe` | Ingredients, times, nutritional values — data via meta box |
+| `event` | `Event` | Date, location, organizer — data via meta box |
+
+---
 
 ### llms.txt
-Serves a machine-readable index of published content at `/llms.txt` (and paginated `/llms-2.txt`, `/llms-3.txt`, ...) following the emerging llms.txt convention for AI training and retrieval systems. Features:
 
-- Configurable title, description blocks (before, after, footer), and custom featured links section
-- Selectable post types
-- Configurable maximum links per page (minimum 50, default 500)
-- Transient-based caching with manual cache-clear button in the admin
-- HTTP caching headers: `ETag`, `Last-Modified`, `Cache-Control: public, max-age=3600`
-- HTTP 304 Not Modified responses when the ETag matches
-- Admin notice when Rank Math is also active (BRE takes priority via `parse_request` at priority 1)
+Serves `/llms.txt` and paginated follow-up files (`/llms-2.txt`, `/llms-3.txt` …) via a `parse_request` hook at priority 1 — before WordPress routing, no rewrite rule flush needed.
+
+**File structure:**
+```
+# Site Title
+> Description block
+
+## Featured Links
+- [Title](URL): Description
+
+## Content
+- [Title](URL): Date
+
+---
+## More
+/llms-2.txt
+```
+
+**HTTP caching:**
+- `ETag: "md5(content)"` → HTTP 304 on `If-None-Match`
+- `Last-Modified` based on the most recent `post_modified_gmt` in the database
+- `Cache-Control: public, max-age=3600`
+- Transient cache is automatically invalidated on every settings change
+
+**Rank Math conflict notice:** If Rank Math also wants to serve an llms.txt, BRE shows an admin notice — BRE takes precedence automatically due to priority 1.
+
+---
 
 ### robots.txt Manager
-Appends `User-agent` / `Disallow: /` blocks to WordPress's virtual `robots.txt` via the `robots_txt` filter. Supports 13 known AI and data-harvesting crawlers:
 
-GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot, Applebot-Extended, Bytespider, DataForSeoBot, ImagesiftBot, omgili, Diffbot, FacebookBot, Amazonbot.
+Appends `Disallow` blocks via the WordPress filter `robots_txt` — WordPress's own robots.txt is preserved; BRE only extends it.
 
-Each bot can be individually enabled or disabled in the admin UI.
+Supported AI bots (all individually toggleable):
+
+| User-Agent | Operator |
+|---|---|
+| `GPTBot` | OpenAI |
+| `ClaudeBot` | Anthropic |
+| `Google-Extended` | Google (Bard/Gemini training) |
+| `PerplexityBot` | Perplexity AI |
+| `CCBot` | Common Crawl |
+| `Applebot-Extended` | Apple AI |
+| `Bytespider` | ByteDance |
+| `DataForSeoBot` | DataForSEO |
+| `ImagesiftBot` | Imagesift |
+| `omgili` | Omgili |
+| `Diffbot` | Diffbot |
+| `FacebookBot` | Meta |
+| `Amazonbot` | Amazon |
+
+---
+
+### Bulk Generator
+
+Batch processing of all published posts without a meta description. The process runs as a repeated AJAX request in the browser — no WP-Cron, no CLI required.
+
+**Technical details:**
+- 1–20 posts per batch (configurable)
+- 6-second delay between batches (rate limiting against API limits)
+- Up to 3 attempts per post
+- Live progress log and running cost estimate in the admin UI
+- **Mutex lock via transient** (`bre_bulk_running`, TTL 15 minutes): prevents parallel runs across multiple browser tabs or admin users. The lock is set at start, automatically released after the last batch — or manually via button.
+
+---
 
 ### Crawler Log
-Logs visits from known AI bots to a dedicated database table (`{prefix}bre_crawler_log`). Stores bot name, SHA-256 hash of the visitor IP (privacy-safe), requested URL (truncated to 512 characters), and timestamp. Entries older than 90 days are purged automatically via a weekly WP-Cron job. The dashboard shows a 30-day summary per bot.
+
+Logs visits from known AI bots in the dedicated database table `{prefix}bre_crawler_log`:
+
+| Column | Type | Content |
+|---|---|---|
+| `bot_name` | VARCHAR | Name of the bot (e.g. `GPTBot`) |
+| `ip_hash` | CHAR(64) | SHA-256 hash of the visitor IP |
+| `url` | VARCHAR(512) | Requested URL |
+| `visited_at` | DATETIME | Timestamp |
+
+**Why SHA-256 instead of plain-text IP?** The original IP is never stored. The hash satisfies the GDPR requirement of data minimization: bot patterns are identifiable (same hash = same IP), but tracing back to a person without the plain-text value is practically impossible.
+
+Entries older than 90 days are automatically cleaned up via weekly cron (`bre_cleanup_crawler_log`). The dashboard shows a 30-day summary per bot.
+
+---
 
 ### Meta Editor Box
-Adds a "Meta Description (BRE)" meta box to the post editor for every configured post type. Displays the current description (with a source badge: AI / Fallback / Manual / Not generated yet), a character counter targeting 160 characters, and a "Regenerate with AI" button that calls the API inline without leaving the editor.
+
+Meta box in the post editor (Classic and Block Editor):
+- Source badge: `AI generated` / `Fallback` / `Manual` / `Not generated`
+- Text field with `maxlength="160"` and live character counter (JavaScript, no save needed)
+- "Regenerate with AI" button (only when API key is configured) — generates inline without page reload
+
+---
 
 ### SEO Analysis Widget
-A sidebar meta box on the post editor showing live content stats: title character count (target 60), word count, estimated reading time, heading structure, and internal/external link counts. Also displays inline warnings (e.g. missing H2, no internal links). Stats update in real time as content changes.
+
+Sidebar meta box in the post editor with live evaluation while writing:
+- Title length (target: ≤ 60 characters)
+- Word count and estimated reading time
+- Heading hierarchy (H1–H6 tree)
+- Counter for internal and external links
+- Inline warnings: no H2, no internal link, title too long
+
+All stats are updated live via `MutationObserver`, no manual save needed.
+
+---
 
 ### Link Analysis (Dashboard)
-An AJAX-loaded dashboard panel that identifies posts without any internal links, posts with an unusually high number of external links (configurable threshold), and the top pillar pages by inbound internal link count. Results are cached for one hour.
 
-### Multi-Provider AI Backend
-Four providers are registered out of the box:
+AJAX widget on the plugin dashboard:
+- Posts with no internal links at all
+- Posts with an above-average number of external links
+- Top-5 pillar pages by number of incoming internal links
 
-| Provider | Class |
+Results are cached for 1 hour in the transient cache (`bre_link_analysis`).
+
+---
+
+## Data Storage
+
+### WordPress Options (wp_options)
+
+| Option Key | Content |
 |---|---|
-| OpenAI | `OpenAIProvider` |
-| Anthropic (Claude) | `AnthropicProvider` |
-| Google Gemini | `GeminiProvider` |
-| xAI Grok | `GrokProvider` |
+| `bre_settings` | Active provider, API keys (obfuscated), model selection, token costs, `ai_enabled` flag |
+| `bre_meta_settings` | Meta generator: auto mode, post types, token mode, prompt |
+| `bre_schema_settings` | Schema.org: enabled types, organization sameAs URLs |
+| `bre_geo_settings` | GEO block: mode, position, labels, CSS, prompt, color scheme |
+| `bre_robots_settings` | robots.txt: blocked bots |
+| `bre_llms_settings` | llms.txt: title, description, featured links, footer, page count |
+| `bre_usage_stats` | Accumulated token usage: `tokens_in`, `tokens_out`, `count` |
+| `bre_first_activated` | Unix timestamp of first activation (used by welcome notice) |
 
-The active provider and model are selected per-site. API keys can also be set via `wp-config.php` constants (see API Key Security below).
+### Post Meta (wp_postmeta)
 
----
+| Meta Key | Content |
+|---|---|
+| `_bre_meta_description` | Generated meta description |
+| `_bre_meta_source` | Source: `ai` / `fallback` / `manual` |
+| `_bre_bulk_failed` | Last error during bulk attempt |
+| `_bre_geo_summary` | GEO block summary |
+| `_bre_geo_bullets` | GEO block key points (JSON array) |
+| `_bre_geo_faq` | GEO block FAQ (JSON array) |
 
-## Requirements
+### Custom Database Table
 
-- WordPress 6.0 or later
-- PHP 8.0 or later
-- At least one AI provider API key (optional — fallback meta extraction works without one)
+| Table | Purpose |
+|---|---|
+| `{prefix}bre_crawler_log` | AI bot visits (bot_name, ip_hash, url, visited_at) |
 
----
+### Transients
 
-## Installation
+| Transient | TTL | Purpose |
+|---|---|---|
+| `bre_llms_cache_{n}` | 1 hour | Cached llms.txt content per page |
+| `bre_link_analysis` | 1 hour | Dashboard link analysis result |
+| `bre_bulk_running` | 15 minutes | Mutex lock for bulk generator |
+| `bre_meta_stats` | 5 minutes | Dashboard meta coverage query result |
+| `bre_crawler_summary` | 5 minutes | Dashboard crawler summary (last 30 days) |
 
-1. Upload the plugin folder to `wp-content/plugins/`.
-2. Activate the plugin via **Plugins → Installed Plugins**.
-3. Go to **Bavarian Rank → AI Provider**.
-4. Select your provider, enter the API key, pick a model, and click **Test connection**.
-5. Go to **Bavarian Rank → Meta Generator** to configure post types, token limits, and the prompt.
-6. Optionally enable Schema.org types on the same page.
-7. To serve `llms.txt`, go to **Bavarian Rank → llms.txt**, enable it, and save.
+### Uninstall cleanup
 
-On first activation the plugin creates the `{prefix}bre_crawler_log` table and registers the `llms.txt` rewrite rule (followed by a `flush_rewrite_rules()` call).
+`uninstall.php` removes on plugin deletion:
+- Option `bre_settings`
+- Post meta `_bre_meta_description` for all posts
 
----
-
-## Admin Menu Structure
-
-The plugin registers a top-level menu **Bavarian Rank** (slug `bavarian-rank`) with the following sub-pages:
-
-| Sub-page | Slug | Class | Purpose |
-|---|---|---|---|
-| Dashboard | `bavarian-rank` | `AdminMenu` | Overview: active provider, meta coverage stats per post type, crawler log summary, link analysis, token/cost usage |
-| AI Provider | `bre-provider` | `ProviderPage` | Select provider, enter/test API key, choose model, set optional token costs, enable/disable AI |
-| Meta Generator | `bre-meta` | `MetaPage` | Toggle auto-generation, select post types, set token limit, edit prompt |
-| Schema.org | `bre-schema` | `SchemaPage` | Toggle and configure JSON-LD structured data types |
-| llms.txt | `bre-llms` | `LlmsPage` | Enable/configure llms.txt, set post types, max links, custom sections |
-| Bulk Generator | `bre-bulk` | `BulkPage` | Batch-generate meta for all posts without descriptions |
-| robots.txt | `bre-robots` | `RobotsPage` | Select which AI bots to block in robots.txt |
-| Settings | `bre-settings` | `SettingsPage` | Global plugin settings |
-
-All pages require the `manage_options` capability.
+> Note: The remaining option keys and the `bre_crawler_log` table are not automatically removed. For full cleanup, delete these manually.
 
 ---
 
-## API Key Security (KeyVault)
+## Security
 
-API keys are obfuscated before being written to the WordPress options table using `BavarianRankEngine\Helpers\KeyVault`.
+### API Key Obfuscation (KeyVault)
 
-**How it works:**
+```
+Plaintext key  →  XOR(key, sha256(AUTH_KEY . SECURE_AUTH_KEY))  →  base64  →  "bre1:<base64>"
+```
 
-1. A 64-character hex salt is derived from the WordPress `AUTH_KEY` and `SECURE_AUTH_KEY` constants via `hash('sha256', AUTH_KEY . SECURE_AUTH_KEY)`.
-2. The plaintext key is XOR-encrypted byte-by-byte with the salt (wrapping when the salt is shorter than the key).
-3. The result is base64-encoded and stored with a `bre1:` prefix.
+`BavarianRankEngine\Helpers\KeyVault` obfuscates API keys before writing to `wp_options`:
 
-Stored format: `bre1:<base64(xor(plaintext, salt))>`
+1. A 64-byte salt is derived from the WordPress constants `AUTH_KEY` and `SECURE_AUTH_KEY` via `hash('sha256', ...)`.
+2. The plaintext is XOR'd byte-by-byte (salt is repeated as needed).
+3. The result is base64-encoded and prefixed with `bre1:`.
 
-No OpenSSL or any PHP extension beyond the standard library is required.
+**Why XOR and not AES?** No `openssl_*` or external extension required — the code runs on any PHP 8.0+ installation without configuration. The `bre1:` prefix allows future migration to stronger encryption without a breaking change.
 
-**Limitations:** XOR with a static derived key is obfuscation, not cryptographic encryption. It prevents API keys from appearing in plain text in database dumps and export files, but does not protect against an attacker who has access to both the database and `wp-config.php`. For stronger protection, define the API key directly in `wp-config.php`:
+**Security boundary:** XOR with a static salt is obfuscation, not cryptographic encryption. An attacker with access to **both** the database **and** `wp-config.php` can reconstruct the key. For maximum security, keys can be defined as `wp-config.php` constants — these take precedence over the database version:
 
 ```php
 define( 'BRE_OPENAI_KEY',    'sk-...' );
@@ -138,166 +373,170 @@ define( 'BRE_GEMINI_KEY',    'AI...' );
 define( 'BRE_GROK_KEY',      'xai-...' );
 ```
 
-When a constant is defined and the database field is left empty, the constant value is used automatically.
+In the admin UI, keys are always displayed masked: `••••••Ab3c9` (only the last 5 characters visible).
 
-The admin UI always displays keys masked: `••••••Ab3c9` (last 5 characters visible).
+### CSRF Protection and Capability Checks
+
+Every AJAX handler follows the same pattern — without exception:
+
+```php
+check_ajax_referer( 'bre_admin', 'nonce' );          // CSRF
+if ( ! current_user_can( 'manage_options' ) ) {      // Authorization
+    wp_send_json_error( 'Unauthorized', 403 );
+}
+```
+
+The nonce `bre_admin` is passed to the frontend via `wp_localize_script` and validated server-side on every request. There are no `wp_ajax_nopriv_` handlers — all AJAX endpoints are exclusively accessible to logged-in users with `manage_options` capability.
+
+### Input Validation and Output Escaping
+
+- All `$_POST` values are processed via `wp_unslash()` + specific sanitizers (`sanitize_text_field`, `absint`, `wp_kses_post` depending on context).
+- All output in admin views is escaped (`esc_html`, `esc_attr`, `esc_url`, `esc_textarea`).
+- SQL queries exclusively via `$wpdb->prepare()`.
+
+### Privacy (GDPR)
+
+The crawler log stores IP addresses exclusively as SHA-256 hashes. The original value is never persisted. Entries are automatically deleted after 90 days.
 
 ---
 
-## Extending the Plugin
+## AI Providers
 
-### Adding a New AI Provider
+BRE supports four providers, all implementing the same `ProviderInterface`:
 
-Create `includes/Providers/YourProvider.php` implementing `ProviderInterface`:
+| Provider | Class | API Base URL |
+|---|---|---|
+| OpenAI | `OpenAIProvider` | `https://api.openai.com/v1/chat/completions` |
+| Anthropic | `AnthropicProvider` | `https://api.anthropic.com/v1/messages` |
+| Google Gemini | `GeminiProvider` | `https://generativelanguage.googleapis.com/...` |
+| xAI Grok | `GrokProvider` | `https://api.x.ai/v1/chat/completions` |
+
+### Adding a New Provider
 
 ```php
-<?php
+// includes/Providers/YourProvider.php
 namespace BavarianRankEngine\Providers;
 
 class YourProvider implements ProviderInterface {
-
-    public function getId(): string {
-        return 'yourprovider';
-    }
-
-    public function getName(): string {
-        return 'Your Provider Name';
-    }
-
-    public function getModels(): array {
-        return [
-            'model-v1'      => 'Model V1 (Smart)',
-            'model-v1-mini' => 'Model V1 Mini (Fast)',
-        ];
-    }
+    public function getId(): string    { return 'yourprovider'; }
+    public function getName(): string  { return 'Your Provider'; }
+    public function getModels(): array { return [ 'model-id' => 'Model Name' ]; }
 
     public function testConnection( string $api_key ): array {
-        // Make a minimal, low-cost API call to verify the key.
-        // Return ['success' => true, 'message' => 'Connected to ...']
-        // or     ['success' => false, 'message' => 'Error: ...']
+        // Minimal API call — returns ['success' => bool, 'message' => string]
     }
 
     public function generateText( string $prompt, string $api_key, string $model, int $max_tokens = 300 ): string {
-        // Call your API endpoint.
-        // Return the generated text string on success.
-        // Throw \RuntimeException on API or HTTP error.
+        // Call API, return plain text — throw \RuntimeException on error
     }
 }
 ```
 
-Then register the provider in `includes/Core.php` inside `register_hooks()`:
+Register in `includes/Core.php` → `register_hooks()`:
 
 ```php
 $registry->register( new Providers\YourProvider() );
 ```
 
-The new provider appears automatically in all admin dropdowns (AI Provider page, Bulk Generator) without any further changes.
+The provider automatically appears in all admin dropdowns, the provider settings page, and the cost overview of the bulk generator.
 
-### Adding a New Feature
+---
 
-1. Create `includes/Features/YourFeature.php` with a public `register()` method that attaches WordPress hooks.
-2. Add `require_once BRE_DIR . 'includes/Features/YourFeature.php';` in `Core::load_dependencies()`.
-3. Add `( new Features\YourFeature() )->register();` in `Core::register_hooks()`.
+## Hooks & Extensibility
 
-### Available Hooks
+### `bre_prompt` (Filter)
 
-**`bre_prompt` (filter)**
-
-Fired inside `MetaGenerator::buildPrompt()` after all placeholder substitutions. Use it to append keywords, change the language instruction, or inject dynamic context.
+Allows modifying the final prompt immediately before the API call.
 
 ```php
-add_filter( 'bre_prompt', function( string $prompt, \WP_Post $post ): string {
+add_filter( 'bre_prompt', function( string $prompt, WP_Post $post ): string {
     $keyword = get_post_meta( $post->ID, 'focus_keyword', true );
-    if ( $keyword ) {
-        $prompt .= "\nFokus-Keyword: " . $keyword;
-    }
-    return $prompt;
+    return $keyword ? $prompt . "\nFocus keyword: {$keyword}" : $prompt;
 }, 10, 2 );
 ```
 
-**`bre_meta_saved` (action)**
+### `bre_meta_saved` (Action)
 
-Fired at the end of `MetaGenerator::saveMeta()` after the description has been written to all relevant post meta keys. Use it to sync descriptions to external systems, send notifications, or log results.
+Fired after a meta description is successfully saved — both on automatic generation at publish and on manual regen in the editor.
 
 ```php
 add_action( 'bre_meta_saved', function( int $post_id, string $description ): void {
-    // $description is the sanitized, saved meta description
-    my_sync_function( $post_id, $description );
+    // e.g. sync with external system or cache invalidation
+    my_cdn_purge( get_permalink( $post_id ) );
 }, 10, 2 );
 ```
 
----
+### Adding a New Feature
 
-## Option Keys
-
-| Option key | Content |
-|---|---|
-| `bre_settings` | Provider ID, encrypted API keys, selected models, token costs |
-| `bre_meta_settings` | Auto-generate toggle, post types, token mode/limit, prompt, Schema.org config |
-| `bre_llms_settings` | llms.txt enable flag, title, description blocks, post types, max links |
-| `bre_robots_settings` | Array of blocked bot user-agent strings |
-
-Post-level meta keys written by the plugin:
-
-| Meta key | Content |
-|---|---|
-| `_bre_meta_description` | The generated or manually entered meta description |
-| `_bre_meta_source` | Source tag: `ai`, `fallback`, or `manual` |
-| `_bre_bulk_failed` | Last error message if bulk generation failed for this post |
+1. Create `includes/Features/YourFeature.php` with a `register()` method that registers WordPress hooks.
+2. In `includes/Core.php` → `load_dependencies()`: `require_once BRE_DIR . 'includes/Features/YourFeature.php';`
+3. In `includes/Core.php` → `register_hooks()`: `( new Features\YourFeature() )->register();`
 
 ---
 
-## Development
+## AJAX Endpoints
 
+All endpoints are exclusively accessible to logged-in users with `manage_options` (no `nopriv`).
+
+| Action | Handler | Description |
+|---|---|---|
+| `bre_regen_meta` | `MetaEditorBox::ajax_regen` | Regenerate meta description for a single post |
+| `bre_test_connection` | `ProviderPage::ajax_test_connection` | Test API key and connection |
+| `bre_get_default_prompt` | `ProviderPage::ajax_get_default_prompt` | Reset to default prompt |
+| `bre_link_analysis` | `LinkAnalysis::ajax_analyse` | Run link analysis for the dashboard |
+| `bre_geo_generate` | `GeoEditorBox::ajax_generate` | Generate GEO block for a single post |
+| `bre_geo_clear` | `GeoEditorBox::ajax_clear` | Clear GEO block data for a single post |
+| `bre_llms_clear_cache` | `LlmsPage::ajax_clear_cache` | Clear llms.txt transient cache |
+| `bre_dismiss_llms_notice` | `LlmsTxt::ajax_dismiss_notice` | Dismiss Rank Math conflict admin notice |
+| `bre_dismiss_welcome` | `AdminMenu::ajax_dismiss_welcome` | Dismiss the welcome notice per user |
+| `bre_bulk_generate` | `MetaGenerator::ajaxBulkGenerate` | Process next batch in bulk generator |
+| `bre_bulk_stats` | `MetaGenerator::ajaxBulkStats` | Retrieve progress and stats of running bulk |
+| `bre_bulk_release` | `MetaGenerator::ajaxBulkRelease` | Manually release bulk mutex lock |
+| `bre_bulk_status` | `MetaGenerator::ajaxBulkStatus` | Check bulk lock status |
+
+---
+
+## Installation
+
+**Via GitHub Release (recommended):**
+1. Download `bavarian-rank-engine.zip` from the [latest release](https://github.com/noschmarrn/bavarianrankengine/releases/latest)
+2. In WordPress go to *Plugins → Add New → Upload Plugin*
+
+**Manual (clone):**
 ```bash
-# Install dev dependencies (PHPUnit, etc.)
-php composer.phar install
-
-# Run the test suite
-php composer.phar exec phpunit
-
-# WordPress Coding Standards check
-php composer.phar exec phpcs -- --standard=WordPress includes/
+cd /path/to/wordpress/wp-content/plugins/
+git clone https://github.com/noschmarrn/bavarianrankengine.git bavarian-rank-engine
+wp plugin activate bavarian-rank-engine
 ```
 
-The plugin has no JavaScript build step. Assets in `assets/` are plain JavaScript files loaded conditionally per admin page.
+**After activation:**
+1. Go to *Bavarian Rank → AI Provider*, select your provider and enter your API key
+2. Run the connection test
+3. Go to *Meta Generator*, enable auto mode and select post types
+
+The plugin has no JavaScript build step. All assets under `assets/` are direct JS/CSS files without transpiling or bundling.
 
 ---
 
-## Changelog
+## Tech Stack
 
-### 1.2.2 (2026-02)
+| Component | Technology |
+|---|---|
+| Backend | PHP 8.0+, WordPress Plugin API |
+| Namespace | `BavarianRankEngine\` |
+| Architecture | Singleton core, registry pattern (providers), feature classes with `register()` |
+| Database | WordPress Options API, `wpdb` (custom table for CrawlerLog) |
+| Caching | WordPress transients (llms.txt, link analysis, bulk lock) |
+| Frontend | Vanilla JS + jQuery (WordPress-bundled), no build step |
+| i18n | `.pot` file, text domain `bavarian-rank-engine` |
+| Tests | PHPUnit (82 tests, 160 assertions) |
+| Coding standard | WordPress PHPCS |
+| License | GPL-2.0-or-later |
 
-- **Dashboard UX** — Progress bars for meta coverage, styled quick links, AI-crawler dot indicators
-- **Welcome Notice** — Dismissible Bavarian-flavored notice with 24 h auto-expiry (per-user meta)
-- **Status Widget** — Estimated token usage and USD cost in the provider status widget
-- **AI Enable Toggle** — Checkbox + cost warning on the provider page; AI can be disabled without deleting the API key
-- **Token Usage Tracking** — `MetaGenerator::record_usage()` accumulates stats in `bre_usage_stats`
-- **Transient Caching** — Dashboard DB queries cached for 5 minutes via `bre_meta_stats` + `bre_crawler_summary`
-- **i18n** — All previously hard-coded German strings in `admin.js` moved to `breAdmin.*` localisation
-- **de_DE Translation** — 14 new strings added to `bavarian-rank-engine-de_DE.po/.mo`
-- **82 tests, 160 assertions** — all green
+---
 
-### 1.2.1 (2026-02)
+## License
 
-- **Schema.org sub-page** — Dedicated admin page (`SchemaPage`) with its own option key `bre_schema_settings`; backward compatible with existing `bre_meta_settings` values
-- **Admin menu** — New "Schema.org" submenu entry after Meta Generator
-- **Settings consolidation** — `SettingsPage::getSettings()` merges all three option keys
-- **80 tests, 154 assertions** — all green
+GPL-2.0-or-later — [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
 
-### 1.0.0 (2025)
-
-- Initial release
-- AI Meta Generator: auto-generate on publish, custom prompt with `{title}`, `{content}`, `{excerpt}`, `{language}` placeholders, Polylang/WPML language detection
-- Bulk Generator: batched AJAX processing, rate limiting (6 s delay), transient lock, up to 3 retries per post, live progress log, cost estimation
-- Schema.org Enhancer: Organization, Article, Author, Speakable, BreadcrumbList JSON-LD; AI meta tags; standalone meta description output
-- llms.txt: paginated, ETag/Last-Modified caching, custom sections, manual cache clear
-- robots.txt Manager: 13 known AI bot user-agents individually configurable
-- Crawler Log: database table, SHA-256 IP hashing, weekly purge cron, dashboard summary
-- Meta Editor Box: inline source badge, character counter, single-post AI regeneration button
-- SEO Analysis Widget: live word count, reading time, heading structure, link counts, inline warnings
-- Link Analysis: posts without internal links, external link outliers, top pillar pages (1-hour cache)
-- KeyVault: XOR obfuscation of stored API keys using WP salts, no OpenSSL dependency
-- FallbackMeta: sentence-boundary-aware 150–160 character excerpt extraction
-- Multi-provider: OpenAI, Anthropic, Google Gemini, xAI Grok
-- Compatible with Rank Math, Yoast SEO, AIOSEO, SEOPress, or no SEO plugin
+Copyright (c) 2025–2026 [Donau2Space](https://donau2space.de)
