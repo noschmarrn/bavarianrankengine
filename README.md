@@ -1,8 +1,8 @@
 # Bavarian Rank Engine
 
-**Version 1.0.0** — AI-powered meta descriptions, GEO structured data, llms.txt, and crawler management for WordPress.
+**Version 1.2.2** — AI-powered meta descriptions, GEO structured data, llms.txt, and crawler management for WordPress.
 
-Developed by [Donau2Space](https://donau2space.de)
+Developed by [noschmarrn](https://github.com/noschmarrn) · [Plugin website](https://bavarianrankengine.com)
 
 ---
 
@@ -102,12 +102,14 @@ The plugin registers a top-level menu **Bavarian Rank** (slug `bavarian-rank`) w
 
 | Sub-page | Slug | Class | Purpose |
 |---|---|---|---|
-| Dashboard | `bavarian-rank` | `AdminMenu` | Overview: active provider, meta coverage stats per post type, crawler log summary, link analysis |
-| AI Provider | `bre-provider` | `ProviderPage` | Select provider, enter/test API key, choose model, set optional token costs |
-| Meta Generator | `bre-meta` | `MetaPage` | Toggle auto-generation, select post types, set token limit, edit prompt, enable Schema.org types |
+| Dashboard | `bavarian-rank` | `AdminMenu` | Overview: active provider, meta coverage stats per post type, crawler log summary, link analysis, token/cost usage |
+| AI Provider | `bre-provider` | `ProviderPage` | Select provider, enter/test API key, choose model, set optional token costs, enable/disable AI |
+| Meta Generator | `bre-meta` | `MetaPage` | Toggle auto-generation, select post types, set token limit, edit prompt |
+| Schema.org | `bre-schema` | `SchemaPage` | Toggle and configure JSON-LD structured data types |
 | llms.txt | `bre-llms` | `LlmsPage` | Enable/configure llms.txt, set post types, max links, custom sections |
 | Bulk Generator | `bre-bulk` | `BulkPage` | Batch-generate meta for all posts without descriptions |
 | robots.txt | `bre-robots` | `RobotsPage` | Select which AI bots to block in robots.txt |
+| Settings | `bre-settings` | `SettingsPage` | Global plugin settings |
 
 All pages require the `manage_options` capability.
 
@@ -249,10 +251,13 @@ Post-level meta keys written by the plugin:
 
 ```bash
 # Install dev dependencies (PHPUnit, etc.)
-composer install
+php composer.phar install
 
 # Run the test suite
-php vendor/bin/phpunit --testdox
+php composer.phar exec phpunit
+
+# WordPress Coding Standards check
+php composer.phar exec phpcs -- --standard=WordPress includes/
 ```
 
 The plugin has no JavaScript build step. Assets in `assets/` are plain JavaScript files loaded conditionally per admin page.
@@ -260,6 +265,25 @@ The plugin has no JavaScript build step. Assets in `assets/` are plain JavaScrip
 ---
 
 ## Changelog
+
+### 1.2.2 (2026-02)
+
+- **Dashboard UX** — Progress bars for meta coverage, styled quick links, AI-crawler dot indicators
+- **Welcome Notice** — Dismissible Bavarian-flavored notice with 24 h auto-expiry (per-user meta)
+- **Status Widget** — Estimated token usage and USD cost in the provider status widget
+- **AI Enable Toggle** — Checkbox + cost warning on the provider page; AI can be disabled without deleting the API key
+- **Token Usage Tracking** — `MetaGenerator::record_usage()` accumulates stats in `bre_usage_stats`
+- **Transient Caching** — Dashboard DB queries cached for 5 minutes via `bre_meta_stats` + `bre_crawler_summary`
+- **i18n** — All previously hard-coded German strings in `admin.js` moved to `breAdmin.*` localisation
+- **de_DE Translation** — 14 new strings added to `bavarian-rank-engine-de_DE.po/.mo`
+- **82 tests, 160 assertions** — all green
+
+### 1.2.1 (2026-02)
+
+- **Schema.org sub-page** — Dedicated admin page (`SchemaPage`) with its own option key `bre_schema_settings`; backward compatible with existing `bre_meta_settings` values
+- **Admin menu** — New "Schema.org" submenu entry after Meta Generator
+- **Settings consolidation** — `SettingsPage::getSettings()` merges all three option keys
+- **80 tests, 154 assertions** — all green
 
 ### 1.0.0 (2025)
 
