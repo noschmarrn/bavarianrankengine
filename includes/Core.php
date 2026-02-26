@@ -46,6 +46,7 @@ class Core {
 		require_once BRE_DIR . 'includes/Admin/GeoPage.php';
 		require_once BRE_DIR . 'includes/Admin/GeoEditorBox.php';
 		require_once BRE_DIR . 'includes/Admin/SchemaMetaBox.php';
+		require_once BRE_DIR . 'includes/Admin/SchemaPage.php';
 	}
 
 	private function register_hooks(): void {
@@ -76,6 +77,7 @@ class Core {
 			( new Admin\GeoPage() )->register();
 			( new Admin\GeoEditorBox() )->register();
 			( new Admin\SchemaMetaBox() )->register();
+			( new Admin\SchemaPage() )->register();
 		}
 	}
 }

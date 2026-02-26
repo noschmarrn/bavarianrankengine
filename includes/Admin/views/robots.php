@@ -42,4 +42,10 @@
 			<?php esc_html_e( 'View current robots.txt →', 'bavarian-rank-engine' ); ?>
 		</a>
 	</p>
+
+	<p class="bre-footer">
+		Bavarian Rank Engine <?php echo esc_html( BRE_VERSION ); ?> &mdash;
+		<?php esc_html_e( 'developed with', 'bavarian-rank-engine' ); ?> ♥
+		<a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
+	</p>
 </div>

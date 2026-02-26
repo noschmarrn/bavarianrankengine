@@ -147,4 +147,10 @@
 	<p class="description" style="color:#d63638;">
 		<?php esc_html_e( 'Note: If the URL shows a 404, go to Settings → Permalinks and click Save to flush rewrite rules.', 'bavarian-rank-engine' ); ?>
 	</p>
+
+	<p class="bre-footer">
+		Bavarian Rank Engine <?php echo esc_html( BRE_VERSION ); ?> &mdash;
+		<?php esc_html_e( 'developed with', 'bavarian-rank-engine' ); ?> ♥
+		<a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
+	</p>
 </div>

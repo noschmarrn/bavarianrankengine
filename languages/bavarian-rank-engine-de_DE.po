@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Bavarian Rank Engine 1.0.0\n"
 "Report-Msgid-Bugs-To: https://donau2space.de\n"
 "POT-Creation-Date: 2026-02-21T00:00:00+00:00\n"
-"PO-Revision-Date: 2026-02-21T00:00:00+00:00\n"
+"PO-Revision-Date: 2026-02-25T00:00:00+00:00\n"
 "Last-Translator: Donau2Space <info@donau2space.de>\n"
 "Language-Team: German <de@li.org>\n"
 "Language: de_DE\n"
@@ -778,3 +778,65 @@ msgstr "Akzentfarbe"
 #: includes/Admin/views/geo.php
 msgid "Used for the left border of the summary bar and the expand arrow. Leave empty for the default blue."
 msgstr "Wird für den linken Rand der Zusammenfassungsleiste und den Expand-Pfeil verwendet. Leer lassen für das Standard-Blau."
+
+# --- v1.2.2 ---
+
+#: includes/Admin/AdminMenu.php
+msgid "Testing…"
+msgstr "Wird getestet…"
+
+#: includes/Admin/AdminMenu.php
+msgid "Network error"
+msgstr "Netzwerkfehler"
+
+#: includes/Admin/AdminMenu.php
+msgid "Really reset the prompt?"
+msgstr "Prompt wirklich zurücksetzen?"
+
+#: includes/Admin/views/dashboard.php
+msgid "Servus! Welcome to Bavarian Rank Engine."
+msgstr "Servus! Willkommen bei Bavarian Rank Engine."
+
+#: includes/Admin/views/dashboard.php
+msgid "No Lederhosen required — your SEO is already in good hands."
+msgstr "Keine Lederhosen nötig — dein SEO ist in guten Händen."
+
+#: includes/Admin/views/dashboard.php
+msgid "Read the setup guide and be running in five minutes →"
+msgstr "Einrichtungsanleitung lesen — in fünf Minuten startklar →"
+
+#: includes/Admin/views/dashboard.php
+msgid "Dismiss"
+msgstr "Schließen"
+
+#: includes/Admin/views/dashboard.php
+msgid "Version"
+msgstr "Version"
+
+#: includes/Admin/views/dashboard.php
+msgid "AI metas generated"
+msgstr "KI-Metas generiert"
+
+#: includes/Admin/views/dashboard.php
+msgid "Tokens used (est.)"
+msgstr "Token verbraucht (Schätzung)"
+
+#: includes/Admin/views/dashboard.php
+msgid "Est. cost (USD)"
+msgstr "Gesch. Kosten (USD)"
+
+#: includes/Admin/views/dashboard.php
+msgid "Configure AI Provider"
+msgstr "KI-Anbieter konfigurieren"
+
+#: includes/Admin/views/dashboard.php
+msgid "Documentation &amp; How To"
+msgstr "Dokumentation &amp; How To"
+
+#: includes/Admin/views/provider.php
+msgid "Enable AI generation"
+msgstr "KI-Generierung aktivieren"
+
+#: includes/Admin/views/provider.php
+msgid "This feature will incur costs with your AI provider. Make sure you understand the pricing before entering an API key."
+msgstr "Diese Funktion verursacht Kosten beim KI-Anbieter. Bitte prüfe die Preise, bevor du einen API-Key eingibst."

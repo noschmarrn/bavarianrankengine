@@ -4,3 +4,5 @@ firebase-debug.log
 composer.phar
 *.zip
 /node_modules/
+.claude/
+*.log

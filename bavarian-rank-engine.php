@@ -24,10 +24,9 @@ define( 'BRE_URL', plugin_dir_url( __FILE__ ) );
 
 require_once BRE_DIR . 'includes/Core.php';
 
-function bavarian_rank_engine_init(): void {
+add_action( 'plugins_loaded', static function (): void {
 	\BavarianRankEngine\Core::instance()->init();
-}
-add_action( 'plugins_loaded', 'bavarian_rank_engine_init' );
+} );
 
 register_activation_hook(
 	BRE_FILE,

@@ -4,7 +4,7 @@
          bootstrap="tests/bootstrap.php"
          colors="true">
     <testsuites>
-        <testsuite name="SEO GEO Tests">
+        <testsuite name="Bavarian Rank Engine Tests">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

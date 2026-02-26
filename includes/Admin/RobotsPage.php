@@ -10,6 +10,14 @@ use BavarianRankEngine\Features\RobotsTxt;
 class RobotsPage {
 	public function register(): void {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+	}
+
+	public function enqueue_assets( string $hook ): void {
+		if ( $hook !== 'bavarian-rank_page_bre-robots' ) {
+			return;
+		}
+		wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', array(), BRE_VERSION );
 	}
 
 	public function register_settings(): void {

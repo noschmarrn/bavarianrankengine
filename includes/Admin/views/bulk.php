@@ -74,4 +74,10 @@ endif;
 		style="background:#1e1e1e;color:#d4d4d4;padding:15px;font-family:monospace;font-size:12px;max-height:400px;overflow-y:auto;display:none;"></div>
 
 	<div id="bre-failed-summary" style="display:none;background:#fdf2f2;border:1px solid #f5c6cb;padding:10px 15px;margin-top:15px;border-radius:3px;font-size:13px;"></div>
+
+	<p class="bre-footer">
+		Bavarian Rank Engine <?php echo esc_html( BRE_VERSION ); ?> &mdash;
+		<?php esc_html_e( 'developed with', 'bavarian-rank-engine' ); ?> ♥
+		<a href="https://donau2space.de" target="_blank" rel="noopener">Donau2Space.de</a>
+	</p>
 </div>

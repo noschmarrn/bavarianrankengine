@@ -27,7 +27,7 @@
 				<?php if ( empty( $meta_stats ) ) : ?>
 					<p><?php esc_html_e( 'No post types configured.', 'bavarian-rank-engine' ); ?></p>
 				<?php else : ?>
-				<?php foreach ( $meta_stats as $pt => $stat ) : ?>
+				<?php foreach ( $meta_stats as $pt => $stat ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 				<div class="bre-coverage-row">
 					<div class="bre-coverage-label">
 						<strong><?php echo esc_html( $pt ); ?></strong>
@@ -114,7 +114,7 @@
 				<?php foreach ( $bre_compat as $plugin ) : ?>
 				<p style="margin-bottom:4px;"><strong><?php echo esc_html( $plugin['name'] ); ?></strong></p>
 				<ul style="margin:0 0 12px 20px;">
-					<?php foreach ( $plugin['notes'] as $note ) : ?>
+					<?php foreach ( $plugin['notes'] as $note ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<li><?php echo esc_html( $note ); ?></li>
 					<?php endforeach; ?>
 				</ul>
