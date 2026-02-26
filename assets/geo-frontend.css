@@ -1,0 +1,99 @@
+/* Bavarian Rank Engine — GEO Block (scoped to .bre-geo) */
+
+/* ── Light theme (default) ────────────────────────────── */
+.bre-geo {
+	--bre-border:    #e0e0e0;
+	--bre-bg:        #fafafa;
+	--bre-sec-border:#e0e0e0;
+	--bre-label:     #666;
+	--bre-faq-ans:   #444;
+	--bre-accent:    #0073aa;
+
+	margin: 1.5em 0;
+	border: 1px solid var(--bre-border);
+	border-radius: 6px;
+	background: var(--bre-bg);
+	padding: 0;
+}
+
+/* ── Auto dark: follows OS/browser preference ─────────── */
+@media (prefers-color-scheme: dark) {
+	.bre-geo:not([data-bre-scheme="light"]) {
+		--bre-border:    #3d3d3d;
+		--bre-bg:        #1e1e1e;
+		--bre-sec-border:#3d3d3d;
+		--bre-label:     #999;
+		--bre-faq-ans:   #bbb;
+		--bre-accent:    #4ea8d8;
+	}
+}
+
+/* ── Forced dark ──────────────────────────────────────── */
+.bre-geo[data-bre-scheme="dark"] {
+	--bre-border:    #3d3d3d;
+	--bre-bg:        #1e1e1e;
+	--bre-sec-border:#3d3d3d;
+	--bre-label:     #999;
+	--bre-faq-ans:   #bbb;
+	--bre-accent:    #4ea8d8;
+}
+
+/* ── Summary bar ──────────────────────────────────────── */
+.bre-geo summary {
+	cursor: pointer;
+	padding: 0.75em 1em;
+	font-weight: 600;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	border-left: 3px solid var(--bre-accent);
+	border-radius: 5px 5px 0 0;
+}
+
+.bre-geo summary::-webkit-details-marker { display: none; }
+
+.bre-geo summary::before {
+	content: '▶';
+	display: inline-block;
+	margin-right: 0.5em;
+	font-size: 0.7em;
+	transition: transform 0.2s;
+	color: var(--bre-accent);
+}
+
+.bre-geo[open] summary::before { transform: rotate(90deg); }
+
+.bre-geo__title { flex: 1; }
+
+/* ── Content sections ─────────────────────────────────── */
+.bre-geo__section {
+	padding: 0.75em 1em;
+	border-top: 1px solid var(--bre-sec-border);
+}
+
+.bre-geo__section h3 {
+	font-size: 0.8em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--bre-label);
+	margin: 0 0 0.5em;
+}
+
+.bre-geo__bullets ul {
+	margin: 0;
+	padding-left: 1.25em;
+}
+
+.bre-geo__bullets li { margin-bottom: 0.25em; }
+
+.bre-geo__faq dl { margin: 0; }
+
+.bre-geo__faq dt {
+	font-weight: 600;
+	margin-top: 0.5em;
+}
+
+.bre-geo__faq dd {
+	margin-left: 0;
+	color: var(--bre-faq-ans);
+}
