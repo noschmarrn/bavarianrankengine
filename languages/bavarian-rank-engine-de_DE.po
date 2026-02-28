@@ -53,11 +53,11 @@ msgstr "Massen-Generator"
 
 #: includes/Admin/AdminMenu.php
 msgid "TXT Files"
-msgstr "TXT-Dateien"
+msgstr "TXT Dateien"
 
 #: includes/Admin/views/dashboard.php:3
 msgid "Bavarian Rank Engine \xe2\x80\x94 Dashboard"
-msgstr "Bavarian Rank Engine \xe2\x80\x94 Dashboard"
+msgstr "Bavarian Rank Engine — Dashboard"
 
 #: includes/Admin/views/dashboard.php:8
 msgid "Meta Coverage"
@@ -73,7 +73,7 @@ msgstr "Beitragstyp"
 
 #: includes/Admin/views/dashboard.php:16
 msgid "Published"
-msgstr "Ver\xc3\xb6ffentlicht"
+msgstr "Veröffentlicht"
 
 #: includes/Admin/views/dashboard.php:17
 msgid "With Meta"
@@ -182,7 +182,7 @@ msgstr "Aktiver Anbieter"
 
 #: includes/Admin/views/provider.php:27
 msgid "API Key"
-msgstr "API-Schl\xc3\xbcssel"
+msgstr "API-Schlüssel"
 
 #: includes/Admin/views/provider.php:31
 msgid "Saved:"
@@ -190,11 +190,11 @@ msgstr "Gespeichert:"
 
 #: includes/Admin/views/provider.php:37
 msgid "Enter new key to overwrite"
-msgstr "Neuen Schl\xc3\xbcssel zum \xc3\x9cberschreiben eingeben"
+msgstr "Neuen Schlüssel zum Überschreiben eingeben"
 
 #: includes/Admin/views/provider.php:37
 msgid "Enter API key"
-msgstr "API-Schl\xc3\xbcssel eingeben"
+msgstr "API-Schlüssel eingeben"
 
 #: includes/Admin/views/provider.php:41
 msgid "Test connection"
@@ -225,11 +225,11 @@ msgstr "entwickelt mit"
 
 #: includes/Admin/views/bulk.php:7
 msgid "Generates meta descriptions for posts without an existing meta description."
-msgstr "Generiert Meta-Beschreibungen f\xc3\xbcr Artikel ohne vorhandene Meta-Beschreibung."
+msgstr "Generiert Meta-Beschreibungen für Artikel ohne vorhandene Meta-Beschreibung."
 
 #: includes/Admin/views/bulk.php:10
 msgid "Loading statistics\xe2\x80\xa6"
-msgstr "Lade Statistiken\xe2\x80\xa6"
+msgstr "Lade Statistiken…"
 
 #: includes/Admin/views/bulk.php:46
 msgid "Max. posts this run"
@@ -293,7 +293,7 @@ msgstr "Titel"
 
 #: includes/Admin/views/txt.php:63
 msgid "Appears as the # heading in llms.txt"
-msgstr "Erscheint als # \xc3\x9cberschrift in der llms.txt"
+msgstr "Erscheint als # Überschrift in der llms.txt"
 
 #: includes/Admin/views/txt.php:68
 msgid "Description (before links)"
@@ -309,7 +309,7 @@ msgstr "Besondere Links"
 
 #: includes/Admin/views/txt.php:82
 msgid "Important links to highlight for AI models. One per line."
-msgstr "Wichtige Links f\xc3\xbcr KI-Modelle hervorheben. Eine pro Zeile."
+msgstr "Wichtige Links für KI-Modelle hervorheben. Eine pro Zeile."
 
 #: includes/Admin/views/txt.php:83
 msgid "Markdown format recommended:"
@@ -338,7 +338,7 @@ msgstr "Beschreibung (nach Inhalt)"
 
 #: includes/Admin/views/txt.php:126
 msgid "Footer Description"
-msgstr "Fu\xc3\x9fzeilen-Beschreibung"
+msgstr "Fußzeilen-Beschreibung"
 
 #: includes/Admin/views/txt.php:130
 msgid "Appears at the end of llms.txt after a --- separator."
@@ -354,11 +354,11 @@ msgstr "Vorschau"
 
 #: includes/Admin/views/txt.php:141
 msgid "After saving, visit your llms.txt to verify:"
-msgstr "Nach dem Speichern die llms.txt aufrufen zur \xc3\x9cberpr\xc3\xbcfung:"
+msgstr "Nach dem Speichern die llms.txt aufrufen zur Überprüfung:"
 
 #: includes/Admin/views/txt.php:147
 msgid "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
-msgstr "Hinweis: Wenn die URL einen 404 zeigt, unter Einstellungen \xe2\x86\x92 Permalinks auf Speichern klicken."
+msgstr "Hinweis: Wenn die URL einen 404 zeigt, unter Einstellungen → Permalinks auf Speichern klicken."
 
 #: includes/Admin/views/meta.php:13
 msgid "Auto Mode"
@@ -366,7 +366,7 @@ msgstr "Auto-Modus"
 
 #: includes/Admin/views/meta.php:20
 msgid "Automatically generate meta description on publish"
-msgstr "Meta-Beschreibung beim Ver\xc3\xb6ffentlichen automatisch generieren"
+msgstr "Meta-Beschreibung beim Veröffentlichen automatisch generieren"
 
 #: includes/Admin/views/meta.php:39
 msgid "Token Mode"
@@ -378,7 +378,7 @@ msgstr "Ganzen Artikel senden"
 
 #: includes/Admin/views/meta.php:50
 msgid "Limit to"
-msgstr "K\xc3\xbcrzen auf"
+msgstr "Kürzen auf"
 
 #: includes/Admin/views/meta.php:55
 msgid "tokens"
@@ -394,7 +394,7 @@ msgstr "Variablen:"
 
 #: includes/Admin/views/meta.php:68
 msgid "Reset prompt"
-msgstr "Prompt zur\xc3\xbccksetzen"
+msgstr "Prompt zurücksetzen"
 
 #: includes/Admin/views/meta.php:74
 msgid "Schema.org Enhancer (GEO)"
@@ -410,7 +410,7 @@ msgstr "Organization sameAs URLs"
 
 #: includes/Admin/views/meta.php:93
 msgid "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
-msgstr "Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
+msgstr "Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook…)"
 
 #: includes/Admin/views/txt.php
 msgid "Block known AI bots for this site."
@@ -498,11 +498,11 @@ msgstr "Autor (sameAs Profil-Links)"
 
 #: includes/Admin/MetaPage.php:68
 msgid "Speakable (for AI assistants)"
-msgstr "Speakable (f\xc3\xbcr KI-Assistenten)"
+msgstr "Speakable (für KI-Assistenten)"
 
 #: includes/Admin/MetaPage.php:69
 msgid "Article about/mentions"
-msgstr "Artikel \xc3\xbcber/erw\xc3\xa4hnt"
+msgstr "Artikel über/erwähnt"
 
 #: includes/Admin/MetaPage.php:70
 msgid "BreadcrumbList"
@@ -520,7 +520,7 @@ msgstr "Keine Berechtigung."
 
 #: includes/Admin/ProviderPage.php:89
 msgid "No API key saved. Please save first."
-msgstr "Kein API-Schl\xc3\xbcssel gespeichert. Bitte zuerst speichern."
+msgstr "Kein API-Schlüssel gespeichert. Bitte zuerst speichern."
 
 #: includes/Admin/ProviderPage.php:93
 msgid "Unknown provider."
@@ -536,19 +536,19 @@ msgstr "Ein Bulk-Prozess läuft bereits."
 
 #: includes/Features/LlmsTxt.php
 msgid "Bavarian Rank Engine serves llms.txt with priority \xe2\x80\x94 no action needed in Rank Math."
-msgstr "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
+msgstr "Bavarian Rank Engine bedient llms.txt mit Priorität — kein Handlungsbedarf bei Rank Math."
 
 #: includes/Admin/AdminMenu.php
 msgid "GEO Quick Overview"
-msgstr "GEO Schnell\xc3\xbcberblick"
+msgstr "GEO Schnellüberblick"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "GEO Quick Overview (BRE)"
-msgstr "GEO Schnell\xc3\xbcberblick (BRE)"
+msgstr "GEO Schnellüberblick (BRE)"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "Enable GEO block for this post"
-msgstr "GEO-Block f\xc3\xbcr diesen Beitrag aktiv"
+msgstr "GEO-Block für diesen Beitrag aktiv"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "Lock auto-regeneration"
@@ -585,7 +585,7 @@ msgstr "Kernaussagen"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "(Format: Question? | Answer \xe2\x80\x94 one per line)"
-msgstr "(Format: Frage? | Antwort \xe2\x80\x94 eine pro Zeile)"
+msgstr "(Format: Frage? | Antwort — eine pro Zeile)"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "Prompt add-on (optional)"
@@ -593,7 +593,7 @@ msgstr "Prompt-Zusatz (optional)"
 
 #: includes/Admin/GeoEditorBox.php
 msgid "Generation failed. Check API key and provider settings."
-msgstr "Generierung fehlgeschlagen. API-Key und Provider-Einstellungen pr\xc3\xbcfen."
+msgstr "Generierung fehlgeschlagen. API-Key und Provider-Einstellungen prüfen."
 
 #: includes/Admin/views/geo.php
 msgid "Activation"
@@ -605,7 +605,7 @@ msgstr "GEO Block aktivieren"
 
 #: includes/Admin/views/geo.php
 msgid "Output the Quick Overview block on the frontend"
-msgstr "Schnell\xc3\xbcberblick-Block im Frontend ausgeben"
+msgstr "Schnellüberblick-Block im Frontend ausgeben"
 
 #: includes/Admin/views/geo.php
 msgid "Mode"
@@ -633,7 +633,7 @@ msgstr "Bei jedem Speichern eines publizierten Beitrags neu generieren"
 
 #: includes/Admin/views/geo.php
 msgid "Word threshold for FAQ"
-msgstr "Wortschwellwert f\xc3\xbcr FAQ"
+msgstr "Wortschwellwert für FAQ"
 
 #: includes/Admin/views/geo.php
 msgid "Below this word count, no FAQ is generated. Default: 350"
@@ -693,7 +693,7 @@ msgstr "Minimal-CSS laden"
 
 #: includes/Admin/views/geo.php
 msgid "Load base stylesheet for .bre-geo on the frontend"
-msgstr "Basis-Stylesheet f\xc3\xbcr .bre-geo auf dem Frontend laden"
+msgstr "Basis-Stylesheet für .bre-geo auf dem Frontend laden"
 
 #: includes/Admin/views/geo.php
 msgid "Automatically scoped to .bre-geo{...}. Enter CSS properties only, no selector."
@@ -713,7 +713,7 @@ msgstr "Prompt-Zusatz pro Beitrag"
 
 #: includes/Admin/views/geo.php
 msgid "Authors can enter a prompt add-on per post in the editor"
-msgstr "Autoren d\xc3\xbcrfen im Editor einen Prompt-Zusatz pro Beitrag eingeben"
+msgstr "Autoren dürfen im Editor einen Prompt-Zusatz pro Beitrag eingeben"
 
 #: includes/Admin/views/dashboard.php
 msgid "Plugin Compatibility"
