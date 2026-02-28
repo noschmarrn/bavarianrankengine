@@ -85,14 +85,14 @@ class SchemaPage {
 			'article_about' => __( 'Article about/mentions', 'bavarian-rank-engine' ),
 			'breadcrumb'    => __( 'BreadcrumbList', 'bavarian-rank-engine' ),
 			'ai_meta_tags'  => __( 'AI-optimized Meta Tags (max-snippet etc.)', 'bavarian-rank-engine' ),
-			'faq_schema'    => __( 'FAQPage (aus GEO Quick Overview — automatisch)', 'bavarian-rank-engine' ),
-			'blog_posting'  => __( 'BlogPosting / Article (mit eingebettetem Author + Image)', 'bavarian-rank-engine' ),
+			'faq_schema'    => __( 'FAQPage (from GEO Quick Overview — automatic)', 'bavarian-rank-engine' ),
+			'blog_posting'  => __( 'BlogPosting / Article (with embedded Author + Image)', 'bavarian-rank-engine' ),
 			'image_object'  => __( 'ImageObject (Featured Image)', 'bavarian-rank-engine' ),
-			'video_object'  => __( 'VideoObject (YouTube/Vimeo automatisch erkennen)', 'bavarian-rank-engine' ),
-			'howto'         => __( 'HowTo (Metabox im Post-Editor)', 'bavarian-rank-engine' ),
-			'review'        => __( 'Review mit Bewertung (Metabox im Post-Editor)', 'bavarian-rank-engine' ),
-			'recipe'        => __( 'Recipe (Metabox im Post-Editor)', 'bavarian-rank-engine' ),
-			'event'         => __( 'Event (Metabox im Post-Editor)', 'bavarian-rank-engine' ),
+			'video_object'  => __( 'VideoObject (auto-detect YouTube/Vimeo)', 'bavarian-rank-engine' ),
+			'howto'         => __( 'HowTo (Metabox in Post Editor)', 'bavarian-rank-engine' ),
+			'review'        => __( 'Review with Rating (Metabox in Post Editor)', 'bavarian-rank-engine' ),
+			'recipe'        => __( 'Recipe (Metabox in Post Editor)', 'bavarian-rank-engine' ),
+			'event'         => __( 'Event (Metabox in Post Editor)', 'bavarian-rank-engine' ),
 		);
 		include BRE_DIR . 'includes/Admin/views/schema.php';
 	}

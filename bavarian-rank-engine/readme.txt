@@ -3,7 +3,7 @@ Contributors: mifupadev
 Tags: seo, ai, meta description, schema, llms.txt
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -149,6 +149,15 @@ Yes. Implement the `BavarianRankEngine\Providers\ProviderInterface` interface (f
 8. Post editor — SEO Analysis sidebar widget with live stats and warnings.
 
 == Changelog ==
+
+= 1.2.4 =
+* Fix: AI generation is now disabled by default — users must explicitly enable it on the AI Provider page
+* Fix: Dashboard "Active Provider" now correctly shows "AI disabled" or "Not configured" when no API key is set
+* Fix: German strings removed from Schema.org admin page, Schema Metabox in Post Editor, and SEO Widget
+* New: Meta Generator and GEO Block pages show an info notice when no AI provider is active
+* New: Meta Generator prompt is now locale-aware — German WordPress installs get the German prompt, all others get English
+* New: "Theme outputs post title as H1" setting in Meta Generator — suppresses false H1 warning in the SEO Widget
+* Improved: SEO Widget strings (headings, warnings, links) are now fully translatable via WordPress i18n
 
 = 1.2.3 =
 * Improved: llms.txt and robots.txt admin pages merged into a single "TXT Files" page with native WordPress tab navigation

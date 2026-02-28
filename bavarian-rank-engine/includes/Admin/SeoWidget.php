@@ -68,5 +68,24 @@ class SeoWidget {
 			BRE_VERSION,
 			true
 		);
+		$settings = SettingsPage::getSettings();
+		$locale   = get_locale();
+		// Convert WP locale (de_DE) to BCP 47 (de-DE) for JS toLocaleString
+		$bcp47    = str_replace( '_', '-', $locale );
+		wp_localize_script(
+			'bre-seo-widget',
+			'breWidget',
+			array(
+				'none'           => __( 'None', 'bavarian-rank-engine' ),
+				'noH1'           => __( 'No H1 heading', 'bavarian-rank-engine' ),
+				'multipleH1'     => __( 'Multiple H1 headings', 'bavarian-rank-engine' ),
+				'noInternalLinks' => __( 'No internal links', 'bavarian-rank-engine' ),
+				'internal'       => __( 'internal', 'bavarian-rank-engine' ),
+				'external'       => __( 'external', 'bavarian-rank-engine' ),
+				'minLabel'       => __( 'min', 'bavarian-rank-engine' ),
+				'locale'         => $bcp47,
+				'themeHasH1'     => ! empty( $settings['theme_has_h1'] ),
+			)
+		);
 	}
 }

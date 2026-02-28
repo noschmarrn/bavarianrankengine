@@ -11,7 +11,7 @@
 		<div class="bre-ai-toggle-wrap">
 			<label style="font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
 				<input type="checkbox" name="bre_settings[ai_enabled]" value="1" id="bre-ai-enabled"
-					   <?php checked( $settings['ai_enabled'] ?? true, true ); ?>>
+					   <?php checked( $settings['ai_enabled'] ?? false, true ); ?>>
 				<?php esc_html_e( 'Enable AI generation', 'bavarian-rank-engine' ); ?>
 			</label>
 			<p class="bre-ai-cost-notice">

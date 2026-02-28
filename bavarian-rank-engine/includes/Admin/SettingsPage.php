@@ -36,7 +36,8 @@ class SettingsPage {
 			'schema_enabled'    => array(),
 			'schema_same_as'    => array(),
 			'costs'             => array(),
-			'ai_enabled'        => true,
+			'ai_enabled'        => false,
+			'theme_has_h1'      => true,
 		);
 
 		$saved_provider = get_option( self::OPTION_KEY_PROVIDER, array() );
@@ -61,13 +62,26 @@ class SettingsPage {
 	}
 
 	public static function getDefaultPrompt(): string {
-		return 'Schreibe eine SEO-optimierte Meta-Beschreibung für den folgenden Artikel.' . "\n"
-			. 'Die Beschreibung soll für menschliche Leser verständlich und hilfreich sein,' . "\n"
-			. 'den Inhalt treffend zusammenfassen und zwischen 150 und 160 Zeichen lang sein.' . "\n"
-			. 'Schreibe die Meta-Beschreibung auf {language}.' . "\n"
-			. 'Antworte ausschließlich mit der Meta-Beschreibung, ohne Erklärung.' . "\n\n"
-			. 'Titel: {title}' . "\n"
-			. 'Inhalt: {content}';
+		$locale    = get_locale();
+		$is_german = str_starts_with( $locale, 'de_' );
+
+		if ( $is_german ) {
+			return 'Schreibe eine SEO-optimierte Meta-Beschreibung für den folgenden Artikel.' . "\n"
+				. 'Die Beschreibung soll für menschliche Leser verständlich und hilfreich sein,' . "\n"
+				. 'den Inhalt treffend zusammenfassen und zwischen 150 und 160 Zeichen lang sein.' . "\n"
+				. 'Schreibe die Meta-Beschreibung auf {language}.' . "\n"
+				. 'Antworte ausschließlich mit der Meta-Beschreibung, ohne Erklärung.' . "\n\n"
+				. 'Titel: {title}' . "\n"
+				. 'Inhalt: {content}';
+		}
+
+		return 'Write an SEO-optimised meta description for the following article.' . "\n"
+			. 'The description should be easy to understand for human readers,' . "\n"
+			. 'accurately summarise the content, and be between 150 and 160 characters long.' . "\n"
+			. 'Write the meta description in {language}.' . "\n"
+			. 'Reply with the meta description only, without any explanation.' . "\n\n"
+			. 'Title: {title}' . "\n"
+			. 'Content: {content}';
 	}
 
 	/**
@@ -82,6 +96,7 @@ class SettingsPage {
 
 		$clean['provider']          = sanitize_key( $input['provider'] ?? 'openai' );
 		$clean['meta_auto_enabled'] = ! empty( $input['meta_auto_enabled'] );
+		$clean['theme_has_h1']      = ! empty( $input['theme_has_h1'] );
 		$clean['token_mode']        = in_array( $input['token_mode'] ?? '', array( 'limit', 'full' ), true )
 										? $input['token_mode'] : 'limit';
 		$clean['token_limit']       = max( 100, (int) ( $input['token_limit'] ?? 1000 ) );

@@ -82,8 +82,11 @@ class GeoPage {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$settings   = GeoBlock::getSettings();
-		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		$settings       = GeoBlock::getSettings();
+		$post_types     = get_post_types( array( 'public' => true ), 'objects' );
+		$global         = SettingsPage::getSettings();
+		$api_key        = $global['api_keys'][ $global['provider'] ] ?? '';
+		$has_ai         = ( $global['ai_enabled'] ?? false ) && ! empty( $api_key );
 		include BRE_DIR . 'includes/Admin/views/geo.php';
 	}
 }

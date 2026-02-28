@@ -42,6 +42,7 @@ class MetaPage {
 		$clean = array();
 
 		$clean['meta_auto_enabled'] = ! empty( $input['meta_auto_enabled'] );
+		$clean['theme_has_h1']      = ! empty( $input['theme_has_h1'] );
 		$clean['token_mode']        = in_array( $input['token_mode'] ?? '', array( 'limit', 'full' ), true )
 										? $input['token_mode'] : 'limit';
 		$clean['token_limit']       = max( 100, (int) ( $input['token_limit'] ?? 1000 ) );
@@ -64,6 +65,8 @@ class MetaPage {
 		}
 		$settings   = SettingsPage::getSettings();
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		$api_key    = $settings['api_keys'][ $settings['provider'] ] ?? '';
+		$has_ai     = ( $settings['ai_enabled'] ?? false ) && ! empty( $api_key );
 		include BRE_DIR . 'includes/Admin/views/meta.php';
 	}
 }

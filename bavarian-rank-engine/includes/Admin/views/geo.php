@@ -206,6 +206,15 @@
 		</table>
 
 		<h2><?php esc_html_e( 'AI Prompt', 'bavarian-rank-engine' ); ?></h2>
+	<?php if ( ! $has_ai ) : ?>
+	<div class="notice notice-warning inline" style="margin:0 0 12px;">
+		<p>
+			<strong><?php esc_html_e( 'No AI provider active.', 'bavarian-rank-engine' ); ?></strong>
+			<?php esc_html_e( 'The GEO block will not be generated automatically until an API key is configured and AI generation is enabled.', 'bavarian-rank-engine' ); ?>
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-provider' ) ); ?>"><?php esc_html_e( 'Configure AI Provider →', 'bavarian-rank-engine' ); ?></a>
+		</p>
+	</div>
+	<?php endif; ?>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><?php esc_html_e( 'Default prompt', 'bavarian-rank-engine' ); ?></th>

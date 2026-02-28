@@ -112,8 +112,21 @@ class AdminMenu {
 			return;
 		}
 
-		$settings   = SettingsPage::getSettings();
-		$provider   = $settings['provider'] ?? 'openai';
+		$settings     = SettingsPage::getSettings();
+		$provider_key = $settings['provider'] ?? 'openai';
+		$api_key      = $settings['api_keys'][ $provider_key ] ?? '';
+		$ai_enabled   = $settings['ai_enabled'] ?? false;
+		$has_ai       = $ai_enabled && ! empty( $api_key );
+
+		if ( ! $ai_enabled ) {
+			$provider = __( 'AI disabled', 'bavarian-rank-engine' );
+		} elseif ( empty( $api_key ) ) {
+			$provider = __( '— Not configured —', 'bavarian-rank-engine' );
+		} else {
+			$prov_obj = \BavarianRankEngine\ProviderRegistry::instance()->get( $provider_key );
+			$provider = $prov_obj ? $prov_obj->getName() : $provider_key;
+		}
+
 		$post_types = $settings['meta_post_types'] ?? array( 'post', 'page' );
 		$meta_stats = $this->get_meta_stats( $post_types );
 		$bre_compat = $this->get_compat_info();
@@ -121,8 +134,8 @@ class AdminMenu {
 		$bre_show_welcome = $this->should_show_welcome();
 
 		$usage_stats  = get_option( 'bre_usage_stats', array( 'tokens_in' => 0, 'tokens_out' => 0, 'count' => 0 ) );
-		$model        = $settings['models'][ $provider ] ?? '';
-		$costs_config = $settings['costs'][ $provider ][ $model ] ?? array();
+		$model        = $settings['models'][ $provider_key ] ?? '';
+		$costs_config = $settings['costs'][ $provider_key ][ $model ] ?? array();
 		$cost_usd     = null;
 		if ( ! empty( $costs_config['input'] ) || ! empty( $costs_config['output'] ) ) {
 			$cost_usd = round(
