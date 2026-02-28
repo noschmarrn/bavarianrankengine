@@ -11,9 +11,9 @@ class AnthropicProvider implements ProviderInterface {
 
 	public function getModels(): array {
 		return array(
-			'claude-sonnet-4-6'         => 'Claude Sonnet 4.6 (Empfohlen)',
-			'claude-opus-4-6'           => 'Claude Opus 4.6 (Leistungsstark)',
-			'claude-haiku-4-5-20251001' => 'Claude Haiku 4.5 (Schnell & günstig)',
+			'claude-sonnet-4-6'         => 'Claude Sonnet 4.6 (' . __( 'Recommended', 'bavarian-rank-engine' ) . ')',
+			'claude-opus-4-6'           => 'Claude Opus 4.6 (' . __( 'Powerful', 'bavarian-rank-engine' ) . ')',
+			'claude-haiku-4-5-20251001' => 'Claude Haiku 4.5 (' . __( 'Fast & cheap', 'bavarian-rank-engine' ) . ')',
 		);
 	}
 
@@ -22,7 +22,7 @@ class AnthropicProvider implements ProviderInterface {
 			$this->generateText( 'Say "ok"', $api_key, 'claude-haiku-4-5-20251001', 5 );
 			return array(
 				'success' => true,
-				'message' => 'Verbindung erfolgreich',
+				'message' => __( 'Connection successful', 'bavarian-rank-engine' ),
 			);
 		} catch ( \RuntimeException $e ) {
 			return array(

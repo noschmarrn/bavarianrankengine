@@ -16,10 +16,10 @@
 		<a href="<?php echo esc_url( admin_url( 'admin.php?page=bre-txt&tab=robots' ) ); ?>"
 			class="nav-tab <?php echo $active_tab === 'robots' ? 'nav-tab-active' : ''; ?>">
 			robots.txt
-			<?php $blocked_count = count( $robots_settings['blocked_bots'] ?? array() ); ?>
-			<?php if ( $blocked_count > 0 ) : ?>
+			<?php $bre_blocked_count = count( $robots_settings['blocked_bots'] ?? array() ); ?>
+			<?php if ( $bre_blocked_count > 0 ) : ?>
 				<span style="display:inline-block;background:#2271b1;color:#fff;border-radius:10px;font-size:11px;padding:1px 7px;margin-left:6px;vertical-align:middle;line-height:1.6;">
-					<?php echo esc_html( $blocked_count ); ?>
+					<?php echo esc_html( $bre_blocked_count ); ?>
 				</span>
 			<?php endif; ?>
 		</a>

@@ -11,10 +11,10 @@ class OpenAIProvider implements ProviderInterface {
 
 	public function getModels(): array {
 		return array(
-			'gpt-4.1'       => 'GPT-4.1 (Empfohlen)',
+			'gpt-4.1'       => 'GPT-4.1 (' . __( 'Recommended', 'bavarian-rank-engine' ) . ')',
 			'gpt-4o'        => 'GPT-4o',
-			'gpt-4o-mini'   => 'GPT-4o Mini (Günstig)',
-			'gpt-3.5-turbo' => 'GPT-3.5 Turbo (Sehr günstig)',
+			'gpt-4o-mini'   => 'GPT-4o Mini (' . __( 'Cheap', 'bavarian-rank-engine' ) . ')',
+			'gpt-3.5-turbo' => 'GPT-3.5 Turbo (' . __( 'Very cheap', 'bavarian-rank-engine' ) . ')',
 		);
 	}
 
@@ -23,7 +23,7 @@ class OpenAIProvider implements ProviderInterface {
 			$this->generateText( 'Say "ok"', $api_key, 'gpt-4o-mini', 5 );
 			return array(
 				'success' => true,
-				'message' => 'Verbindung erfolgreich',
+				'message' => __( 'Connection successful', 'bavarian-rank-engine' ),
 			);
 		} catch ( \RuntimeException $e ) {
 			return array(

@@ -785,6 +785,96 @@ msgstr "Wird getestet…"
 msgid "Network error"
 msgstr "Netzwerkfehler"
 
+# --- v1.2.3 ---
+
+#: includes/Admin/BulkPage.php
+msgid "A bulk process is already running"
+msgstr "Ein Bulk-Prozess läuft bereits"
+
+#: includes/Admin/BulkPage.php
+msgid "since"
+msgstr "seit"
+
+#: includes/Admin/BulkPage.php
+msgid "Posts without meta description:"
+msgstr "Posts ohne Meta-Beschreibung:"
+
+#: includes/Admin/BulkPage.php
+msgid "Total:"
+msgstr "Gesamt:"
+
+#: includes/Admin/BulkPage.php
+msgid "Input tokens"
+msgstr "Input-Token"
+
+#: includes/Admin/BulkPage.php
+msgid "Output tokens"
+msgstr "Output-Token"
+
+#: includes/Admin/BulkPage.php
+msgid "▶ Start — max {limit} posts, Provider: {provider}"
+msgstr "▶ Start — max {limit} Posts, Anbieter: {provider}"
+
+#: includes/Admin/BulkPage.php
+msgid "Stop requested…"
+msgstr "Abbruch angefordert…"
+
+#: includes/Admin/BulkPage.php
+msgid "↻ Processing {count} posts… ({remaining} remaining)"
+msgstr "↻ Verarbeite {count} Posts… ({remaining} verbleibend)"
+
+#: includes/Admin/BulkPage.php
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: includes/Admin/BulkPage.php
+msgid "attempt"
+msgstr "Versuch"
+
+#: includes/Admin/BulkPage.php
+msgid "processed"
+msgstr "verarbeitet"
+
+#: includes/Admin/BulkPage.php
+msgid "— Done —"
+msgstr "— Fertig —"
+
+#: includes/Admin/BulkPage.php
+msgid "posts failed:"
+msgstr "Posts fehlgeschlagen:"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/AnthropicProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Connection successful"
+msgstr "Verbindung erfolgreich"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/AnthropicProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Recommended"
+msgstr "Empfohlen"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Cheap"
+msgstr "Günstig"
+
+#: includes/Providers/OpenAIProvider.php
+msgid "Very cheap"
+msgstr "Sehr günstig"
+
+#: includes/Providers/AnthropicProvider.php
+msgid "Powerful"
+msgstr "Leistungsstark"
+
+#: includes/Providers/AnthropicProvider.php
+msgid "Fast & cheap"
+msgstr "Schnell & günstig"
+
 #: includes/Admin/AdminMenu.php
 msgid "Really reset the prompt?"
 msgstr "Prompt wirklich zurücksetzen?"

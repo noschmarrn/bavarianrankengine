@@ -11,8 +11,8 @@ class GeminiProvider implements ProviderInterface {
 
 	public function getModels(): array {
 		return array(
-			'gemini-2.0-flash'      => 'Gemini 2.0 Flash (Empfohlen)',
-			'gemini-2.0-flash-lite' => 'Gemini 2.0 Flash Lite (Günstig)',
+			'gemini-2.0-flash'      => 'Gemini 2.0 Flash (' . __( 'Recommended', 'bavarian-rank-engine' ) . ')',
+			'gemini-2.0-flash-lite' => 'Gemini 2.0 Flash Lite (' . __( 'Cheap', 'bavarian-rank-engine' ) . ')',
 			'gemini-1.5-pro'        => 'Gemini 1.5 Pro',
 		);
 	}
@@ -22,7 +22,7 @@ class GeminiProvider implements ProviderInterface {
 			$this->generateText( 'Say "ok"', $api_key, 'gemini-2.0-flash-lite', 5 );
 			return array(
 				'success' => true,
-				'message' => 'Verbindung erfolgreich',
+				'message' => __( 'Connection successful', 'bavarian-rank-engine' ),
 			);
 		} catch ( \RuntimeException $e ) {
 			return array(

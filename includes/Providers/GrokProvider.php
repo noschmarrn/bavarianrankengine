@@ -11,8 +11,8 @@ class GrokProvider implements ProviderInterface {
 
 	public function getModels(): array {
 		return array(
-			'grok-3'      => 'Grok 3 (Empfohlen)',
-			'grok-3-mini' => 'Grok 3 Mini (Günstig)',
+			'grok-3'      => 'Grok 3 (' . __( 'Recommended', 'bavarian-rank-engine' ) . ')',
+			'grok-3-mini' => 'Grok 3 Mini (' . __( 'Cheap', 'bavarian-rank-engine' ) . ')',
 		);
 	}
 
@@ -21,7 +21,7 @@ class GrokProvider implements ProviderInterface {
 			$this->generateText( 'Say "ok"', $api_key, 'grok-3-mini', 5 );
 			return array(
 				'success' => true,
-				'message' => 'Verbindung erfolgreich',
+				'message' => __( 'Connection successful', 'bavarian-rank-engine' ),
 			);
 		} catch ( \RuntimeException $e ) {
 			return array(

@@ -34,6 +34,8 @@ rsync -a \
     --exclude='docs/' \
     --exclude='bin/' \
     --exclude='README.md' \
+    --exclude='README.de.md' \
+    --exclude='STATE.md' \
     --exclude='composer.phar' \
     --exclude='phpunit.xml' \
     --exclude='.phpunit.result.cache' \
@@ -67,6 +69,41 @@ echo ""
 echo "✓ Build complete!"
 echo "  Output : $BUILD_DIR"
 echo "  ZIP    : $ZIP_FILE ($ZIP_SIZE, $FILE_COUNT files)"
+
+# ─── Plugin → GitHub (github-plugin/) ───────────────────────────────────────
+GITHUB_PLUGIN_DIR="$BASE_DIR/github-plugin"
+
+if [ -d "$GITHUB_PLUGIN_DIR/.git" ]; then
+    echo ""
+    echo "▶ Syncing plugin to GitHub repo..."
+
+    PLUGIN_VERSION=$(grep -m1 "Version:" "$BUILD_DIR/bavarian-rank-engine.php" | grep -oP '[\d]+\.[\d]+\.[\d]+')
+
+    # Sync built files into bavarian-rank-engine/ subfolder
+    mkdir -p "$GITHUB_PLUGIN_DIR/bavarian-rank-engine"
+    rsync -a --delete \
+        --exclude='composer.json' \
+        --exclude='composer.lock' \
+        "$BUILD_DIR/" "$GITHUB_PLUGIN_DIR/bavarian-rank-engine/"
+
+    # READMEs stay at repo root (come from bre-dev, not the build output)
+    cp "$PLUGIN_SRC/README.md"    "$GITHUB_PLUGIN_DIR/"
+    cp "$PLUGIN_SRC/README.de.md" "$GITHUB_PLUGIN_DIR/"
+
+    cd "$GITHUB_PLUGIN_DIR"
+    git add -A
+
+    if git diff --cached --quiet; then
+        echo "  ℹ No plugin changes to commit."
+    else
+        git commit -m "release: v${PLUGIN_VERSION}"
+        git push origin main
+        echo "  ✓ Plugin pushed to GitHub (v${PLUGIN_VERSION})."
+    fi
+else
+    echo ""
+    echo "  ℹ GitHub plugin repo not found at $GITHUB_PLUGIN_DIR — skipping."
+fi
 
 # ─── Website (GitHub Pages) ──────────────────────────────────────────────────
 GITHUB_REPO_DIR="$BASE_DIR/github-website"

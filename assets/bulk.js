@@ -13,7 +13,7 @@ jQuery( function ( $ ) {
     loadStats();
 
     function showLockWarning( age ) {
-        var msg = 'Ein Bulk-Prozess läuft bereits' + ( age ? ' (seit ' + age + 's)' : '' ) + '.';
+        var msg = breBulk.i18n.lockWarning + ( age ? ' (' + breBulk.i18n.since + ' ' + age + 's)' : '' ) + '.';
         $( '#bre-lock-warning' ).text( msg ).show();
         $( '#bre-bulk-start' ).prop( 'disabled', true );
     }
@@ -27,13 +27,13 @@ jQuery( function ( $ ) {
         $.post( breBulk.ajaxUrl, { action: 'bre_bulk_stats', nonce: breBulk.nonce } )
             .done( function ( res ) {
                 if ( ! res.success ) return;
-                var html = '<strong>Posts ohne Meta-Beschreibung:</strong><ul>';
+                var html = '<strong>' + breBulk.i18n.postsWithoutMeta + '</strong><ul>';
                 var t = 0;
                 $.each( res.data, function ( pt, count ) {
                     html += '<li>' + $( '<span>' ).text( pt ).html() + ': <strong>' + parseInt( count, 10 ) + '</strong></li>';
                     t += parseInt( count, 10 );
                 } );
-                html += '</ul><strong>Gesamt: ' + t + '</strong>';
+                html += '</ul><strong>' + breBulk.i18n.total + ' ' + t + '</strong>';
                 total = t;
                 $( '#bre-bulk-stats' ).html( html );
                 updateCostEstimate();
@@ -46,7 +46,7 @@ jQuery( function ( $ ) {
         var limit        = parseInt( $( '#bre-bulk-limit' ).val(), 10 ) || 20;
         var inputTokens  = limit * 800;
         var outputTokens = limit * 50;
-        var costHtml     = '~' + inputTokens + ' Input-Token + ' + outputTokens + ' Output-Token';
+        var costHtml     = '~' + inputTokens + ' ' + breBulk.i18n.inputTokens + ' + ' + outputTokens + ' ' + breBulk.i18n.outputTokens;
 
         var costData = breBulk.costs || {};
         var provider = $( '#bre-bulk-provider' ).val();
@@ -93,13 +93,13 @@ jQuery( function ( $ ) {
         var provider = $( '#bre-bulk-provider' ).val();
         var model    = $( '#bre-bulk-model' ).val();
 
-        log( '▶ Start — max ' + limit + ' Posts, Provider: ' + provider );
+        log( breBulk.i18n.logStart.replace( '{limit}', limit ).replace( '{provider}', provider ) );
         runBatch( 'post', limit, provider, model, true );
     }
 
     $( '#bre-bulk-stop' ).on( 'click', function () {
         stopFlag = true;
-        log( '⚠ Abbruch angefordert…', 'warn' );
+        log( '⚠ ' + breBulk.i18n.stopRequested, 'warn' );
         releaseLock();
     } );
 
@@ -116,7 +116,7 @@ jQuery( function ( $ ) {
         var batchSize = Math.min( 20, remaining );
         var isLast    = ( remaining - batchSize ) <= 0;
 
-        log( '↻ Verarbeite ' + batchSize + ' Posts… (' + remaining + ' verbleibend)' );
+        log( breBulk.i18n.logProcess.replace( '{count}', batchSize ).replace( '{remaining}', remaining ) );
 
         $.post( breBulk.ajaxUrl, {
             action:     'bre_bulk_generate',
@@ -134,14 +134,14 @@ jQuery( function ( $ ) {
                     finish();
                     return;
                 }
-                log( '✗ Fehler: ' + $( '<span>' ).text( ( res.data && res.data.message ) || 'Unbekannter Fehler' ).html(), 'error' );
+                log( '✗ Fehler: ' + $( '<span>' ).text( ( res.data && res.data.message ) || breBulk.i18n.unknownError ).html(), 'error' );
                 finish();
                 return;
             }
 
             $.each( res.data.results, function ( i, item ) {
                 if ( item.success ) {
-                    var note = item.attempts > 1 ? ' (Versuch ' + item.attempts + ')' : '';
+                    var note = item.attempts > 1 ? ' (' + breBulk.i18n.attempt + ' ' + item.attempts + ')' : '';
                     log(
                         '✓ [' + item.id + '] ' +
                         $( '<span>' ).text( item.title ).html() + note +
@@ -173,7 +173,7 @@ jQuery( function ( $ ) {
                 finish();
             }
         } ).fail( function () {
-            log( '✗ Netzwerkfehler', 'error' );
+            log( '✗ ' + breBulk.i18n.networkError, 'error' );
             releaseLock();
             finish();
         } );
@@ -182,7 +182,7 @@ jQuery( function ( $ ) {
     function updateProgress( done, t ) {
         var pct = t > 0 ? Math.round( ( done / t ) * 100 ) : 100;
         $( '#bre-progress-bar' ).css( 'width', pct + '%' );
-        $( '#bre-progress-text' ).text( done + ' / ' + t + ' verarbeitet' );
+        $( '#bre-progress-text' ).text( done + ' / ' + t + ' ' + breBulk.i18n.processed );
     }
 
     /**
@@ -204,10 +204,10 @@ jQuery( function ( $ ) {
         running = false;
         $( '#bre-bulk-start' ).prop( 'disabled', false );
         $( '#bre-bulk-stop' ).hide();
-        log( '— Fertig —' );
+        log( breBulk.i18n.done );
 
         if ( failedItems.length > 0 ) {
-            var html = '<strong>⚠ ' + failedItems.length + ' Posts fehlgeschlagen:</strong><ul>';
+            var html = '<strong>⚠ ' + failedItems.length + ' ' + breBulk.i18n.postsFailed + '</strong><ul>';
             $.each( failedItems, function ( i, item ) {
                 html += '<li>[' + item.id + '] ' +
                     $( '<span>' ).text( item.title ).html() +

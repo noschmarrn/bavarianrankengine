@@ -29,6 +29,23 @@ class BulkPage {
 				'lockAge'   => \BavarianRankEngine\Helpers\BulkQueue::lockAge(),
 				'rateDelay' => 6000,
 				'costs'     => $settings['costs'] ?? array(),
+				'i18n'      => array(
+					'lockWarning'      => __( 'A bulk process is already running', 'bavarian-rank-engine' ),
+					'since'            => __( 'since', 'bavarian-rank-engine' ),
+					'postsWithoutMeta' => __( 'Posts without meta description:', 'bavarian-rank-engine' ),
+					'total'            => __( 'Total:', 'bavarian-rank-engine' ),
+					'inputTokens'      => __( 'Input tokens', 'bavarian-rank-engine' ),
+					'outputTokens'     => __( 'Output tokens', 'bavarian-rank-engine' ),
+					'logStart'         => __( '▶ Start — max {limit} posts, Provider: {provider}', 'bavarian-rank-engine' ),
+					'stopRequested'    => __( 'Stop requested…', 'bavarian-rank-engine' ),
+					'logProcess'       => __( '↻ Processing {count} posts… ({remaining} remaining)', 'bavarian-rank-engine' ),
+					'unknownError'     => __( 'Unknown error', 'bavarian-rank-engine' ),
+					'attempt'          => __( 'attempt', 'bavarian-rank-engine' ),
+					'networkError'     => __( 'Network error', 'bavarian-rank-engine' ),
+					'processed'        => __( 'processed', 'bavarian-rank-engine' ),
+					'done'             => __( '— Done —', 'bavarian-rank-engine' ),
+					'postsFailed'      => __( 'posts failed:', 'bavarian-rank-engine' ),
+				),
 			)
 		);
 	}
