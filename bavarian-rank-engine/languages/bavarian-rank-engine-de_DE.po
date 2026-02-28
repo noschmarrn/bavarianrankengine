@@ -1,0 +1,928 @@
+# German (de_DE) translation for Bavarian Rank Engine
+# Copyright (C) 2025 Donau2Space
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Bavarian Rank Engine 1.0.0\n"
+"Report-Msgid-Bugs-To: https://donau2space.de\n"
+"POT-Creation-Date: 2026-02-21T00:00:00+00:00\n"
+"PO-Revision-Date: 2026-02-25T00:00:00+00:00\n"
+"Last-Translator: Donau2Space <info@donau2space.de>\n"
+"Language-Team: German <de@li.org>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Manual\n"
+"X-Domain: bavarian-rank-engine\n"
+
+#: includes/Admin/AdminMenu.php:11
+msgid "Bavarian Rank Engine"
+msgstr "Bavarian Rank Engine"
+
+#: includes/Admin/AdminMenu.php:12
+msgid "Bavarian Rank"
+msgstr "Bavarian Rank"
+
+#: includes/Admin/AdminMenu.php:23
+#: includes/Admin/AdminMenu.php:24
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: includes/Admin/AdminMenu.php:31
+#: includes/Admin/AdminMenu.php:32
+#: includes/Admin/views/provider.php:3
+#: includes/Admin/views/provider.php:10
+msgid "AI Provider"
+msgstr "KI-Anbieter"
+
+#: includes/Admin/AdminMenu.php:41
+#: includes/Admin/AdminMenu.php:42
+#: includes/Admin/views/meta.php:3
+#: includes/Admin/views/meta.php:10
+msgid "Meta Generator"
+msgstr "Meta-Generator"
+
+#: includes/Admin/AdminMenu.php:59
+#: includes/Admin/AdminMenu.php:60
+#: includes/Admin/views/bulk.php:3
+#: includes/Admin/views/dashboard.php:42
+msgid "Bulk Generator"
+msgstr "Massen-Generator"
+
+#: includes/Admin/AdminMenu.php
+msgid "TXT Files"
+msgstr "TXT Dateien"
+
+#: includes/Admin/views/dashboard.php:3
+msgid "Bavarian Rank Engine \xe2\x80\x94 Dashboard"
+msgstr "Bavarian Rank Engine — Dashboard"
+
+#: includes/Admin/views/dashboard.php:8
+msgid "Meta Coverage"
+msgstr "Meta-Abdeckung"
+
+#: includes/Admin/views/dashboard.php:11
+msgid "No post types configured."
+msgstr "Keine Beitragstypen konfiguriert."
+
+#: includes/Admin/views/dashboard.php:15
+msgid "Post Type"
+msgstr "Beitragstyp"
+
+#: includes/Admin/views/dashboard.php:16
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: includes/Admin/views/dashboard.php:17
+msgid "With Meta"
+msgstr "Mit Meta"
+
+#: includes/Admin/views/dashboard.php:18
+msgid "Coverage"
+msgstr "Abdeckung"
+
+#: includes/Admin/views/dashboard.php:36
+msgid "Quick Links"
+msgstr "Schnellzugriff"
+
+#: includes/Admin/views/dashboard.php:39
+msgid "AI Provider Settings"
+msgstr "KI-Anbieter-Einstellungen"
+
+#: includes/Admin/views/dashboard.php:40
+msgid "Meta Generator Settings"
+msgstr "Meta-Generator-Einstellungen"
+
+#: includes/Admin/views/dashboard.php:48
+msgid "Status"
+msgstr "Status"
+
+#: includes/Admin/views/dashboard.php:50
+msgid "Version:"
+msgstr "Version:"
+
+#: includes/Admin/views/dashboard.php:51
+msgid "Active Provider:"
+msgstr "Aktiver Anbieter:"
+
+#: includes/Admin/views/dashboard.php
+msgid "New here?"
+msgstr "Neu hier?"
+
+#: includes/Admin/views/dashboard.php
+msgid "Read the setup guide — get running in five minutes →"
+msgstr "Einrichtungsanleitung lesen — in fünf Minuten startklar →"
+
+#: includes/Admin/views/dashboard.php
+msgid "Internal Link Analysis"
+msgstr "Interne Link-Analyse"
+
+#: includes/Admin/views/dashboard.php
+msgid "Loading…"
+msgstr "Wird geladen…"
+
+#: includes/Admin/views/dashboard.php
+msgid "AI Crawlers — Last 30 Days"
+msgstr "AI Crawler — letzte 30 Tage"
+
+#: includes/Admin/views/dashboard.php
+msgid "No AI crawlers recorded yet."
+msgstr "Noch keine AI-Crawls aufgezeichnet."
+
+#: includes/Admin/views/dashboard.php
+msgid "Bot"
+msgstr "Bot"
+
+#: includes/Admin/views/dashboard.php
+msgid "Visits"
+msgstr "Besuche"
+
+#: includes/Admin/views/dashboard.php
+msgid "Last Seen"
+msgstr "Zuletzt"
+
+#: includes/Admin/views/dashboard.php
+msgid "Analysis error."
+msgstr "Analysefehler."
+
+#: includes/Admin/views/dashboard.php
+msgid "Posts without internal links"
+msgstr "Posts ohne interne Links"
+
+#: includes/Admin/views/dashboard.php
+msgid "All posts have internal links."
+msgstr "Alle Posts haben interne Links."
+
+#: includes/Admin/views/dashboard.php
+msgid "Posts with many external links (≥"
+msgstr "Posts mit vielen externen Links (≥"
+
+#: includes/Admin/views/dashboard.php
+msgid "No posts with excessive external links."
+msgstr "Keine auffälligen Posts."
+
+#: includes/Admin/views/dashboard.php
+msgid "Pillar Pages (Top 5)"
+msgstr "Pillar Pages (Top 5)"
+
+#: includes/Admin/views/dashboard.php
+msgid "No data."
+msgstr "Keine Daten."
+
+#: includes/Admin/views/dashboard.php
+msgid "Connection error."
+msgstr "Verbindungsfehler."
+
+#: includes/Admin/views/provider.php:13
+#: includes/Admin/views/bulk.php:15
+msgid "Active Provider"
+msgstr "Aktiver Anbieter"
+
+#: includes/Admin/views/provider.php:27
+msgid "API Key"
+msgstr "API-Schlüssel"
+
+#: includes/Admin/views/provider.php:31
+msgid "Saved:"
+msgstr "Gespeichert:"
+
+#: includes/Admin/views/provider.php:37
+msgid "Enter new key to overwrite"
+msgstr "Neuen Schlüssel zum Überschreiben eingeben"
+
+#: includes/Admin/views/provider.php:37
+msgid "Enter API key"
+msgstr "API-Schlüssel eingeben"
+
+#: includes/Admin/views/provider.php:41
+msgid "Test connection"
+msgstr "Verbindung testen"
+
+#: includes/Admin/views/provider.php:45
+#: includes/Admin/views/bulk.php:28
+msgid "Model:"
+msgstr "Modell:"
+
+#: includes/Admin/views/provider.php
+msgid "View current pricing →"
+msgstr "Aktuelle Preise ansehen →"
+
+#: includes/Admin/views/provider.php
+msgid "Cost per 1 million tokens (for the Bulk cost overview):"
+msgstr "Kosten pro 1 Million Token (für Kostenübersicht im Bulk):"
+
+#: includes/Admin/views/provider.php:88
+#: includes/Admin/views/meta.php:101
+msgid "Save Settings"
+msgstr "Einstellungen speichern"
+
+#: includes/Admin/views/provider.php:94
+#: includes/Admin/views/meta.php:107
+msgid "developed with"
+msgstr "entwickelt mit"
+
+#: includes/Admin/views/bulk.php:7
+msgid "Generates meta descriptions for posts without an existing meta description."
+msgstr "Generiert Meta-Beschreibungen für Artikel ohne vorhandene Meta-Beschreibung."
+
+#: includes/Admin/views/bulk.php:10
+msgid "Loading statistics\xe2\x80\xa6"
+msgstr "Lade Statistiken…"
+
+#: includes/Admin/views/bulk.php:46
+msgid "Max. posts this run"
+msgstr "Max. Artikel diesen Run"
+
+#: includes/Admin/views/bulk.php:55
+msgid "Start Bulk Run"
+msgstr "Bulk-Run starten"
+
+#: includes/Admin/views/bulk.php:56
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: includes/Admin/views/bulk.php:64
+msgid "0 / 0 processed"
+msgstr "0 / 0 verarbeitet"
+
+#: includes/Admin/views/txt.php:3
+msgid "llms.txt Configuration"
+msgstr "llms.txt Konfiguration"
+
+#: includes/Admin/views/txt.php
+msgid "Clear llms.txt Cache"
+msgstr "llms.txt Cache leeren"
+
+#: includes/Admin/views/txt.php
+msgid "Error."
+msgstr "Fehler."
+
+#: includes/Admin/views/txt.php
+msgid "Max. links per page"
+msgstr "Max. Links pro Seite"
+
+#: includes/Admin/views/txt.php
+msgid "With more posts, llms-2.txt, llms-3.txt etc. are created and linked automatically."
+msgstr "Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt."
+
+#: includes/Admin/views/txt.php:28
+msgid "Your llms.txt will be served at:"
+msgstr "Deine llms.txt ist erreichbar unter:"
+
+#: includes/Admin/views/txt.php:33
+msgid "Active"
+msgstr "Aktiv"
+
+#: includes/Admin/views/txt.php:35
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: includes/Admin/views/txt.php:44
+msgid "Enable llms.txt"
+msgstr "llms.txt aktivieren"
+
+#: includes/Admin/views/txt.php:49
+msgid "Serve llms.txt at"
+msgstr "llms.txt bereitstellen unter"
+
+#: includes/Admin/views/txt.php:56
+msgid "Title"
+msgstr "Titel"
+
+#: includes/Admin/views/txt.php:63
+msgid "Appears as the # heading in llms.txt"
+msgstr "Erscheint als # Überschrift in der llms.txt"
+
+#: includes/Admin/views/txt.php:68
+msgid "Description (before links)"
+msgstr "Beschreibung (vor Links)"
+
+#: includes/Admin/views/txt.php:72
+msgid "Text shown after the title, before featured links."
+msgstr "Text der nach dem Titel, vor den besonderen Links erscheint."
+
+#: includes/Admin/views/txt.php:77
+msgid "Featured Links"
+msgstr "Besondere Links"
+
+#: includes/Admin/views/txt.php:82
+msgid "Important links to highlight for AI models. One per line."
+msgstr "Wichtige Links für KI-Modelle hervorheben. Eine pro Zeile."
+
+#: includes/Admin/views/txt.php:83
+msgid "Markdown format recommended:"
+msgstr "Markdown-Format empfohlen:"
+
+#: includes/Admin/views/txt.php:90
+#: includes/Admin/views/meta.php:25
+msgid "Post Types"
+msgstr "Beitragstypen"
+
+#: includes/Admin/views/txt.php:101
+msgid "Which post types to include in the content list."
+msgstr "Welche Beitragstypen in der Inhaltsliste erscheinen sollen."
+
+#: includes/Admin/views/txt.php:106
+msgid "Max. Links pro Seite"
+msgstr "Max. Links pro Seite"
+
+#: includes/Admin/views/txt.php:112
+msgid "Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt."
+msgstr "Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt."
+
+#: includes/Admin/views/txt.php:118
+msgid "Description (after content)"
+msgstr "Beschreibung (nach Inhalt)"
+
+#: includes/Admin/views/txt.php:126
+msgid "Footer Description"
+msgstr "Fußzeilen-Beschreibung"
+
+#: includes/Admin/views/txt.php:130
+msgid "Appears at the end of llms.txt after a --- separator."
+msgstr "Erscheint am Ende der llms.txt nach einem --- Trenner."
+
+#: includes/Admin/views/txt.php:135
+msgid "Save llms.txt Settings"
+msgstr "llms.txt-Einstellungen speichern"
+
+#: includes/Admin/views/txt.php:139
+msgid "Preview"
+msgstr "Vorschau"
+
+#: includes/Admin/views/txt.php:141
+msgid "After saving, visit your llms.txt to verify:"
+msgstr "Nach dem Speichern die llms.txt aufrufen zur Überprüfung:"
+
+#: includes/Admin/views/txt.php:147
+msgid "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
+msgstr "Hinweis: Wenn die URL einen 404 zeigt, unter Einstellungen → Permalinks auf Speichern klicken."
+
+#: includes/Admin/views/meta.php:13
+msgid "Auto Mode"
+msgstr "Auto-Modus"
+
+#: includes/Admin/views/meta.php:20
+msgid "Automatically generate meta description on publish"
+msgstr "Meta-Beschreibung beim Veröffentlichen automatisch generieren"
+
+#: includes/Admin/views/meta.php:39
+msgid "Token Mode"
+msgstr "Token-Modus"
+
+#: includes/Admin/views/meta.php:44
+msgid "Send full article"
+msgstr "Ganzen Artikel senden"
+
+#: includes/Admin/views/meta.php:50
+msgid "Limit to"
+msgstr "Kürzen auf"
+
+#: includes/Admin/views/meta.php:55
+msgid "tokens"
+msgstr "Token"
+
+#: includes/Admin/views/meta.php:60
+msgid "Prompt"
+msgstr "Prompt"
+
+#: includes/Admin/views/meta.php:66
+msgid "Variables:"
+msgstr "Variablen:"
+
+#: includes/Admin/views/meta.php:68
+msgid "Reset prompt"
+msgstr "Prompt zurücksetzen"
+
+#: includes/Admin/views/meta.php:74
+msgid "Schema.org Enhancer (GEO)"
+msgstr "Schema.org Enhancer (GEO)"
+
+#: includes/Admin/views/meta.php:77
+msgid "Enabled Schema Types"
+msgstr "Aktivierte Schema-Typen"
+
+#: includes/Admin/views/meta.php:91
+msgid "Organization sameAs URLs"
+msgstr "Organization sameAs URLs"
+
+#: includes/Admin/views/meta.php:93
+msgid "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
+msgstr "Eine URL pro Zeile (Twitter, LinkedIn, GitHub, Facebook…)"
+
+#: includes/Admin/views/txt.php
+msgid "Block known AI bots for this site."
+msgstr "Bekannte KI-Bots für diese Website blockieren."
+
+#: includes/Admin/views/txt.php
+msgid "Note: Bots are not required to comply."
+msgstr "Hinweis: Bots müssen sich nicht daran halten."
+
+#: includes/Admin/views/txt.php
+msgid "User-Agent"
+msgstr "User-Agent"
+
+#: includes/Admin/views/txt.php
+msgid "Description"
+msgstr "Beschreibung"
+
+#: includes/Admin/views/txt.php
+msgid "Block"
+msgstr "Blockieren"
+
+#: includes/Admin/views/txt.php
+msgid "View current robots.txt →"
+msgstr "Aktuelle robots.txt ansehen →"
+
+#: includes/Admin/views/txt.php
+msgid "Save robots.txt Settings"
+msgstr "robots.txt-Einstellungen speichern"
+
+#: includes/Admin/MetaEditorBox.php:20
+msgid "Meta Description (BRE)"
+msgstr "Meta-Beschreibung (BRE)"
+
+#: includes/Admin/MetaEditorBox.php
+msgid "AI generated"
+msgstr "KI generiert"
+
+#: includes/Admin/MetaEditorBox.php
+msgid "Fallback (first paragraph)"
+msgstr "Fallback (erster Absatz)"
+
+#: includes/Admin/MetaEditorBox.php
+msgid "Manually edited"
+msgstr "Manuell bearbeitet"
+
+#: includes/Admin/MetaEditorBox.php
+msgid "Not yet generated"
+msgstr "Noch nicht generiert"
+
+#: includes/Admin/MetaEditorBox.php
+msgid "Regenerate with AI"
+msgstr "Mit KI neu generieren"
+
+#: includes/Admin/SeoWidget.php
+msgid "SEO Analysis (BRE)"
+msgstr "SEO Analyse (BRE)"
+
+#: includes/Admin/SeoWidget.php
+msgid "Title:"
+msgstr "Titel:"
+
+#: includes/Admin/SeoWidget.php
+msgid "Words:"
+msgstr "Wörter:"
+
+#: includes/Admin/SeoWidget.php
+msgid "Reading Time:"
+msgstr "Lesezeit:"
+
+#: includes/Admin/SeoWidget.php
+msgid "Headings"
+msgstr "Überschriften"
+
+#: includes/Admin/SeoWidget.php:49
+msgid "Links"
+msgstr "Links"
+
+#: includes/Admin/MetaPage.php:66
+msgid "Organization (sameAs Social Profiles)"
+msgstr "Organisation (sameAs Social-Profile)"
+
+#: includes/Admin/MetaPage.php:67
+msgid "Author (sameAs Profile Links)"
+msgstr "Autor (sameAs Profil-Links)"
+
+#: includes/Admin/MetaPage.php:68
+msgid "Speakable (for AI assistants)"
+msgstr "Speakable (für KI-Assistenten)"
+
+#: includes/Admin/MetaPage.php:69
+msgid "Article about/mentions"
+msgstr "Artikel über/erwähnt"
+
+#: includes/Admin/MetaPage.php:70
+msgid "BreadcrumbList"
+msgstr "BreadcrumbList"
+
+#: includes/Admin/MetaPage.php:71
+msgid "AI-optimized Meta Tags (max-snippet etc.)"
+msgstr "KI-optimierte Meta-Tags (max-snippet usw.)"
+
+#: includes/Admin/ProviderPage.php:83
+#: includes/Features/MetaGenerator.php:149
+#: includes/Features/MetaGenerator.php:181
+msgid "Insufficient permissions."
+msgstr "Keine Berechtigung."
+
+#: includes/Admin/ProviderPage.php:89
+msgid "No API key saved. Please save first."
+msgstr "Kein API-Schlüssel gespeichert. Bitte zuerst speichern."
+
+#: includes/Admin/ProviderPage.php:93
+msgid "Unknown provider."
+msgstr "Unbekannter Anbieter."
+
+#: includes/Admin/LlmsPage.php
+msgid "Cache cleared."
+msgstr "Cache geleert."
+
+#: includes/Features/MetaGenerator.php
+msgid "A bulk process is already running."
+msgstr "Ein Bulk-Prozess läuft bereits."
+
+#: includes/Features/LlmsTxt.php
+msgid "Bavarian Rank Engine serves llms.txt with priority \xe2\x80\x94 no action needed in Rank Math."
+msgstr "Bavarian Rank Engine bedient llms.txt mit Priorität — kein Handlungsbedarf bei Rank Math."
+
+#: includes/Admin/AdminMenu.php
+msgid "GEO Quick Overview"
+msgstr "GEO Schnellüberblick"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "GEO Quick Overview (BRE)"
+msgstr "GEO Schnellüberblick (BRE)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Enable GEO block for this post"
+msgstr "GEO-Block für diesen Beitrag aktiv"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Lock auto-regeneration"
+msgstr "Auto-Regeneration sperren"
+
+#: includes/Admin/GeoEditorBox.php
+#, php-format
+msgid "Generated: %s"
+msgstr "Generiert: %s"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Generate now"
+msgstr "Jetzt generieren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Regenerate"
+msgstr "Neu generieren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Clear"
+msgstr "Leeren"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Summary"
+msgstr "Kurzfassung"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "(one per line)"
+msgstr "(eine pro Zeile)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Key Points"
+msgstr "Kernaussagen"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "(Format: Question? | Answer \xe2\x80\x94 one per line)"
+msgstr "(Format: Frage? | Antwort — eine pro Zeile)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Prompt add-on (optional)"
+msgstr "Prompt-Zusatz (optional)"
+
+#: includes/Admin/GeoEditorBox.php
+msgid "Generation failed. Check API key and provider settings."
+msgstr "Generierung fehlgeschlagen. API-Key und Provider-Einstellungen prüfen."
+
+#: includes/Admin/views/geo.php
+msgid "Activation"
+msgstr "Aktivierung"
+
+#: includes/Admin/views/geo.php
+msgid "Enable GEO Block"
+msgstr "GEO Block aktivieren"
+
+#: includes/Admin/views/geo.php
+msgid "Output the Quick Overview block on the frontend"
+msgstr "Schnellüberblick-Block im Frontend ausgeben"
+
+#: includes/Admin/views/geo.php
+msgid "Mode"
+msgstr "Modus"
+
+#: includes/Admin/views/geo.php
+msgid "Auto on publish / update (recommended)"
+msgstr "Auto bei Publish/Update (empfohlen)"
+
+#: includes/Admin/views/geo.php
+msgid "Hybrid: auto only when fields are empty"
+msgstr "Hybrid: Auto nur wenn Felder leer"
+
+#: includes/Admin/views/geo.php
+msgid "Manual only (editor button)"
+msgstr "Nur manuell (Editor-Button)"
+
+#: includes/Admin/views/geo.php
+msgid "Regenerate on update"
+msgstr "Bei Update neu generieren"
+
+#: includes/Admin/views/geo.php
+msgid "Regenerate on every save of a published post"
+msgstr "Bei jedem Speichern eines publizierten Beitrags neu generieren"
+
+#: includes/Admin/views/geo.php
+msgid "Word threshold for FAQ"
+msgstr "Wortschwellwert für FAQ"
+
+#: includes/Admin/views/geo.php
+msgid "Below this word count, no FAQ is generated. Default: 350"
+msgstr "Unter dieser Wortanzahl wird keine FAQ generiert. Standard: 350"
+
+#: includes/Admin/views/geo.php
+msgid "Output"
+msgstr "Ausgabe"
+
+#: includes/Admin/views/geo.php
+msgid "After first paragraph (default)"
+msgstr "Nach dem ersten Absatz (Standard)"
+
+#: includes/Admin/views/geo.php
+msgid "Top of post"
+msgstr "Anfang des Beitrags"
+
+#: includes/Admin/views/geo.php
+msgid "Bottom of post"
+msgstr "Ende des Beitrags"
+
+#: includes/Admin/views/geo.php
+msgid "Output style"
+msgstr "Ausgabe-Stil"
+
+#: includes/Admin/views/geo.php
+msgid "Collapsible <details> (default)"
+msgstr "Einklappbar <details> (Standard)"
+
+#: includes/Admin/views/geo.php
+msgid "Always open"
+msgstr "Immer aufgeklappt"
+
+#: includes/Admin/views/geo.php
+msgid "Store only, no frontend output"
+msgstr "Nur speichern, nicht ausgeben"
+
+#: includes/Admin/views/geo.php
+msgid "Block title"
+msgstr "Block-Titel"
+
+#: includes/Admin/views/geo.php
+msgid "Summary label"
+msgstr "Label Kurzfassung"
+
+#: includes/Admin/views/geo.php
+msgid "Key Points label"
+msgstr "Label Kernaussagen"
+
+#: includes/Admin/views/geo.php
+msgid "FAQ label"
+msgstr "Label FAQ"
+
+#: includes/Admin/views/geo.php
+msgid "Load minimal CSS"
+msgstr "Minimal-CSS laden"
+
+#: includes/Admin/views/geo.php
+msgid "Load base stylesheet for .bre-geo on the frontend"
+msgstr "Basis-Stylesheet für .bre-geo auf dem Frontend laden"
+
+#: includes/Admin/views/geo.php
+msgid "Automatically scoped to .bre-geo{...}. Enter CSS properties only, no selector."
+msgstr "Wird automatisch auf .bre-geo{...} begrenzt. Nur CSS-Eigenschaften eingeben, keinen Selektor."
+
+#: includes/Admin/views/geo.php
+msgid "AI Prompt"
+msgstr "KI Prompt"
+
+#: includes/Admin/views/geo.php
+msgid "Default prompt"
+msgstr "Standard-Prompt"
+
+#: includes/Admin/views/geo.php
+msgid "Per-post prompt add-on"
+msgstr "Prompt-Zusatz pro Beitrag"
+
+#: includes/Admin/views/geo.php
+msgid "Authors can enter a prompt add-on per post in the editor"
+msgstr "Autoren dürfen im Editor einen Prompt-Zusatz pro Beitrag eingeben"
+
+#: includes/Admin/views/dashboard.php
+msgid "Plugin Compatibility"
+msgstr "Plugin-Kompatibilität"
+
+#: includes/Admin/views/dashboard.php
+msgid "The following SEO plugins were detected. BRE adapts automatically."
+msgstr "Folgende SEO-Plugins wurden erkannt. BRE passt sich automatisch an."
+
+#: includes/Admin/views/dashboard.php
+msgid "llms.txt: BRE serves the file with priority — Rank Math is bypassed."
+msgstr "llms.txt: BRE liefert die Datei mit Priorität — Rank Math wird umgangen."
+
+#: includes/Admin/views/dashboard.php
+msgid "Schema.org: BRE suppresses its own JSON-LD to avoid duplicates."
+msgstr "Schema.org: BRE unterdrückt sein eigenes JSON-LD, um Duplikate zu vermeiden."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the Rank Math meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das Rank-Math-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the Yoast meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das Yoast-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the AIOSEO meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das AIOSEO-Metafeld."
+
+#: includes/Admin/views/dashboard.php
+msgid "Meta descriptions: BRE writes to the SEOPress meta field."
+msgstr "Meta-Beschreibungen: BRE schreibt in das SEOPress-Metafeld."
+
+#: includes/Admin/views/geo.php
+msgid "Color scheme"
+msgstr "Farbschema"
+
+#: includes/Admin/views/geo.php
+msgid "Auto (follows OS light/dark preference)"
+msgstr "Automatisch (folgt dem OS-Licht/Dunkel-Modus)"
+
+#: includes/Admin/views/geo.php
+msgid "Always light"
+msgstr "Immer hell"
+
+#: includes/Admin/views/geo.php
+msgid "Always dark"
+msgstr "Immer dunkel"
+
+#: includes/Admin/views/geo.php
+msgid "Auto detects the visitor's OS or browser setting via prefers-color-scheme."
+msgstr "Erkennt automatisch die OS- oder Browser-Einstellung des Besuchers via prefers-color-scheme."
+
+#: includes/Admin/views/geo.php
+msgid "Accent color"
+msgstr "Akzentfarbe"
+
+#: includes/Admin/views/geo.php
+msgid "Used for the left border of the summary bar and the expand arrow. Leave empty for the default blue."
+msgstr "Wird für den linken Rand der Zusammenfassungsleiste und den Expand-Pfeil verwendet. Leer lassen für das Standard-Blau."
+
+# --- v1.2.2 ---
+
+#: includes/Admin/AdminMenu.php
+msgid "Testing…"
+msgstr "Wird getestet…"
+
+#: includes/Admin/AdminMenu.php
+msgid "Network error"
+msgstr "Netzwerkfehler"
+
+# --- v1.2.3 ---
+
+#: includes/Admin/BulkPage.php
+msgid "A bulk process is already running"
+msgstr "Ein Bulk-Prozess läuft bereits"
+
+#: includes/Admin/BulkPage.php
+msgid "since"
+msgstr "seit"
+
+#: includes/Admin/BulkPage.php
+msgid "Posts without meta description:"
+msgstr "Posts ohne Meta-Beschreibung:"
+
+#: includes/Admin/BulkPage.php
+msgid "Total:"
+msgstr "Gesamt:"
+
+#: includes/Admin/BulkPage.php
+msgid "Input tokens"
+msgstr "Input-Token"
+
+#: includes/Admin/BulkPage.php
+msgid "Output tokens"
+msgstr "Output-Token"
+
+#: includes/Admin/BulkPage.php
+msgid "▶ Start — max {limit} posts, Provider: {provider}"
+msgstr "▶ Start — max {limit} Posts, Anbieter: {provider}"
+
+#: includes/Admin/BulkPage.php
+msgid "Stop requested…"
+msgstr "Abbruch angefordert…"
+
+#: includes/Admin/BulkPage.php
+msgid "↻ Processing {count} posts… ({remaining} remaining)"
+msgstr "↻ Verarbeite {count} Posts… ({remaining} verbleibend)"
+
+#: includes/Admin/BulkPage.php
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: includes/Admin/BulkPage.php
+msgid "attempt"
+msgstr "Versuch"
+
+#: includes/Admin/BulkPage.php
+msgid "processed"
+msgstr "verarbeitet"
+
+#: includes/Admin/BulkPage.php
+msgid "— Done —"
+msgstr "— Fertig —"
+
+#: includes/Admin/BulkPage.php
+msgid "posts failed:"
+msgstr "Posts fehlgeschlagen:"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/AnthropicProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Connection successful"
+msgstr "Verbindung erfolgreich"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/AnthropicProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Recommended"
+msgstr "Empfohlen"
+
+#: includes/Providers/OpenAIProvider.php
+#: includes/Providers/GeminiProvider.php
+#: includes/Providers/GrokProvider.php
+msgid "Cheap"
+msgstr "Günstig"
+
+#: includes/Providers/OpenAIProvider.php
+msgid "Very cheap"
+msgstr "Sehr günstig"
+
+#: includes/Providers/AnthropicProvider.php
+msgid "Powerful"
+msgstr "Leistungsstark"
+
+#: includes/Providers/AnthropicProvider.php
+msgid "Fast & cheap"
+msgstr "Schnell & günstig"
+
+#: includes/Admin/AdminMenu.php
+msgid "Really reset the prompt?"
+msgstr "Prompt wirklich zurücksetzen?"
+
+#: includes/Admin/views/dashboard.php
+msgid "Servus! Welcome to Bavarian Rank Engine."
+msgstr "Servus! Willkommen bei Bavarian Rank Engine."
+
+#: includes/Admin/views/dashboard.php
+msgid "No Lederhosen required — your SEO is already in good hands."
+msgstr "Keine Lederhosen nötig — dein SEO ist in guten Händen."
+
+#: includes/Admin/views/dashboard.php
+msgid "Read the setup guide and be running in five minutes →"
+msgstr "Einrichtungsanleitung lesen — in fünf Minuten startklar →"
+
+#: includes/Admin/views/dashboard.php
+msgid "Dismiss"
+msgstr "Schließen"
+
+#: includes/Admin/views/dashboard.php
+msgid "Version"
+msgstr "Version"
+
+#: includes/Admin/views/dashboard.php
+msgid "AI metas generated"
+msgstr "KI-Metas generiert"
+
+#: includes/Admin/views/dashboard.php
+msgid "Tokens used (est.)"
+msgstr "Token verbraucht (Schätzung)"
+
+#: includes/Admin/views/dashboard.php
+msgid "Est. cost (USD)"
+msgstr "Gesch. Kosten (USD)"
+
+#: includes/Admin/views/dashboard.php
+msgid "Configure AI Provider"
+msgstr "KI-Anbieter konfigurieren"
+
+#: includes/Admin/views/dashboard.php
+msgid "Documentation &amp; How To"
+msgstr "Dokumentation &amp; How To"
+
+#: includes/Admin/views/provider.php
+msgid "Enable AI generation"
+msgstr "KI-Generierung aktivieren"
+
+#: includes/Admin/views/provider.php
+msgid "This feature will incur costs with your AI provider. Make sure you understand the pricing before entering an API key."
+msgstr "Diese Funktion verursacht Kosten beim KI-Anbieter. Bitte prüfe die Preise, bevor du einen API-Key eingibst."

@@ -1,0 +1,137 @@
+.bre-settings h1 {
+    padding-left: 4px;
+    margin-bottom: 16px;
+}
+.bre-settings h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+.bre-dashboard-grid .postbox {
+    margin: 0;
+}
+.bre-footer {
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    color: #999;
+    font-size: 12px;
+}
+.bre-provider-row { display: none; }
+.bre-provider-row.active { display: table-row; }
+.bre-test-result { margin-left: 10px; font-weight: bold; }
+.bre-test-result.success { color: #46b450; }
+.bre-test-result.error { color: #dc3232; }
+
+
+/* --- Welcome notice --- */
+.bre-welcome-notice {
+    background: linear-gradient(135deg, #fff 0%, #f0f6ff 100%);
+    border-left: 4px solid #2271b1;
+    border-radius: 0 4px 4px 0;
+    padding: 16px 40px 16px 20px;
+    margin: 16px 0 0;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.bre-welcome-notice a { font-weight: 600; }
+.bre-dismiss {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #999;
+    line-height: 1;
+    padding: 2px 6px;
+}
+.bre-dismiss:hover { color: #333; }
+
+/* --- Progress bars --- */
+.bre-progress-bar {
+    height: 8px;
+    background: #f0f0f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bre-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width .3s ease;
+}
+.bre-progress-fill.bre-ok   { background: #46b450; }
+.bre-progress-fill.bre-warn { background: #ffb900; }
+.bre-progress-fill.bre-bad  { background: #dc3232; }
+
+/* --- Quick links --- */
+.bre-quick-links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.bre-quick-links-list li {
+    border-bottom: 1px solid #f0f0f1;
+}
+.bre-quick-links-list li:last-child { border-bottom: none; }
+.bre-quick-links-list a {
+    display: block;
+    padding: 9px 6px;
+    text-decoration: none;
+    color: #2271b1;
+    transition: padding-left .12s;
+}
+.bre-quick-links-list a:hover {
+    color: #135e96;
+    padding-left: 12px;
+}
+
+/* --- Crawler dot --- */
+.bre-bot-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #46b450;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* --- Meta coverage --- */
+.bre-coverage-row { margin-bottom: 14px; }
+.bre-coverage-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+.bre-coverage-stat { color: #666; }
+
+/* --- Status widget --- */
+.bre-stat-label {
+    padding: 5px 8px 5px 0;
+    color: #666;
+    font-size: 12px;
+    width: 55%;
+    vertical-align: top;
+}
+.bre-stat-value {
+    padding: 5px 0;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* --- AI enable toggle --- */
+.bre-ai-toggle-wrap {
+    background: #fff8e5;
+    border-left: 4px solid #ffb900;
+    border-radius: 0 4px 4px 0;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+.bre-ai-cost-notice {
+    margin: 8px 0 0;
+    color: #856404;
+    font-size: 13px;
+}
