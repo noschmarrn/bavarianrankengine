@@ -50,13 +50,9 @@ msgstr "Meta Generator"
 msgid "Bulk Generator"
 msgstr "Bulk Generator"
 
-#: includes/Admin/AdminMenu.php:67
-msgid "robots.txt / AI Bots"
-msgstr "robots.txt / AI Bots"
-
-#: includes/Admin/AdminMenu.php:69
-msgid "robots.txt"
-msgstr "robots.txt"
+#: includes/Admin/AdminMenu.php
+msgid "TXT Files"
+msgstr "TXT Files"
 
 #: includes/Admin/views/dashboard.php:3
 msgid "Bavarian Rank Engine \xe2\x80\x94 Dashboard"
@@ -214,104 +210,104 @@ msgstr "Cancel"
 msgid "0 / 0 processed"
 msgstr "0 / 0 processed"
 
-#: includes/Admin/views/llms.php:3
+#: includes/Admin/views/txt.php:3
 msgid "llms.txt Configuration"
 msgstr "llms.txt Configuration"
 
-#: includes/Admin/views/llms.php:7
+#: includes/Admin/views/txt.php:7
 msgid "llms.txt Cache leeren"
 msgstr "Clear llms.txt cache"
 
-#: includes/Admin/views/llms.php:28
+#: includes/Admin/views/txt.php:28
 msgid "Your llms.txt will be served at:"
 msgstr "Your llms.txt will be served at:"
 
-#: includes/Admin/views/llms.php:33
+#: includes/Admin/views/txt.php:33
 msgid "Active"
 msgstr "Active"
 
-#: includes/Admin/views/llms.php:35
+#: includes/Admin/views/txt.php:35
 msgid "Inactive"
 msgstr "Inactive"
 
-#: includes/Admin/views/llms.php:44
+#: includes/Admin/views/txt.php:44
 msgid "Enable llms.txt"
 msgstr "Enable llms.txt"
 
-#: includes/Admin/views/llms.php:49
+#: includes/Admin/views/txt.php:49
 msgid "Serve llms.txt at"
 msgstr "Serve llms.txt at"
 
-#: includes/Admin/views/llms.php:56
+#: includes/Admin/views/txt.php:56
 msgid "Title"
 msgstr "Title"
 
-#: includes/Admin/views/llms.php:63
+#: includes/Admin/views/txt.php:63
 msgid "Appears as the # heading in llms.txt"
 msgstr "Appears as the # heading in llms.txt"
 
-#: includes/Admin/views/llms.php:68
+#: includes/Admin/views/txt.php:68
 msgid "Description (before links)"
 msgstr "Description (before links)"
 
-#: includes/Admin/views/llms.php:72
+#: includes/Admin/views/txt.php:72
 msgid "Text shown after the title, before featured links."
 msgstr "Text shown after the title, before featured links."
 
-#: includes/Admin/views/llms.php:77
+#: includes/Admin/views/txt.php:77
 msgid "Featured Links"
 msgstr "Featured Links"
 
-#: includes/Admin/views/llms.php:82
+#: includes/Admin/views/txt.php:82
 msgid "Important links to highlight for AI models. One per line."
 msgstr "Important links to highlight for AI models. One per line."
 
-#: includes/Admin/views/llms.php:83
+#: includes/Admin/views/txt.php:83
 msgid "Markdown format recommended:"
 msgstr "Markdown format recommended:"
 
-#: includes/Admin/views/llms.php:90
+#: includes/Admin/views/txt.php:90
 #: includes/Admin/views/meta.php:25
 msgid "Post Types"
 msgstr "Post Types"
 
-#: includes/Admin/views/llms.php:101
+#: includes/Admin/views/txt.php:101
 msgid "Which post types to include in the content list."
 msgstr "Which post types to include in the content list."
 
-#: includes/Admin/views/llms.php:106
+#: includes/Admin/views/txt.php:106
 msgid "Max. Links pro Seite"
 msgstr "Max. links per page"
 
-#: includes/Admin/views/llms.php:112
+#: includes/Admin/views/txt.php:112
 msgid "Bei mehr Posts werden automatisch llms-2.txt, llms-3.txt etc. erstellt und verlinkt."
 msgstr "For more posts, llms-2.txt, llms-3.txt etc. are automatically created and linked."
 
-#: includes/Admin/views/llms.php:118
+#: includes/Admin/views/txt.php:118
 msgid "Description (after content)"
 msgstr "Description (after content)"
 
-#: includes/Admin/views/llms.php:126
+#: includes/Admin/views/txt.php:126
 msgid "Footer Description"
 msgstr "Footer Description"
 
-#: includes/Admin/views/llms.php:130
+#: includes/Admin/views/txt.php:130
 msgid "Appears at the end of llms.txt after a --- separator."
 msgstr "Appears at the end of llms.txt after a --- separator."
 
-#: includes/Admin/views/llms.php:135
+#: includes/Admin/views/txt.php:135
 msgid "Save llms.txt Settings"
 msgstr "Save llms.txt Settings"
 
-#: includes/Admin/views/llms.php:139
+#: includes/Admin/views/txt.php:139
 msgid "Preview"
 msgstr "Preview"
 
-#: includes/Admin/views/llms.php:141
+#: includes/Admin/views/txt.php:141
 msgid "After saving, visit your llms.txt to verify:"
 msgstr "After saving, visit your llms.txt to verify:"
 
-#: includes/Admin/views/llms.php:147
+#: includes/Admin/views/txt.php:147
 msgid "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
 msgstr "Note: If the URL shows a 404, go to Settings \xe2\x86\x92 Permalinks and click Save to flush rewrite rules."
 
@@ -367,37 +363,33 @@ msgstr "Organization sameAs URLs"
 msgid "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
 msgstr "One URL per line (Twitter, LinkedIn, GitHub, Facebook\xe2\x80\xa6)"
 
-#: includes/Admin/views/robots.php:3
-msgid "robots.txt \xe2\x80\x94 AI Bots"
-msgstr "robots.txt \xe2\x80\x94 AI Bots"
+#: includes/Admin/views/txt.php
+msgid "Block known AI bots for this site."
+msgstr "Block known AI bots for this site."
 
-#: includes/Admin/views/robots.php:5
-msgid "Bekannte AI-Bots f\xc3\xbcr diese Website blockieren."
-msgstr "Block known AI bots for this website."
-
-#: includes/Admin/views/robots.php:6
-msgid "Hinweis: Bots m\xc3\xbcssen sich nicht daran halten."
+#: includes/Admin/views/txt.php
+msgid "Note: Bots are not required to comply."
 msgstr "Note: Bots are not required to comply."
 
-#: includes/Admin/views/robots.php:15
+#: includes/Admin/views/txt.php
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: includes/Admin/views/robots.php:16
-msgid "Beschreibung"
+#: includes/Admin/views/txt.php
+msgid "Description"
 msgstr "Description"
 
-#: includes/Admin/views/robots.php:17
-msgid "Blockieren"
+#: includes/Admin/views/txt.php
+msgid "Block"
 msgstr "Block"
 
-#: includes/Admin/views/robots.php:36
-msgid "Einstellungen speichern"
-msgstr "Save Settings"
-
-#: includes/Admin/views/robots.php:41
-msgid "Aktuelle robots.txt ansehen \xe2\x86\x92"
+#: includes/Admin/views/txt.php
+msgid "View current robots.txt \xe2\x86\x92"
 msgstr "View current robots.txt \xe2\x86\x92"
+
+#: includes/Admin/views/txt.php
+msgid "Save robots.txt Settings"
+msgstr "Save robots.txt Settings"
 
 #: includes/Admin/MetaEditorBox.php:20
 msgid "Meta Description (BRE)"

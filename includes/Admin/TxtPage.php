@@ -6,8 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use BavarianRankEngine\Features\LlmsTxt;
+use BavarianRankEngine\Features\RobotsTxt;
 
-class LlmsPage {
+class TxtPage {
 	public function register(): void {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -18,20 +19,23 @@ class LlmsPage {
 		register_setting(
 			'bre_llms',
 			'bre_llms_settings',
-			array(
-				'sanitize_callback' => array( $this, 'sanitize' ),
-			)
+			array( 'sanitize_callback' => array( $this, 'sanitize_llms' ) )
+		);
+		register_setting(
+			'bre_robots',
+			'bre_robots_settings',
+			array( 'sanitize_callback' => array( $this, 'sanitize_robots' ) )
 		);
 	}
 
 	public function enqueue_assets( string $hook ): void {
-		if ( $hook !== 'bavarian-rank_page_bre-llms' ) {
+		if ( $hook !== 'bavarian-rank_page_bre-txt' ) {
 			return;
 		}
 		wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', array(), BRE_VERSION );
 	}
 
-	public function sanitize( mixed $input ): array {
+	public function sanitize_llms( mixed $input ): array {
 		$input = is_array( $input ) ? $input : array();
 		$clean = array();
 
@@ -57,12 +61,23 @@ class LlmsPage {
 		return $clean;
 	}
 
+	public function sanitize_robots( mixed $input ): array {
+		$input   = is_array( $input ) ? $input : array();
+		$blocked = array_values(
+			array_intersect(
+				array_map( 'sanitize_text_field', (array) ( $input['blocked_bots'] ?? array() ) ),
+				array_keys( RobotsTxt::KNOWN_BOTS )
+			)
+		);
+		return array( 'blocked_bots' => $blocked );
+	}
+
 	public function ajax_clear_cache(): void {
 		check_ajax_referer( 'bre_admin', 'nonce' );
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error();
 		}
-		\BavarianRankEngine\Features\LlmsTxt::clear_cache();
+		LlmsTxt::clear_cache();
 		wp_send_json_success( __( 'Cache cleared.', 'bavarian-rank-engine' ) );
 	}
 
@@ -70,9 +85,16 @@ class LlmsPage {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$settings   = LlmsTxt::getSettings();
-		$post_types = get_post_types( array( 'public' => true ), 'objects' );
-		$llms_url   = home_url( '/llms.txt' );
-		include BRE_DIR . 'includes/Admin/views/llms.php';
+		$valid_tabs = array( 'llms', 'robots' );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$raw_tab    = sanitize_key( $_GET['tab'] ?? 'llms' );
+		$active_tab = in_array( $raw_tab, $valid_tabs, true ) ? $raw_tab : 'llms';
+
+		$llms_settings   = LlmsTxt::getSettings();
+		$robots_settings = RobotsTxt::getSettings();
+		$post_types      = get_post_types( array( 'public' => true ), 'objects' );
+		$llms_url        = home_url( '/llms.txt' );
+
+		include BRE_DIR . 'includes/Admin/views/txt.php';
 	}
 }

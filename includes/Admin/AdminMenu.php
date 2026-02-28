@@ -81,11 +81,11 @@ class AdminMenu {
 
 		add_submenu_page(
 			'bavarian-rank',
-			'llms.txt',
-			'llms.txt',
+			__( 'TXT Files', 'bavarian-rank-engine' ),
+			__( 'TXT Files', 'bavarian-rank-engine' ),
 			'manage_options',
-			'bre-llms',
-			array( new LlmsPage(), 'render' )
+			'bre-txt',
+			array( new TxtPage(), 'render' )
 		);
 
 		add_submenu_page(
@@ -95,15 +95,6 @@ class AdminMenu {
 			'manage_options',
 			'bre-bulk',
 			array( new BulkPage(), 'render' )
-		);
-
-		add_submenu_page(
-			'bavarian-rank',
-			__( 'robots.txt / AI Bots', 'bavarian-rank-engine' ),
-			__( 'robots.txt', 'bavarian-rank-engine' ),
-			'manage_options',
-			'bre-robots',
-			array( new RobotsPage(), 'render' )
 		);
 
 		add_submenu_page(

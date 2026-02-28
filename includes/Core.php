@@ -38,11 +38,10 @@ class Core {
 		require_once BRE_DIR . 'includes/Admin/ProviderPage.php';
 		require_once BRE_DIR . 'includes/Admin/MetaPage.php';
 		require_once BRE_DIR . 'includes/Admin/BulkPage.php';
-		require_once BRE_DIR . 'includes/Admin/LlmsPage.php';
+		require_once BRE_DIR . 'includes/Admin/TxtPage.php';
 		require_once BRE_DIR . 'includes/Admin/MetaEditorBox.php';
 		require_once BRE_DIR . 'includes/Admin/SeoWidget.php';
 		require_once BRE_DIR . 'includes/Admin/LinkAnalysis.php';
-		require_once BRE_DIR . 'includes/Admin/RobotsPage.php';
 		require_once BRE_DIR . 'includes/Admin/GeoPage.php';
 		require_once BRE_DIR . 'includes/Admin/GeoEditorBox.php';
 		require_once BRE_DIR . 'includes/Admin/SchemaMetaBox.php';
@@ -69,11 +68,10 @@ class Core {
 			( new Admin\ProviderPage() )->register();
 			( new Admin\MetaPage() )->register();
 			( new Admin\BulkPage() )->register();
-			( new Admin\LlmsPage() )->register();
+			( new Admin\TxtPage() )->register();
 			( new Admin\MetaEditorBox() )->register();
 			( new Admin\SeoWidget() )->register();
 			( new Admin\LinkAnalysis() )->register();
-			( new Admin\RobotsPage() )->register();
 			( new Admin\GeoPage() )->register();
 			( new Admin\GeoEditorBox() )->register();
 			( new Admin\SchemaMetaBox() )->register();

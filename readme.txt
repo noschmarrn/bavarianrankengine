@@ -3,7 +3,7 @@ Contributors: mifupadev
 Tags: seo, ai, meta description, schema, llms.txt
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -149,6 +149,9 @@ Yes. Implement the `BavarianRankEngine\Providers\ProviderInterface` interface (f
 8. Post editor — SEO Analysis sidebar widget with live stats and warnings.
 
 == Changelog ==
+
+= 1.2.3 =
+* Improved: llms.txt and robots.txt admin pages merged into a single "TXT Files" page with native WordPress tab navigation
 
 = 1.2.2 =
 * New: Dismissible welcome notice with 24 h auto-expiry and Bavarian flavour
