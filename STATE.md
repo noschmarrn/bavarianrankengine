@@ -5,18 +5,16 @@
 ## Zuletzt released: 2026-02-28
 
 ## Was zuletzt gemacht wurde
-- README.md + README.de.md auf v1.2.3 gebracht: Version-Badge, Verzeichnisstruktur (TxtPage statt LlmsPage/RobotsPage), AJAX-Tabelle
-- Deutsche Website (github-website/de/) auf v1.2.3: index.html + changelog.html mit v1.2.3-Eintrag auf Deutsch
-- CLAUDE.md Release-Prozess ergänzt: README.md/README.de.md und DE+EN Website als Pflichtschritte
-- llms.txt-Seite (LlmsPage) und robots.txt-Seite (RobotsPage) in eine einzige "TXT Files"-Seite (TxtPage) zusammengeführt
-- Neues Tab-System via WordPress-nativer `nav-tab-wrapper`: Tab "llms.txt" mit Status-Dot, Tab "robots.txt" mit Blocked-Bot-Zähler-Badge
-- Alte Dateien gelöscht: LlmsPage.php, RobotsPage.php, views/llms.php, views/robots.php
-- .po-Dateien (de_DE + en_US) aktualisiert: neue Strings "TXT Files", "Save robots.txt Settings"
-- Website (github-website/) aktualisiert: changelog.html + index.html auf v1.2.3
+- i18n-Fix: alle hardcoded deutschen Strings in bulk.js über wp_localize_script (breBulk.i18n.*) lokalisiert
+- Provider-Labels (Empfohlen/Günstig/etc.) nun über __() übersetzt, English als Default
+- testConnection "Verbindung erfolgreich" → __('Connection successful') in allen 4 Providern
+- de_DE.po + .mo: 20 neue Einträge für Bulk-JS-Strings und Provider-Labels
+- Plugin Check Fix: $blocked_count → $bre_blocked_count in views/txt.php
+- Plugin Check Fix: build.sh excludiert nun README.de.md + STATE.md
+- Divergierende Git-Historie gelöst: force-push auf main, Tag v1.2.3 neu gesetzt → GitHub Action erneut getriggert
 
 ## Bekannte Offene Punkte
-- Lokales bre-dev/-Repo hat divergierende Historie zum Remote (Remote hat Dateien in Unterordner `bavarian-rank-engine/` reorganisiert, lokal liegt alles flach). Der Tag v1.2.3 wurde erfolgreich gepusht (GitHub Action wurde getriggert), aber `git push origin main` vom bre-dev/-Ordner schlägt fehl wegen Divergenz. Der build.sh-Weg via github-plugin/ hat funktioniert.
+- Keine kritischen offenen Punkte
 
 ## Nächste Schritte (Vorschläge)
-- bre-dev/-Repo mit Remote synchronisieren (git pull --allow-unrelated-histories oder Force-Push nach Rücksprache)
 - Neue Features oder Bugfixes
