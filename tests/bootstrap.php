@@ -314,6 +314,9 @@ if ( ! function_exists( 'wp_get_post_terms' ) ) {
         return $GLOBALS['bre_post_terms'][$post_id][$taxonomy] ?? [];
     }
 }
+if ( ! function_exists( 'update_object_term_cache' ) ) {
+    function update_object_term_cache( $object_ids, $object_type ) { return true; }
+}
 if ( ! function_exists( 'wp_enqueue_style' ) ) {
     function wp_enqueue_style( $handle, $src = '', $deps = [], $ver = false, $media = 'all' ) {}
 }

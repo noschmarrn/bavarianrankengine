@@ -318,6 +318,11 @@ class LinkSuggest {
 		$content = wp_kses_post( wp_unslash( $_POST['post_content'] ?? '' ) );
 		// phpcs:enable
 
+		if ( $post_id && ! current_user_can( 'edit_post', $post_id ) ) {
+			wp_send_json_error( 'Insufficient permissions' );
+			return;
+		}
+
 		if ( ! $post_id || ! $content ) {
 			wp_send_json_success( [] );
 			return;
@@ -386,6 +391,14 @@ class LinkSuggest {
 			 ORDER BY post_date DESC
 			 LIMIT 500"
 		);
+
+		if ( ! is_array( $posts ) ) {
+			return [];
+		}
+
+		// Preload term cache for all post IDs in two queries (avoids N+1 problem).
+		$post_ids = array_map( fn( $p ) => (int) $p->ID, $posts );
+		update_object_term_cache( $post_ids, [ 'post_tag', 'category' ] );
 
 		$pool = [];
 		foreach ( $posts as $post ) {
