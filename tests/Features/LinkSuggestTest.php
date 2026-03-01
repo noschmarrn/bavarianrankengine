@@ -89,13 +89,41 @@ class LinkSuggestTest extends TestCase {
 	public function test_score_partial_title_overlap(): void {
 		$content   = [ 'wordpress', 'plugin', 'seo', 'optimization' ];
 		$candidate = [
-			'title_tokens' => [ 'wordpress', 'seo', 'guide', 'tips' ],
-			'tag_tokens'   => [],
-			'cat_tokens'   => [],
+			'title_tokens'   => [ 'wordpress', 'seo', 'guide', 'tips' ],
+			'tag_tokens'     => [],
+			'excerpt_tokens' => [],
+			'cat_tokens'     => [],
 		];
 		// 2 shared out of 4 title tokens → title_overlap = 2/4 = 0.5 → score = 0.5 * 3.0 = 1.5
 		$score = LinkSuggest::score_candidate( $content, $candidate );
 		$this->assertEqualsWithDelta( 1.5, $score, 0.0001 );
+	}
+
+	public function test_score_excerpt_weights_between_tags_and_categories(): void {
+		$content = [ 'donau', 'fluss', 'bayern' ];
+
+		// Candidate with only excerpt overlap.
+		$candidate_excerpt = [
+			'title_tokens'   => [ 'deggendorf' ],
+			'tag_tokens'     => [],
+			'excerpt_tokens' => [ 'donau', 'niederbayern' ], // 1 shared / 2 = 0.5 → 0.5 * 1.5 = 0.75
+			'cat_tokens'     => [],
+		];
+		// Candidate with only category overlap.
+		$candidate_cat = [
+			'title_tokens'   => [ 'deggendorf' ],
+			'tag_tokens'     => [],
+			'excerpt_tokens' => [],
+			'cat_tokens'     => [ 'donau', 'fluss' ], // 2 shared / 2 = 1.0 → 1.0 * 1.0 = 1.0
+		];
+
+		$score_excerpt = LinkSuggest::score_candidate( $content, $candidate_excerpt );
+		$score_cat     = LinkSuggest::score_candidate( $content, $candidate_cat );
+
+		// Excerpt (×1.5) beats category (×1.0) for equal proportional overlap.
+		$this->assertGreaterThan( 0.0, $score_excerpt );
+		$this->assertEqualsWithDelta( 0.75, $score_excerpt, 0.0001 );
+		$this->assertEqualsWithDelta( 1.0, $score_cat, 0.0001 );
 	}
 
 	// -------------------------------------------------------------------------
@@ -118,12 +146,26 @@ class LinkSuggestTest extends TestCase {
 	// -------------------------------------------------------------------------
 
 	public function test_find_phrase_returns_matching_ngram(): void {
-		$content      = 'WordPress SEO plugins help you optimize your site for search engines.';
-		$titleTokens  = [ 'wordpress', 'seo', 'plugins' ];
-		$phrase       = LinkSuggest::find_best_phrase( $content, $titleTokens );
+		$content     = 'WordPress SEO plugins help you optimize your site for search engines.';
+		// Simulates combined topic tokens (title + tags + cats) of the target post.
+		$topicTokens = [ 'wordpress', 'seo', 'plugins' ];
+		$phrase      = LinkSuggest::find_best_phrase( $content, $topicTokens );
 		$this->assertNotSame( '', $phrase );
 		// The phrase should appear in the original content (case-insensitive).
 		$this->assertStringContainsStringIgnoringCase( $phrase, $content );
+	}
+
+	public function test_find_phrase_via_tag_token_without_title_overlap(): void {
+		// Simulates: article about "Donau" links to "Deggendorf" post.
+		// "Deggendorf" never appears in the content, but the tag token "donau" does.
+		// Combined topic tokens = title_tokens + tag_tokens: ['deggendorf', 'donau', 'niederbayern'].
+		$content     = 'Die Donau ist einer der längsten Flüsse Europas und fließt durch Bayern.';
+		$topicTokens = [ 'deggendorf', 'donau', 'niederbayern' ]; // title + tags of target
+		$phrase      = LinkSuggest::find_best_phrase( $content, $topicTokens );
+		// Should find an anchor containing "Donau" — the shared topic word.
+		$this->assertNotSame( '', $phrase );
+		$this->assertStringContainsStringIgnoringCase( $phrase, $content );
+		$this->assertStringContainsStringIgnoringCase( 'donau', $phrase );
 	}
 
 	public function test_find_phrase_skips_existing_links(): void {
@@ -136,8 +178,8 @@ class LinkSuggestTest extends TestCase {
 
 	public function test_find_phrase_returns_empty_when_no_match(): void {
 		$content     = 'Completely unrelated text about cooking and recipes.';
-		$titleTokens = [ 'quantum', 'physics', 'relativity' ];
-		$phrase      = LinkSuggest::find_best_phrase( $content, $titleTokens );
+		$topicTokens = [ 'quantum', 'physics', 'relativity' ];
+		$phrase      = LinkSuggest::find_best_phrase( $content, $topicTokens );
 		$this->assertSame( '', $phrase );
 	}
 

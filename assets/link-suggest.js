@@ -215,10 +215,11 @@
             var q = $input.val().trim();
             if ( q.length < 2 ) { $results.hide(); return; }
             timer = setTimeout( function () {
-                $.getJSON(
-                    cfg.ajaxUrl.replace( 'admin-ajax.php', '' ) + 'wp-json/wp/v2/search',
-                    { search: q, type: 'post', subtype: 'any', per_page: 10, _fields: 'id,title,url' }
-                ).done( function ( items ) {
+                $.ajax( {
+                    url:     cfg.restUrl,
+                    data:    { search: q, type: 'post', subtype: 'any', per_page: 10, _fields: 'id,title,url' },
+                    headers: { 'X-WP-Nonce': cfg.restNonce },
+                } ).done( function ( items ) {
                     $results.empty().show();
                     if ( ! items.length ) {
                         $results.append( '<div style="padding:6px;">No results</div>' );

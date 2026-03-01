@@ -3,7 +3,7 @@ Contributors: mifupadev
 Tags: seo, ai, meta description, schema, llms.txt
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -149,6 +149,13 @@ Yes. Implement the `BavarianRankEngine\Providers\ProviderInterface` interface (f
 8. Post editor — SEO Analysis sidebar widget with live stats and warnings.
 
 == Changelog ==
+
+= 1.3.1 =
+* Improved: Internal Link Suggestions now match by topic (title + tags + categories + excerpt) — anchor phrases are found even when the target post title does not appear verbatim in the content
+* New: Post excerpt included in candidate scoring (weight ×1.5) for better semantic relevance
+* New: Dashboard "AI Features" card — opt-in AI toggle per feature (Meta Descriptions, Link Suggestions, GEO Block); only visible when an AI provider is connected; all options disabled by default
+* Fix: Post search in Link Suggestions settings (Exclude / Boost) was broken — wrong REST API URL and missing script on settings page
+* Fix: Plugin Check — translators comment position in bulk.php, NonPrefixedVariable warnings in link-suggest-settings.php and txt.php
 
 = 1.3.0 =
 * New: Internal Link Suggestions — editor meta box suggests "phrase → target post" links while writing; manual review + multi-select apply with preview modal
