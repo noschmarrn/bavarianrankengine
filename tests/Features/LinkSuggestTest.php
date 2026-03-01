@@ -127,16 +127,11 @@ class LinkSuggestTest extends TestCase {
 	}
 
 	public function test_find_phrase_skips_existing_links(): void {
-		// "WordPress SEO" is already linked — the finder should not return it.
-		$content     = 'Check out <a href="/seo">WordPress SEO</a> plugins for better rankings.';
-		$titleTokens = [ 'wordpress', 'seo', 'plugins' ];
-		$phrase      = LinkSuggest::findBestPhrase( $content, $titleTokens );
-		// If a phrase is returned it must NOT be the already-linked text.
-		if ( $phrase !== '' ) {
-			$this->assertNotSame( 0, strcasecmp( 'WordPress SEO', $phrase ) );
-		}
-		// The winner should not come from inside the <a> tag.
-		$this->assertDoesNotMatchRegularExpression( '/^wordpress seo$/i', $phrase );
+		$content = 'Visit <a href="/x">WordPress SEO</a> for plugins and performance tips';
+		$title   = [ 'wordpress', 'seo' ];
+		$phrase  = LinkSuggest::findBestPhrase( $content, $title );
+		// All occurrences of the matching phrase are already linked — expect empty
+		$this->assertSame( '', $phrase );
 	}
 
 	public function test_find_phrase_returns_empty_when_no_match(): void {
@@ -144,6 +139,14 @@ class LinkSuggestTest extends TestCase {
 		$titleTokens = [ 'quantum', 'physics', 'relativity' ];
 		$phrase      = LinkSuggest::findBestPhrase( $content, $titleTokens );
 		$this->assertSame( '', $phrase );
+	}
+
+	public function test_tokenize_filters_short_multibyte_words(): void {
+		// "öl" is 2 characters (4 bytes in UTF-8) — should be filtered (length <= 2)
+		$tokens = LinkSuggest::tokenize( 'Das Öl ist teuer', 'de' );
+		$this->assertNotContains( 'öl', $tokens );
+		// Longer words should remain
+		$this->assertContains( 'teuer', $tokens );
 	}
 
 	// -------------------------------------------------------------------------

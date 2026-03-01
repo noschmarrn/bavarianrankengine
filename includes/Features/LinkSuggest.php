@@ -70,7 +70,7 @@ class LinkSuggest {
 
 		$tokens = [];
 		foreach ( $words as $word ) {
-			if ( strlen( $word ) <= 2 ) {
+			if ( mb_strlen( $word, 'UTF-8' ) <= 2 ) {
 				continue;
 			}
 			if ( isset( $stopSet[ $word ] ) ) {
@@ -171,14 +171,15 @@ class LinkSuggest {
 				$score = ( $shared / $len ) + ( $len * 0.1 );
 
 				if ( $score > $bestScore ) {
-					$candidate = implode( ' ', $gram );
-					// Verify the phrase exists outside existing <a> links.
-					if ( self::phraseExistsOutsideLinks( $rawContent, $candidate ) ) {
-						$bestScore  = $score;
-						$bestPhrase = $candidate;
-					}
+					$bestScore  = $score;
+					$bestPhrase = implode( ' ', $gram );
 				}
 			}
+		}
+
+		// Verify the winning phrase exists outside existing <a> links (called once).
+		if ( $bestPhrase !== '' && stripos( $plain, $bestPhrase ) === false ) {
+			return '';
 		}
 
 		return $bestPhrase;
