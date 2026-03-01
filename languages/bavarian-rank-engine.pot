@@ -493,3 +493,121 @@ msgstr ""
 #: includes/Features/LlmsTxt.php:31
 msgid "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
 msgstr ""
+
+#: includes/Admin/AdminMenu.php
+msgid "Link Suggestions"
+msgstr ""
+
+#: includes/Admin/views/link-suggest-settings.php
+msgid "Analysis Trigger"
+msgstr ""
+
+msgid "When to analyse"
+msgstr ""
+
+msgid "Manual only (button)"
+msgstr ""
+
+msgid "On post save"
+msgstr ""
+
+msgid "Every"
+msgstr ""
+
+msgid "minutes"
+msgstr ""
+
+msgid "Exclude Posts / Pages"
+msgstr ""
+
+msgid "These posts will never appear as link suggestions (e.g. Imprint, Contact, Terms)."
+msgstr ""
+
+msgid "Excluded"
+msgstr ""
+
+msgid "Search posts…"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Prioritise Posts / Pages"
+msgstr ""
+
+msgid "Boosted posts rank higher when thematically relevant. A boost of 1.0 = no change."
+msgstr ""
+
+msgid "Boosted"
+msgstr ""
+
+msgid "Boost:"
+msgstr ""
+
+msgid "AI Options (optional)"
+msgstr ""
+
+msgid "AI is connected — these settings control how many candidates are sent for semantic analysis."
+msgstr ""
+
+msgid "Candidates to AI"
+msgstr ""
+
+msgid "How many pre-scored candidates are passed to the AI (max 50)."
+msgstr ""
+
+msgid "Max output tokens"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+#: includes/Admin/views/link-suggest-box.php
+msgid "Click Analyse to find internal link opportunities."
+msgstr ""
+
+msgid "Analyse"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Apply (0 links)"
+msgstr ""
+
+#: includes/Features/LinkSuggest.php
+msgid "Internal Link Suggestions (BRE)"
+msgstr ""
+
+msgid "Analysing…"
+msgstr ""
+
+msgid "No suggestions found."
+msgstr ""
+
+msgid "Apply (%d links)"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Applied — %d links set ✓"
+msgstr ""
+
+msgid "Prioritised"
+msgstr ""
+
+msgid "Open post"
+msgstr ""
+
+msgid "Network error"
+msgstr ""
