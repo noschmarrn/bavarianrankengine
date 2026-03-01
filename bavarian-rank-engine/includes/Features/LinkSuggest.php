@@ -193,16 +193,17 @@ class LinkSuggest {
 	/**
 	 * Score a candidate post against content tokens.
 	 *
-	 * @param string[]                                                                  $content_tokens Tokens from the current page content.
-	 * @param array{title_tokens: string[], tag_tokens: string[], cat_tokens: string[]} $candidate
+	 * @param string[]                                                                                            $content_tokens Tokens from the current page content.
+	 * @param array{title_tokens: string[], tag_tokens: string[], cat_tokens: string[], excerpt_tokens: string[]} $candidate
 	 * @return float
 	 */
 	public static function score_candidate( array $content_tokens, array $candidate ): float {
-		$title_overlap = self::overlap( $content_tokens, $candidate['title_tokens'] );
-		$tag_overlap   = self::overlap( $content_tokens, $candidate['tag_tokens'] );
-		$cat_overlap   = self::overlap( $content_tokens, $candidate['cat_tokens'] );
+		$title_overlap   = self::overlap( $content_tokens, $candidate['title_tokens'] );
+		$tag_overlap     = self::overlap( $content_tokens, $candidate['tag_tokens'] );
+		$excerpt_overlap = self::overlap( $content_tokens, $candidate['excerpt_tokens'] ?? array() );
+		$cat_overlap     = self::overlap( $content_tokens, $candidate['cat_tokens'] );
 
-		return ( $title_overlap * 3.0 ) + ( $tag_overlap * 2.0 ) + ( $cat_overlap * 1.0 );
+		return ( $title_overlap * 3.0 ) + ( $tag_overlap * 2.0 ) + ( $excerpt_overlap * 1.5 ) + ( $cat_overlap * 1.0 );
 	}
 
 	/**
@@ -218,21 +219,26 @@ class LinkSuggest {
 	}
 
 	/**
-	 * Find the best N-gram phrase in $raw_content that overlaps with $title_tokens.
+	 * Find the best N-gram phrase in $raw_content that overlaps with $topic_tokens.
+	 *
+	 * Pass the combined tokens of the link target (title + tags + categories) so that
+	 * the anchor phrase can be found even when the target title does not literally
+	 * appear in the content. Example: a Donau article can produce "entlang der Donau"
+	 * as an anchor for the Deggendorf article if "donau" is one of Deggendorf's tags.
 	 *
 	 * @param string   $raw_content  HTML content to search within.
-	 * @param string[] $title_tokens Lowercased tokens of the link target's title.
+	 * @param string[] $topic_tokens Lowercased tokens of the link target (title + tags + cats).
 	 * @param int      $min_len      Minimum gram length (words). Default 2.
 	 * @param int      $max_len      Maximum gram length (words). Default 6.
 	 * @return string Original-case phrase, or '' if no suitable match is found.
 	 */
 	public static function find_best_phrase(
 		string $raw_content,
-		array $title_tokens,
+		array $topic_tokens,
 		int $min_len = 2,
 		int $max_len = 6
 	): string {
-		if ( empty( $title_tokens ) ) {
+		if ( empty( $topic_tokens ) ) {
 			return '';
 		}
 
@@ -254,7 +260,7 @@ class LinkSuggest {
 			return '';
 		}
 
-		$title_set   = array_flip( $title_tokens ); // O(1) lookup.
+		$title_set   = array_flip( $topic_tokens ); // O(1) lookup.
 		$best_score  = -1.0;
 		$best_phrase = '';
 
@@ -390,6 +396,8 @@ class LinkSuggest {
 			array(
 				'nonce'       => wp_create_nonce( 'bre_admin' ),
 				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+				'restUrl'     => get_rest_url( null, 'wp/v2/search' ),
+				'restNonce'   => wp_create_nonce( 'wp_rest' ),
 				'postId'      => $post ? (int) $post->ID : 0,
 				'triggerMode' => $settings['trigger'],
 				'intervalMs'  => max( 1, (int) $settings['interval_min'] ) * 60000,
@@ -466,7 +474,16 @@ class LinkSuggest {
 
 		$suggestions = array();
 		foreach ( $pool as $candidate ) {
-			$phrase = self::find_best_phrase( $content, $candidate['title_tokens'] );
+			// Combine title, tag and category tokens so the anchor phrase can be found
+			// even when the target title does not appear verbatim in the current content.
+			// A Donau article may anchor to Deggendorf via the shared "donau" tag token.
+			$topic_tokens = array_values( array_unique( array_merge(
+				$candidate['title_tokens'],
+				$candidate['tag_tokens'],
+				$candidate['excerpt_tokens'],
+				$candidate['cat_tokens']
+			) ) );
+			$phrase = self::find_best_phrase( $content, $topic_tokens );
 			if ( $phrase === '' ) {
 				continue;
 			}
@@ -495,7 +512,7 @@ class LinkSuggest {
 		global $wpdb;
 		$lang  = str_starts_with( get_locale(), 'de_' ) ? 'de' : 'en';
 		$posts = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-			"SELECT ID, post_title FROM {$wpdb->posts}
+			"SELECT ID, post_title, post_excerpt FROM {$wpdb->posts}
 			 WHERE post_status = 'publish'
 			   AND post_type IN ('post','page')
 			 ORDER BY post_date DESC
@@ -519,12 +536,13 @@ class LinkSuggest {
 			$cat_str = is_array( $cats ) ? implode( ' ', $cats ) : '';
 
 			$pool[] = array(
-				'post_id'      => (int) $post->ID,
-				'post_title'   => $post->post_title,
-				'url'          => get_permalink( (int) $post->ID ),
-				'title_tokens' => self::tokenize( $post->post_title, $lang ),
-				'tag_tokens'   => self::tokenize( $tag_str, $lang ),
-				'cat_tokens'   => self::tokenize( $cat_str, $lang ),
+				'post_id'        => (int) $post->ID,
+				'post_title'     => $post->post_title,
+				'url'            => get_permalink( (int) $post->ID ),
+				'title_tokens'   => self::tokenize( $post->post_title, $lang ),
+				'tag_tokens'     => self::tokenize( $tag_str, $lang ),
+				'excerpt_tokens' => self::tokenize( $post->post_excerpt ?? '', $lang ),
+				'cat_tokens'     => self::tokenize( $cat_str, $lang ),
 			);
 		}
 

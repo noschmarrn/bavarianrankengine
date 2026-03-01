@@ -15,8 +15,8 @@
 	<div style="background:#fff3cd;border:1px solid #ffc107;padding:10px 15px;margin-bottom:20px;border-radius:3px;color:#856404;">
 		<?php
 		printf(
-			/* translators: %s: URL to provider settings page */
 			wp_kses(
+				/* translators: %s: URL to provider settings page */
 				__( 'No AI provider connected — descriptions will be generated from content without AI (fallback mode). <a href="%s">Configure a provider →</a>', 'bavarian-rank-engine' ),
 				array( 'a' => array( 'href' => array() ) )
 			),

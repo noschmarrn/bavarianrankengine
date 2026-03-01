@@ -6,10 +6,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class AdminMenu {
+	public const OPTION_KEY_AI_FEATURES = 'bre_ai_features';
+
 	public function register(): void {
 		add_action( 'admin_menu', array( $this, 'add_menus' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_ajax_bre_dismiss_welcome', array( $this, 'ajax_dismiss_welcome' ) );
+		add_action( 'admin_post_bre_save_ai_features', array( $this, 'save_ai_features' ) );
+	}
+
+	public static function get_ai_features(): array {
+		$defaults = array(
+			'meta'  => false,
+			'geo'   => false,
+			'links' => false,
+		);
+		$saved = get_option( self::OPTION_KEY_AI_FEATURES, array() );
+		$saved = is_array( $saved ) ? $saved : array();
+		return array_merge( $defaults, $saved );
+	}
+
+	public function save_ai_features(): void {
+		check_admin_referer( 'bre_save_ai_features' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Insufficient permissions.', 'bavarian-rank-engine' ) );
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
+		$input = is_array( $_POST['bre_ai_features'] ?? null ) ? $_POST['bre_ai_features'] : array();
+		// phpcs:enable
+
+		update_option(
+			self::OPTION_KEY_AI_FEATURES,
+			array(
+				'meta'  => ! empty( $input['meta'] ),
+				'geo'   => ! empty( $input['geo'] ),
+				'links' => ! empty( $input['links'] ),
+			)
+		);
+
+		wp_safe_redirect( add_query_arg( array( 'page' => 'bavarian-rank', 'bre-saved' => '1' ), admin_url( 'admin.php' ) ) );
+		exit;
 	}
 
 	public function enqueue_assets( string $hook ): void {
@@ -159,6 +196,8 @@ class AdminMenu {
 			$crawlers = \BavarianRankEngine\Features\CrawlerLog::get_recent_summary( 30 );
 			set_transient( 'bre_crawler_summary', $crawlers, 5 * MINUTE_IN_SECONDS );
 		}
+
+		$ai_features = self::get_ai_features();
 
 		include BRE_DIR . 'includes/Admin/views/dashboard.php';
 	}

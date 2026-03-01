@@ -36,6 +36,19 @@ class LinkSuggestPage {
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 			)
 		);
+
+		// link-suggest.js enthält den Post-Such-Code für Exclude/Boost.
+		// Minimales breLinkSuggest-Objekt — reicht damit der Such-Block läuft.
+		wp_enqueue_script( 'bre-link-suggest', BRE_URL . 'assets/link-suggest.js', array( 'jquery' ), BRE_VERSION, true );
+		wp_localize_script(
+			'bre-link-suggest',
+			'breLinkSuggest',
+			array(
+				'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
+				'restUrl'    => get_rest_url( null, 'wp/v2/search' ),
+				'restNonce'  => wp_create_nonce( 'wp_rest' ),
+			)
+		);
 	}
 
 	public function sanitize( mixed $input ): array {

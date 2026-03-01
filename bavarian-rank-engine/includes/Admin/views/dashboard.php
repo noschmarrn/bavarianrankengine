@@ -106,6 +106,65 @@
 			</div>
 		</div>
 
+		<?php if ( $has_ai ) : ?>
+		<div class="postbox">
+			<div class="postbox-header"><h2><?php esc_html_e( 'AI Features', 'bavarian-rank-engine' ); ?></h2></div>
+			<div class="inside">
+				<?php if ( isset( $_GET['bre-saved'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+				<div class="notice notice-success inline" style="margin:0 0 12px;"><p><?php esc_html_e( 'Settings saved.', 'bavarian-rank-engine' ); ?></p></div>
+				<?php endif; ?>
+				<p style="color:#666;margin-top:0;">
+					<?php esc_html_e( 'Choose which features may use your connected AI provider. All options are opt-in and disabled by default.', 'bavarian-rank-engine' ); ?>
+				</p>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="bre_save_ai_features">
+					<?php wp_nonce_field( 'bre_save_ai_features' ); ?>
+					<table style="width:100%;border-collapse:collapse;">
+						<tr>
+							<td style="padding:6px 0;">
+								<label>
+									<input type="checkbox" name="bre_ai_features[meta]" value="1"
+										<?php checked( $ai_features['meta'] ); ?>>
+									<strong><?php esc_html_e( 'Meta Descriptions', 'bavarian-rank-engine' ); ?></strong>
+								</label>
+								<p style="margin:2px 0 0 22px;color:#777;font-size:12px;">
+									<?php esc_html_e( 'Generate meta descriptions with AI when editing or using the Bulk Generator.', 'bavarian-rank-engine' ); ?>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding:6px 0;">
+								<label>
+									<input type="checkbox" name="bre_ai_features[links]" value="1"
+										<?php checked( $ai_features['links'] ); ?>>
+									<strong><?php esc_html_e( 'Internal Link Suggestions', 'bavarian-rank-engine' ); ?></strong>
+								</label>
+								<p style="margin:2px 0 0 22px;color:#777;font-size:12px;">
+									<?php esc_html_e( 'Let AI pick the most natural anchor phrases and rank candidates semantically.', 'bavarian-rank-engine' ); ?>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding:6px 0;">
+								<label>
+									<input type="checkbox" name="bre_ai_features[geo]" value="1"
+										<?php checked( $ai_features['geo'] ); ?>>
+									<strong><?php esc_html_e( 'GEO Block', 'bavarian-rank-engine' ); ?></strong>
+								</label>
+								<p style="margin:2px 0 0 22px;color:#777;font-size:12px;">
+									<?php esc_html_e( 'Use AI to generate GEO-optimised content blocks for LLM visibility.', 'bavarian-rank-engine' ); ?>
+								</p>
+							</td>
+						</tr>
+					</table>
+					<p style="margin-top:12px;">
+						<?php submit_button( __( 'Save', 'bavarian-rank-engine' ), 'secondary', 'submit', false ); ?>
+					</p>
+				</form>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<?php if ( ! empty( $bre_compat ) ) : ?>
 		<div class="postbox">
 			<div class="postbox-header"><h2><?php esc_html_e( 'Plugin Compatibility', 'bavarian-rank-engine' ); ?></h2></div>

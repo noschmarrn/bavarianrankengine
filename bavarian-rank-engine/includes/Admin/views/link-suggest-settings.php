@@ -49,7 +49,7 @@
 					<div id="bre-ls-excluded-list">
 						<?php
 						foreach ( $settings['excluded_posts'] as $pid ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-							$ptitle = get_the_title( $pid );
+							$ptitle = get_the_title( $pid ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							if ( ! $ptitle ) {
 								continue;
 							}
@@ -81,7 +81,7 @@
 					<div id="bre-ls-boosted-list">
 						<?php
 						foreach ( $settings['boosted_posts'] as $idx => $entry ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-							$ptitle = get_the_title( $entry['id'] );
+							$ptitle = get_the_title( $entry['id'] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							if ( ! $ptitle ) {
 								continue;
 							}
