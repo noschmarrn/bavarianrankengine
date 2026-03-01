@@ -72,7 +72,7 @@ class LinkSuggestPage {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$settings = LinkSuggest::getSettings();
+		$settings = LinkSuggest::get_settings();
 		$main     = SettingsPage::getSettings();
 		$has_ai   = ! empty( $main['ai_enabled'] )
 					&& ! empty( $main['api_keys'][ $main['provider'] ] );
