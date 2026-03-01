@@ -10,15 +10,15 @@ use BavarianRankEngine\Features\LinkSuggest;
 class LinkSuggestPage {
 
 	public function register(): void {
-		add_action( 'admin_init', [ $this, 'register_settings' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
 	public function register_settings(): void {
 		register_setting(
 			'bre_link_suggest',
 			LinkSuggest::OPTION_KEY,
-			[ 'sanitize_callback' => [ $this, 'sanitize' ] ]
+			array( 'sanitize_callback' => array( $this, 'sanitize' ) )
 		);
 	}
 
@@ -26,42 +26,42 @@ class LinkSuggestPage {
 		if ( $hook !== 'bavarian-rank_page_bre-link-suggest' ) {
 			return;
 		}
-		wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', [], BRE_VERSION );
-		wp_enqueue_script( 'bre-admin', BRE_URL . 'assets/admin.js', [ 'jquery' ], BRE_VERSION, true );
+		wp_enqueue_style( 'bre-admin', BRE_URL . 'assets/admin.css', array(), BRE_VERSION );
+		wp_enqueue_script( 'bre-admin', BRE_URL . 'assets/admin.js', array( 'jquery' ), BRE_VERSION, true );
 		wp_localize_script(
 			'bre-admin',
 			'breAdmin',
-			[
+			array(
 				'nonce'   => wp_create_nonce( 'bre_admin' ),
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-			]
+			)
 		);
 	}
 
 	public function sanitize( mixed $input ): array {
-		$input = is_array( $input ) ? $input : [];
-		$clean = [];
+		$input = is_array( $input ) ? $input : array();
+		$clean = array();
 
-		$allowed_triggers      = [ 'manual', 'save', 'interval' ];
-		$clean['trigger']      = in_array( $input['trigger'] ?? '', $allowed_triggers, true )
+		$allowed_triggers       = array( 'manual', 'save', 'interval' );
+		$clean['trigger']       = in_array( $input['trigger'] ?? '', $allowed_triggers, true )
 									? $input['trigger'] : 'manual';
-		$clean['interval_min'] = max( 1, min( 60, (int) ( $input['interval_min'] ?? 2 ) ) );
+		$clean['interval_min']  = max( 1, min( 60, (int) ( $input['interval_min'] ?? 2 ) ) );
 		$clean['ai_candidates'] = max( 1, min( 50, (int) ( $input['ai_candidates'] ?? 20 ) ) );
 		$clean['ai_max_tokens'] = max( 100, min( 2000, (int) ( $input['ai_max_tokens'] ?? 400 ) ) );
 
 		$clean['excluded_posts'] = array_values(
-			array_map( 'intval', (array) ( $input['excluded_posts'] ?? [] ) )
+			array_map( 'intval', (array) ( $input['excluded_posts'] ?? array() ) )
 		);
 
-		$clean['boosted_posts'] = [];
-		foreach ( (array) ( $input['boosted_posts'] ?? [] ) as $entry ) {
-			$id    = (int) ( $entry['id']    ?? 0 );
+		$clean['boosted_posts'] = array();
+		foreach ( (array) ( $input['boosted_posts'] ?? array() ) as $entry ) {
+			$id    = (int) ( $entry['id'] ?? 0 );
 			$boost = (float) ( $entry['boost'] ?? 1.5 );
 			if ( $id > 0 ) {
-				$clean['boosted_posts'][] = [
+				$clean['boosted_posts'][] = array(
 					'id'    => $id,
 					'boost' => max( 1.0, min( 10.0, $boost ) ),
-				];
+				);
 			}
 		}
 
@@ -72,9 +72,9 @@ class LinkSuggestPage {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$settings    = LinkSuggest::getSettings();
-		$main        = SettingsPage::getSettings();
-		$has_ai      = ! empty( $main['ai_enabled'] )
+		$settings = LinkSuggest::getSettings();
+		$main     = SettingsPage::getSettings();
+		$has_ai   = ! empty( $main['ai_enabled'] )
 					&& ! empty( $main['api_keys'][ $main['provider'] ] );
 		include BRE_DIR . 'includes/Admin/views/link-suggest-settings.php';
 	}

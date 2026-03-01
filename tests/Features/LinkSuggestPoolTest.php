@@ -12,7 +12,7 @@ class LinkSuggestPoolTest extends TestCase {
     }
 
     public function test_get_settings_returns_defaults(): void {
-        $settings = LinkSuggest::getSettings();
+        $settings = LinkSuggest::get_settings();
         $this->assertSame( 'manual', $settings['trigger'] );
         $this->assertSame( 2, $settings['interval_min'] );
         $this->assertSame( [], $settings['excluded_posts'] );
@@ -26,7 +26,7 @@ class LinkSuggestPoolTest extends TestCase {
             'trigger'      => 'save',
             'interval_min' => 5,
         ];
-        $settings = LinkSuggest::getSettings();
+        $settings = LinkSuggest::get_settings();
         $this->assertSame( 'save', $settings['trigger'] );
         $this->assertSame( 5, $settings['interval_min'] );
         $this->assertSame( 20, $settings['ai_candidates'] );
@@ -37,18 +37,18 @@ class LinkSuggestPoolTest extends TestCase {
             [ 'id' => 10, 'boost' => 2.0 ],
             [ 'id' => 20, 'boost' => 1.5 ],
         ];
-        $map = LinkSuggest::buildBoostMap( $boosted );
+        $map = LinkSuggest::build_boost_map( $boosted );
         $this->assertSame( 2.0, $map[10] );
         $this->assertSame( 1.5, $map[20] );
     }
 
     public function test_build_boost_map_clamps_boost_to_minimum_one(): void {
-        $map = LinkSuggest::buildBoostMap( [ [ 'id' => 5, 'boost' => 0.5 ] ] );
+        $map = LinkSuggest::build_boost_map( [ [ 'id' => 5, 'boost' => 0.5 ] ] );
         $this->assertSame( 1.0, $map[5] );
     }
 
     public function test_build_boost_map_ignores_invalid_ids(): void {
-        $map = LinkSuggest::buildBoostMap( [ [ 'id' => 0, 'boost' => 2.0 ] ] );
+        $map = LinkSuggest::build_boost_map( [ [ 'id' => 0, 'boost' => 2.0 ] ] );
         $this->assertEmpty( $map );
     }
 

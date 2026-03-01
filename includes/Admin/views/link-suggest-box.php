@@ -1,4 +1,5 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	exit; } ?>
 <div id="bre-link-suggest-box">
 	<div style="display:flex;align-items:center;justify-content:space-between;">
 		<span style="color:#888;font-size:12px;" id="bre-ls-status">

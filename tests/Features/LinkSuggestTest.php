@@ -52,7 +52,7 @@ class LinkSuggestTest extends TestCase {
 	}
 
 	// -------------------------------------------------------------------------
-	// scoreCandidate tests
+	// score_candidate tests
 	// -------------------------------------------------------------------------
 
 	public function test_score_returns_zero_when_no_overlap(): void {
@@ -62,7 +62,7 @@ class LinkSuggestTest extends TestCase {
 			'tag_tokens'   => [ 'js', 'nodejs' ],
 			'cat_tokens'   => [ 'web', 'development' ],
 		];
-		$this->assertSame( 0.0, LinkSuggest::scoreCandidate( $content, $candidate ) );
+		$this->assertSame( 0.0, LinkSuggest::score_candidate( $content, $candidate ) );
 	}
 
 	public function test_score_title_overlap_weights_higher_than_tags(): void {
@@ -80,8 +80,8 @@ class LinkSuggestTest extends TestCase {
 			'cat_tokens'   => [],
 		];
 
-		$score_title = LinkSuggest::scoreCandidate( $content, $candidate_title );
-		$score_tag   = LinkSuggest::scoreCandidate( $content, $candidate_tag );
+		$score_title = LinkSuggest::score_candidate( $content, $candidate_title );
+		$score_tag   = LinkSuggest::score_candidate( $content, $candidate_tag );
 
 		$this->assertGreaterThan( $score_tag, $score_title );
 	}
@@ -94,33 +94,33 @@ class LinkSuggestTest extends TestCase {
 			'cat_tokens'   => [],
 		];
 		// 2 shared out of 4 title tokens → title_overlap = 2/4 = 0.5 → score = 0.5 * 3.0 = 1.5
-		$score = LinkSuggest::scoreCandidate( $content, $candidate );
+		$score = LinkSuggest::score_candidate( $content, $candidate );
 		$this->assertEqualsWithDelta( 1.5, $score, 0.0001 );
 	}
 
 	// -------------------------------------------------------------------------
-	// applyBoost tests
+	// apply_boost tests
 	// -------------------------------------------------------------------------
 
 	public function test_boost_multiplies_score(): void {
-		$this->assertEqualsWithDelta( 4.5, LinkSuggest::applyBoost( 1.5, 3.0 ), 0.0001 );
-		$this->assertEqualsWithDelta( 2.0, LinkSuggest::applyBoost( 1.0, 2.0 ), 0.0001 );
+		$this->assertEqualsWithDelta( 4.5, LinkSuggest::apply_boost( 1.5, 3.0 ), 0.0001 );
+		$this->assertEqualsWithDelta( 2.0, LinkSuggest::apply_boost( 1.0, 2.0 ), 0.0001 );
 	}
 
 	public function test_boost_does_not_create_relevance_from_zero(): void {
 		// 0 * anything = 0, so a boost cannot make a non-relevant result appear.
-		$this->assertSame( 0.0, LinkSuggest::applyBoost( 0.0, 5.0 ) );
-		$this->assertSame( 0.0, LinkSuggest::applyBoost( 0.0, 100.0 ) );
+		$this->assertSame( 0.0, LinkSuggest::apply_boost( 0.0, 5.0 ) );
+		$this->assertSame( 0.0, LinkSuggest::apply_boost( 0.0, 100.0 ) );
 	}
 
 	// -------------------------------------------------------------------------
-	// findBestPhrase tests
+	// find_best_phrase tests
 	// -------------------------------------------------------------------------
 
 	public function test_find_phrase_returns_matching_ngram(): void {
 		$content      = 'WordPress SEO plugins help you optimize your site for search engines.';
 		$titleTokens  = [ 'wordpress', 'seo', 'plugins' ];
-		$phrase       = LinkSuggest::findBestPhrase( $content, $titleTokens );
+		$phrase       = LinkSuggest::find_best_phrase( $content, $titleTokens );
 		$this->assertNotSame( '', $phrase );
 		// The phrase should appear in the original content (case-insensitive).
 		$this->assertStringContainsStringIgnoringCase( $phrase, $content );
@@ -129,7 +129,7 @@ class LinkSuggestTest extends TestCase {
 	public function test_find_phrase_skips_existing_links(): void {
 		$content = 'Visit <a href="/x">WordPress SEO</a> for plugins and performance tips';
 		$title   = [ 'wordpress', 'seo' ];
-		$phrase  = LinkSuggest::findBestPhrase( $content, $title );
+		$phrase  = LinkSuggest::find_best_phrase( $content, $title );
 		// All occurrences of the matching phrase are already linked — expect empty
 		$this->assertSame( '', $phrase );
 	}
@@ -137,7 +137,7 @@ class LinkSuggestTest extends TestCase {
 	public function test_find_phrase_returns_empty_when_no_match(): void {
 		$content     = 'Completely unrelated text about cooking and recipes.';
 		$titleTokens = [ 'quantum', 'physics', 'relativity' ];
-		$phrase      = LinkSuggest::findBestPhrase( $content, $titleTokens );
+		$phrase      = LinkSuggest::find_best_phrase( $content, $titleTokens );
 		$this->assertSame( '', $phrase );
 	}
 
@@ -150,7 +150,7 @@ class LinkSuggestTest extends TestCase {
 	}
 
 	// -------------------------------------------------------------------------
-	// filterExcluded tests
+	// filter_excluded tests
 	// -------------------------------------------------------------------------
 
 	public function test_filter_excluded_removes_matching_ids(): void {
@@ -161,7 +161,7 @@ class LinkSuggestTest extends TestCase {
 			[ 'post_id' => 4, 'title' => 'Delta' ],
 		];
 		$excluded = [ 2, 4 ];
-		$result   = LinkSuggest::filterExcluded( $candidates, $excluded );
+		$result   = LinkSuggest::filter_excluded( $candidates, $excluded );
 
 		$this->assertCount( 2, $result );
 		// Result must be re-indexed.

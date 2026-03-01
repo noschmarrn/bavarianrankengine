@@ -1,4 +1,5 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	exit; } ?>
 <div class="wrap bre-settings">
 	<h1><?php esc_html_e( 'Link Suggestions', 'bavarian-rank-engine' ); ?></h1>
 
@@ -46,9 +47,13 @@
 				<th scope="row"><?php esc_html_e( 'Excluded', 'bavarian-rank-engine' ); ?></th>
 				<td>
 					<div id="bre-ls-excluded-list">
-						<?php foreach ( $settings['excluded_posts'] as $pid ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+						<?php
+						foreach ( $settings['excluded_posts'] as $pid ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$ptitle = get_the_title( $pid );
-							if ( ! $ptitle ) continue; ?>
+							if ( ! $ptitle ) {
+								continue;
+							}
+							?>
 						<span class="bre-ls-tag" style="display:inline-flex;align-items:center;gap:4px;background:#e0e0e0;padding:2px 8px;border-radius:3px;margin:2px;">
 							<?php echo esc_html( $ptitle ); ?>
 							<input type="hidden"
@@ -74,17 +79,21 @@
 				<th scope="row"><?php esc_html_e( 'Boosted', 'bavarian-rank-engine' ); ?></th>
 				<td>
 					<div id="bre-ls-boosted-list">
-						<?php foreach ( $settings['boosted_posts'] as $idx => $entry ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+						<?php
+						foreach ( $settings['boosted_posts'] as $idx => $entry ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$ptitle = get_the_title( $entry['id'] );
-							if ( ! $ptitle ) continue; ?>
+							if ( ! $ptitle ) {
+								continue;
+							}
+							?>
 						<div class="bre-ls-boost-row" style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
 							<span>&#9733; <?php echo esc_html( $ptitle ); ?></span>
 							<input type="hidden"
-								name="<?php echo esc_attr( \BavarianRankEngine\Features\LinkSuggest::OPTION_KEY ); ?>[boosted_posts][<?php echo (int) $idx; ?>][id]"
+								name="<?php echo esc_attr( \BavarianRankEngine\Features\LinkSuggest::OPTION_KEY ); ?>[boosted_posts][<?php echo esc_attr( (string) (int) $idx ); ?>][id]"
 								value="<?php echo esc_attr( $entry['id'] ); ?>">
 							<label><?php esc_html_e( 'Boost:', 'bavarian-rank-engine' ); ?>
 								<input type="number" step="0.1" min="1" max="10"
-									name="<?php echo esc_attr( \BavarianRankEngine\Features\LinkSuggest::OPTION_KEY ); ?>[boosted_posts][<?php echo (int) $idx; ?>][boost]"
+									name="<?php echo esc_attr( \BavarianRankEngine\Features\LinkSuggest::OPTION_KEY ); ?>[boosted_posts][<?php echo esc_attr( (string) (int) $idx ); ?>][boost]"
 									value="<?php echo esc_attr( $entry['boost'] ); ?>"
 									style="width:60px;">
 							</label>
