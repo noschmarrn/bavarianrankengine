@@ -57,6 +57,8 @@ class BulkPage {
 		$settings  = SettingsPage::getSettings();
 		$registry  = ProviderRegistry::instance();
 		$providers = $registry->all();
+		$has_ai    = ! empty( $settings['ai_enabled'] )
+					&& ! empty( $settings['api_keys'][ $settings['provider'] ] );
 		include BRE_DIR . 'includes/Admin/views/bulk.php';
 	}
 }

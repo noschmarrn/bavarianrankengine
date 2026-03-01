@@ -42,6 +42,8 @@ class Core {
 		require_once BRE_DIR . 'includes/Admin/MetaEditorBox.php';
 		require_once BRE_DIR . 'includes/Admin/SeoWidget.php';
 		require_once BRE_DIR . 'includes/Admin/LinkAnalysis.php';
+		require_once BRE_DIR . 'includes/Features/LinkSuggest.php';
+		require_once BRE_DIR . 'includes/Admin/LinkSuggestPage.php';
 		require_once BRE_DIR . 'includes/Admin/GeoPage.php';
 		require_once BRE_DIR . 'includes/Admin/GeoEditorBox.php';
 		require_once BRE_DIR . 'includes/Admin/SchemaMetaBox.php';
@@ -72,6 +74,8 @@ class Core {
 			( new Admin\MetaEditorBox() )->register();
 			( new Admin\SeoWidget() )->register();
 			( new Admin\LinkAnalysis() )->register();
+			( new Features\LinkSuggest() )->register();
+			( new Admin\LinkSuggestPage() )->register();
 			( new Admin\GeoPage() )->register();
 			( new Admin\GeoEditorBox() )->register();
 			( new Admin\SchemaMetaBox() )->register();

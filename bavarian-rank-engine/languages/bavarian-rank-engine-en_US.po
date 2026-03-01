@@ -95,9 +95,6 @@ msgid "Meta Generator Settings"
 msgstr "Meta Generator Settings"
 
 #: includes/Admin/views/dashboard.php:42
-msgid "Bulk Generator"
-msgstr "Bulk Generator"
-
 #: includes/Admin/views/dashboard.php:48
 msgid "Status"
 msgstr "Status"
@@ -488,3 +485,112 @@ msgstr "A bulk process is already running."
 #: includes/Features/LlmsTxt.php:31
 msgid "Bavarian Rank Engine bedient llms.txt mit Priorit\xc3\xa4t \xe2\x80\x94 kein Handlungsbedarf bei Rank Math."
 msgstr "Bavarian Rank Engine serves llms.txt with priority \xe2\x80\x94 no action needed for Rank Math."
+
+#: includes/Admin/AdminMenu.php
+msgid "Link Suggestions"
+msgstr "Link Suggestions"
+
+#: includes/Admin/views/link-suggest-settings.php
+msgid "Analysis Trigger"
+msgstr "Analysis Trigger"
+
+msgid "When to analyse"
+msgstr "When to analyse"
+
+msgid "Manual only (button)"
+msgstr "Manual only (button)"
+
+msgid "On post save"
+msgstr "On post save"
+
+msgid "Every"
+msgstr "Every"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "Exclude Posts / Pages"
+msgstr "Exclude Posts / Pages"
+
+msgid "These posts will never appear as link suggestions (e.g. Imprint, Contact, Terms)."
+msgstr "These posts will never appear as link suggestions (e.g. Imprint, Contact, Terms)."
+
+msgid "Excluded"
+msgstr "Excluded"
+
+msgid "Search posts…"
+msgstr "Search posts…"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Prioritise Posts / Pages"
+msgstr "Prioritise Posts / Pages"
+
+msgid "Boosted posts rank higher when thematically relevant. A boost of 1.0 = no change."
+msgstr "Boosted posts rank higher when thematically relevant. A boost of 1.0 = no change."
+
+msgid "Boosted"
+msgstr "Boosted"
+
+msgid "Boost:"
+msgstr "Boost:"
+
+msgid "AI Options (optional)"
+msgstr "AI Options (optional)"
+
+msgid "AI is connected — these settings control how many candidates are sent for semantic analysis."
+msgstr "AI is connected — these settings control how many candidates are sent for semantic analysis."
+
+msgid "Candidates to AI"
+msgstr "Candidates to AI"
+
+msgid "How many pre-scored candidates are passed to the AI (max 50)."
+msgstr "How many pre-scored candidates are passed to the AI (max 50)."
+
+msgid "Max output tokens"
+msgstr "Max output tokens"
+
+#: includes/Admin/views/link-suggest-box.php
+msgid "Click Analyse to find internal link opportunities."
+msgstr "Click Analyse to find internal link opportunities."
+
+msgid "Analyse"
+msgstr "Analyse"
+
+msgid "All"
+msgstr "All"
+
+msgid "None"
+msgstr "None"
+
+msgid "Apply (0 links)"
+msgstr "Apply (0 links)"
+
+#: includes/Features/LinkSuggest.php
+msgid "Internal Link Suggestions (BRE)"
+msgstr "Internal Link Suggestions (BRE)"
+
+msgid "Analysing…"
+msgstr "Analysing…"
+
+msgid "No suggestions found."
+msgstr "No suggestions found."
+
+msgid "Apply (%d links)"
+msgstr "Apply (%d links)"
+
+msgid "Confirm"
+msgstr "Confirm"
+
+msgid "Applied — %d links set ✓"
+msgstr "Applied — %d links set ✓"
+
+msgid "Prioritised"
+msgstr "Prioritised"
+
+msgid "Open post"
+msgstr "Open post"
+
+msgid "Network error"
+msgstr "Network error"

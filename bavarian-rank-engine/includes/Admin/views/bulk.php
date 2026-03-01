@@ -11,7 +11,23 @@
 		<em><?php esc_html_e( 'Loading statistics…', 'bavarian-rank-engine' ); ?></em>
 	</div>
 
+	<?php if ( ! $has_ai ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
+	<div style="background:#fff3cd;border:1px solid #ffc107;padding:10px 15px;margin-bottom:20px;border-radius:3px;color:#856404;">
+		<?php
+		printf(
+			/* translators: %s: URL to provider settings page */
+			wp_kses(
+				__( 'No AI provider connected — descriptions will be generated from content without AI (fallback mode). <a href="%s">Configure a provider →</a>', 'bavarian-rank-engine' ),
+				array( 'a' => array( 'href' => array() ) )
+			),
+			esc_url( admin_url( 'admin.php?page=bre-provider' ) )
+		);
+		?>
+	</div>
+	<?php endif; ?>
+
 	<table class="form-table">
+		<?php if ( $has_ai ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 		<tr>
 			<th scope="row"><?php esc_html_e( 'Active Provider', 'bavarian-rank-engine' ); ?></th>
 			<td>
@@ -48,6 +64,7 @@ endif;
 				</select>
 			</td>
 		</tr>
+		<?php endif; ?>
 		<tr>
 			<th scope="row"><?php esc_html_e( 'Max. posts this run', 'bavarian-rank-engine' ); ?></th>
 			<td>

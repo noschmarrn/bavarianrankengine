@@ -3,8 +3,8 @@
 ![PHP 8.0+](https://img.shields.io/badge/PHP-8.0%2B-blue)
 ![WordPress 6.0+](https://img.shields.io/badge/WordPress-6.0%2B-21759b)
 ![License: GPL-2.0](https://img.shields.io/badge/License-GPL--2.0--or--later-green)
-![Version](https://img.shields.io/badge/Version-1.2.4-orange)
-![Tests](https://img.shields.io/badge/Tests-82%20passing-brightgreen)
+![Version](https://img.shields.io/badge/Version-1.3.0-orange)
+![Tests](https://img.shields.io/badge/Tests-102%20passing-brightgreen)
 
 🇩🇪 [Deutsche Version → README.de.md](README.de.md)
 
@@ -65,6 +65,7 @@ bavarian-rank-engine/
 │   ├── editor-meta.js            # Meta editor box: live counter, AI regen button
 │   ├── geo-editor.js             # GEO block editor: generate / clear button
 │   ├── geo-frontend.css          # Minimal stylesheet for .bre-geo on frontend
+│   ├── link-suggest.js           # Internal link suggestions: trigger, UI, apply (Gutenberg + Classic)
 │   └── seo-widget.js             # SEO analysis widget: live evaluation in editor
 ├── includes/
 │   ├── Core.php                  # Singleton bootstrap, loads all dependencies
@@ -74,6 +75,7 @@ bavarian-rank-engine/
 │   │   ├── GeoEditorBox.php      # GEO block meta box in post editor
 │   │   ├── GeoPage.php           # GEO block settings page
 │   │   ├── LinkAnalysis.php      # AJAX handler for link analysis dashboard
+│   │   ├── LinkSuggestPage.php   # Internal link suggestions settings page
 │   │   ├── MetaEditorBox.php     # Meta description meta box in post editor
 │   │   ├── MetaPage.php          # Meta generator settings page
 │   │   ├── ProviderPage.php      # AI provider settings page
@@ -87,6 +89,7 @@ bavarian-rank-engine/
 │   │   ├── CrawlerLog.php        # Log AI bot visits (own DB table)
 │   │   ├── GeoBlock.php          # GEO Quick Overview block (frontend output)
 │   │   ├── LlmsTxt.php           # /llms.txt endpoint with ETag/cache
+│   │   ├── LinkSuggest.php       # Internal link suggestions: matching engine + AJAX handler + meta box
 │   │   ├── MetaGenerator.php     # Core logic: AI call, save, bulk, AJAX
 │   │   ├── RobotsTxt.php         # robots.txt bot blocking via WP filter
 │   │   └── SchemaEnhancer.php    # JSON-LD Schema.org output in wp_head
@@ -483,6 +486,7 @@ All endpoints are exclusively accessible to logged-in users with `manage_options
 | `bre_test_connection` | `ProviderPage::ajax_test_connection` | Test API key and connection |
 | `bre_get_default_prompt` | `ProviderPage::ajax_get_default_prompt` | Reset to default prompt |
 | `bre_link_analysis` | `LinkAnalysis::ajax_analyse` | Run link analysis for the dashboard |
+| `bre_link_suggestions` | `LinkSuggest::ajax_suggest` | Return top-10 internal link suggestions for current post |
 | `bre_geo_generate` | `GeoEditorBox::ajax_generate` | Generate GEO block for a single post |
 | `bre_geo_clear` | `GeoEditorBox::ajax_clear` | Clear GEO block data for a single post |
 | `bre_llms_clear_cache` | `TxtPage::ajax_clear_cache` | Clear llms.txt transient cache |
@@ -528,7 +532,7 @@ The plugin has no JavaScript build step. All assets under `assets/` are direct J
 | Caching | WordPress transients (llms.txt, link analysis, bulk lock) |
 | Frontend | Vanilla JS + jQuery (WordPress-bundled), no build step |
 | i18n | `.pot` file, text domain `bavarian-rank-engine` |
-| Tests | PHPUnit (82 tests, 160 assertions) |
+| Tests | PHPUnit (102 tests, 216 assertions) |
 | Coding standard | WordPress PHPCS |
 | License | GPL-2.0-or-later |
 

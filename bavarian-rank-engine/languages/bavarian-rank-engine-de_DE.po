@@ -926,3 +926,109 @@ msgstr "KI-Generierung aktivieren"
 #: includes/Admin/views/provider.php
 msgid "This feature will incur costs with your AI provider. Make sure you understand the pricing before entering an API key."
 msgstr "Diese Funktion verursacht Kosten beim KI-Anbieter. Bitte prüfe die Preise, bevor du einen API-Key eingibst."
+
+#: includes/Admin/AdminMenu.php
+msgid "Link Suggestions"
+msgstr "Link-Vorschläge"
+
+#: includes/Admin/views/link-suggest-settings.php
+msgid "Analysis Trigger"
+msgstr "Analyse-Auslöser"
+
+msgid "When to analyse"
+msgstr "Wann analysieren"
+
+msgid "Manual only (button)"
+msgstr "Nur manuell (Button)"
+
+msgid "On post save"
+msgstr "Beim Speichern"
+
+msgid "Every"
+msgstr "Alle"
+
+msgid "minutes"
+msgstr "Minuten"
+
+msgid "Exclude Posts / Pages"
+msgstr "Beiträge / Seiten ausschließen"
+
+msgid "These posts will never appear as link suggestions (e.g. Imprint, Contact, Terms)."
+msgstr "Diese Beiträge erscheinen nie als Link-Vorschläge (z.B. Impressum, Kontakt, AGB)."
+
+msgid "Excluded"
+msgstr "Ausgeschlossen"
+
+msgid "Search posts…"
+msgstr "Beitrag suchen…"
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Prioritise Posts / Pages"
+msgstr "Beiträge / Seiten priorisieren"
+
+msgid "Boosted posts rank higher when thematically relevant. A boost of 1.0 = no change."
+msgstr "Priorisierte Beiträge werden höher gerankt wenn thematisch passend. Boost 1.0 = keine Änderung."
+
+msgid "Boosted"
+msgstr "Priorisiert"
+
+msgid "Boost:"
+msgstr "Boost:"
+
+msgid "AI Options (optional)"
+msgstr "KI-Optionen (optional)"
+
+msgid "AI is connected — these settings control how many candidates are sent for semantic analysis."
+msgstr "KI ist verbunden — diese Einstellungen steuern, wie viele Kandidaten für die semantische Analyse gesendet werden."
+
+msgid "Candidates to AI"
+msgstr "Kandidaten an KI"
+
+msgid "How many pre-scored candidates are passed to the AI (max 50)."
+msgstr "Wie viele vorgefilterte Kandidaten an die KI übergeben werden (max. 50)."
+
+msgid "Max output tokens"
+msgstr "Max. Ausgabe-Tokens"
+
+#: includes/Admin/views/link-suggest-box.php
+msgid "Click Analyse to find internal link opportunities."
+msgstr "Klicke auf Analysieren, um interne Verlinkungsmöglichkeiten zu finden."
+
+msgid "Analyse"
+msgstr "Analysieren"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "None"
+msgstr "Keine"
+
+msgid "Apply (0 links)"
+msgstr "Anwenden (0 Links)"
+
+#: includes/Features/LinkSuggest.php
+msgid "Internal Link Suggestions (BRE)"
+msgstr "Interne Link-Vorschläge (BRE)"
+
+msgid "Analysing…"
+msgstr "Analysiere…"
+
+msgid "No suggestions found."
+msgstr "Keine Vorschläge gefunden."
+
+msgid "Apply (%d links)"
+msgstr "%d Link(s) anwenden"
+
+msgid "Confirm"
+msgstr "Bestätigen"
+
+msgid "Applied — %d links set ✓"
+msgstr "Angewendet — %d Link(s) gesetzt ✓"
+
+msgid "Prioritised"
+msgstr "Priorisiert"
+
+msgid "Open post"
+msgstr "Beitrag öffnen"

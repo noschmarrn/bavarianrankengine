@@ -99,6 +99,15 @@ class AdminMenu {
 
 		add_submenu_page(
 			'bavarian-rank',
+			__( 'Link Suggestions', 'bavarian-rank-engine' ),
+			__( 'Link Suggestions', 'bavarian-rank-engine' ),
+			'manage_options',
+			'bre-link-suggest',
+			array( new LinkSuggestPage(), 'render' )
+		);
+
+		add_submenu_page(
+			'bavarian-rank',
 			__( 'GEO Quick Overview', 'bavarian-rank-engine' ),
 			__( 'GEO Block', 'bavarian-rank-engine' ),
 			'manage_options',
