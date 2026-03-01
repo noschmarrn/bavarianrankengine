@@ -296,3 +296,38 @@ if ( ! function_exists( 'wp_strip_all_tags' ) ) {
         return trim( $text );
     }
 }
+
+if ( ! function_exists( 'wp_kses_post' ) ) {
+    function wp_kses_post( $data ) { return $data; }
+}
+if ( ! defined( 'HOUR_IN_SECONDS' ) ) {
+    define( 'HOUR_IN_SECONDS', 3600 );
+}
+if ( ! function_exists( 'admin_url' ) ) {
+    function admin_url( $path = '' ) { return 'https://example.com/wp-admin/' . ltrim( $path, '/' ); }
+}
+if ( ! function_exists( 'get_locale' ) ) {
+    function get_locale() { return $GLOBALS['bre_locale'] ?? 'en_US'; }
+}
+if ( ! function_exists( 'wp_get_post_terms' ) ) {
+    function wp_get_post_terms( $post_id, $taxonomy, $args = [] ) {
+        return $GLOBALS['bre_post_terms'][$post_id][$taxonomy] ?? [];
+    }
+}
+if ( ! function_exists( 'wp_enqueue_style' ) ) {
+    function wp_enqueue_style( $handle, $src = '', $deps = [], $ver = false, $media = 'all' ) {}
+}
+if ( ! function_exists( 'wp_localize_script' ) ) {
+    function wp_localize_script( $handle, $name, $data ) {
+        $GLOBALS['bre_localized'][$handle][$name] = $data;
+    }
+}
+if ( ! defined( 'BRE_URL' ) ) {
+    define( 'BRE_URL', 'https://example.com/wp-content/plugins/bre/' );
+}
+if ( ! defined( 'BRE_VERSION' ) ) {
+    define( 'BRE_VERSION', '1.3.0' );
+}
+if ( ! defined( 'BRE_DIR' ) ) {
+    define( 'BRE_DIR', dirname( __DIR__ ) . '/' );
+}

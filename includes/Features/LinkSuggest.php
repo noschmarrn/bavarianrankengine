@@ -204,6 +204,212 @@ class LinkSuggest {
 	}
 
 	// -------------------------------------------------------------------------
+	// Settings key
+	// -------------------------------------------------------------------------
+
+	public const OPTION_KEY = 'bre_link_suggest_settings';
+
+	// -------------------------------------------------------------------------
+	// WP-dependent public methods
+	// -------------------------------------------------------------------------
+
+	public static function getSettings(): array {
+		$defaults = [
+			'trigger'        => 'manual',
+			'interval_min'   => 2,
+			'excluded_posts' => [],
+			'boosted_posts'  => [],
+			'ai_candidates'  => 20,
+			'ai_max_tokens'  => 400,
+		];
+		$saved = get_option( self::OPTION_KEY, [] );
+		$saved = is_array( $saved ) ? $saved : [];
+		return array_merge( $defaults, $saved );
+	}
+
+	public static function buildBoostMap( array $boostedPosts ): array {
+		$map = [];
+		foreach ( $boostedPosts as $entry ) {
+			$id    = (int) ( $entry['id']    ?? 0 );
+			$boost = (float) ( $entry['boost'] ?? 1.0 );
+			if ( $id > 0 ) {
+				$map[ $id ] = max( 1.0, $boost );
+			}
+		}
+		return $map;
+	}
+
+	public function register(): void {
+		add_action( 'wp_ajax_bre_link_suggestions', [ $this, 'ajax_suggest' ] );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'save_post', [ $this, 'invalidate_cache' ] );
+	}
+
+	public function invalidate_cache(): void {
+		delete_transient( 'bre_link_candidate_pool' );
+	}
+
+	public function add_meta_box(): void {
+		$post_types = \BavarianRankEngine\Admin\SettingsPage::getSettings()['meta_post_types'] ?? [ 'post', 'page' ];
+		foreach ( $post_types as $pt ) {
+			add_meta_box(
+				'bre_link_suggest',
+				__( 'Internal Link Suggestions (BRE)', 'bavarian-rank-engine' ),
+				[ $this, 'render_meta_box' ],
+				$pt,
+				'normal',
+				'default'
+			);
+		}
+	}
+
+	public function render_meta_box( \WP_Post $post ): void {
+		include BRE_DIR . 'includes/Admin/views/link-suggest-box.php';
+	}
+
+	public function enqueue_assets( string $hook ): void {
+		if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+			return;
+		}
+		$settings = self::getSettings();
+		$lang     = str_starts_with( get_locale(), 'de_' ) ? 'de' : 'en';
+		wp_enqueue_script( 'bre-link-suggest', BRE_URL . 'assets/link-suggest.js', [ 'jquery' ], BRE_VERSION, true );
+		global $post;
+		wp_localize_script(
+			'bre-link-suggest',
+			'breLinkSuggest',
+			[
+				'nonce'       => wp_create_nonce( 'bre_admin' ),
+				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+				'postId'      => $post ? (int) $post->ID : 0,
+				'triggerMode' => $settings['trigger'],
+				'intervalMs'  => max( 1, (int) $settings['interval_min'] ) * 60000,
+				'lang'        => $lang,
+				'i18n'        => [
+					'title'        => __( 'Internal Link Suggestions (BRE)', 'bavarian-rank-engine' ),
+					'analyse'      => __( 'Analyse', 'bavarian-rank-engine' ),
+					'loading'      => __( 'Analysing…', 'bavarian-rank-engine' ),
+					'noResults'    => __( 'No suggestions found.', 'bavarian-rank-engine' ),
+					'applyBtn'     => __( 'Apply (%d links)', 'bavarian-rank-engine' ),
+					'selectAll'    => __( 'All', 'bavarian-rank-engine' ),
+					'selectNone'   => __( 'None', 'bavarian-rank-engine' ),
+					'preview'      => __( 'Preview', 'bavarian-rank-engine' ),
+					'confirm'      => __( 'Confirm', 'bavarian-rank-engine' ),
+					'cancel'       => __( 'Cancel', 'bavarian-rank-engine' ),
+					'applied'      => __( 'Applied — %d links set ✓', 'bavarian-rank-engine' ),
+					'boosted'      => __( 'Prioritised', 'bavarian-rank-engine' ),
+					'openPost'     => __( 'Open post', 'bavarian-rank-engine' ),
+					'networkError' => __( 'Network error', 'bavarian-rank-engine' ),
+				],
+			]
+		);
+	}
+
+	public function ajax_suggest(): void {
+		check_ajax_referer( 'bre_admin', 'nonce' );
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( 'Insufficient permissions' );
+			return;
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
+		$post_id = (int) ( $_POST['post_id'] ?? 0 );
+		$content = wp_kses_post( wp_unslash( $_POST['post_content'] ?? '' ) );
+		// phpcs:enable
+
+		if ( ! $post_id || ! $content ) {
+			wp_send_json_success( [] );
+			return;
+		}
+
+		$settings    = self::getSettings();
+		$lang        = str_starts_with( get_locale(), 'de_' ) ? 'de' : 'en';
+		$contentToks = self::tokenize( $content, $lang );
+
+		if ( empty( $contentToks ) ) {
+			wp_send_json_success( [] );
+			return;
+		}
+
+		$pool     = $this->getCandidatePool( $post_id );
+		$excluded = array_map( 'intval', $settings['excluded_posts'] );
+		$pool     = self::filterExcluded( $pool, $excluded );
+		$boostMap = self::buildBoostMap( $settings['boosted_posts'] );
+
+		foreach ( $pool as &$candidate ) {
+			$score               = self::scoreCandidate( $contentToks, $candidate );
+			$boost               = $boostMap[ $candidate['post_id'] ] ?? 1.0;
+			$candidate['score']  = self::applyBoost( $score, $boost );
+			$candidate['boosted'] = isset( $boostMap[ $candidate['post_id'] ] );
+		}
+		unset( $candidate );
+
+		$pool = array_filter( $pool, fn( $c ) => $c['score'] > 0.0 );
+		usort( $pool, fn( $a, $b ) => $b['score'] <=> $a['score'] );
+		$pool = array_slice( $pool, 0, 20 );
+
+		$suggestions = [];
+		foreach ( $pool as $candidate ) {
+			$phrase = self::findBestPhrase( $content, $candidate['title_tokens'] );
+			if ( $phrase === '' ) {
+				continue;
+			}
+			$suggestions[] = [
+				'phrase'     => $phrase,
+				'post_id'    => $candidate['post_id'],
+				'post_title' => $candidate['post_title'],
+				'url'        => $candidate['url'],
+				'score'      => round( $candidate['score'], 3 ),
+				'boosted'    => $candidate['boosted'],
+			];
+			if ( count( $suggestions ) >= 10 ) {
+				break;
+			}
+		}
+
+		wp_send_json_success( $suggestions );
+	}
+
+	private function getCandidatePool( int $excludePostId ): array {
+		$cached = get_transient( 'bre_link_candidate_pool' );
+		if ( $cached !== false ) {
+			return array_values( array_filter( $cached, fn( $c ) => $c['post_id'] !== $excludePostId ) );
+		}
+
+		global $wpdb;
+		$lang  = str_starts_with( get_locale(), 'de_' ) ? 'de' : 'en';
+		$posts = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+			"SELECT ID, post_title FROM {$wpdb->posts}
+			 WHERE post_status = 'publish'
+			   AND post_type IN ('post','page')
+			 ORDER BY post_date DESC
+			 LIMIT 500"
+		);
+
+		$pool = [];
+		foreach ( $posts as $post ) {
+			$tags = wp_get_post_terms( (int) $post->ID, 'post_tag', [ 'fields' => 'names' ] );
+			$cats = wp_get_post_terms( (int) $post->ID, 'category', [ 'fields' => 'names' ] );
+
+			$tagStr = is_array( $tags ) ? implode( ' ', $tags ) : '';
+			$catStr = is_array( $cats ) ? implode( ' ', $cats ) : '';
+
+			$pool[] = [
+				'post_id'      => (int) $post->ID,
+				'post_title'   => $post->post_title,
+				'url'          => get_permalink( (int) $post->ID ),
+				'title_tokens' => self::tokenize( $post->post_title, $lang ),
+				'tag_tokens'   => self::tokenize( $tagStr, $lang ),
+				'cat_tokens'   => self::tokenize( $catStr, $lang ),
+			];
+		}
+
+		set_transient( 'bre_link_candidate_pool', $pool, HOUR_IN_SECONDS );
+		return array_values( array_filter( $pool, fn( $c ) => $c['post_id'] !== $excludePostId ) );
+	}
+
+	// -------------------------------------------------------------------------
 	// Private helpers
 	// -------------------------------------------------------------------------
 
